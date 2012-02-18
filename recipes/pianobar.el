@@ -1,0 +1,1 @@
+(:name pianobar :type emacswiki :website "http://www.emacswiki.org/emacs/pianobar.el")

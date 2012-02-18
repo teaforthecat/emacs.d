@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: log
+# binding: direct-keybinding
+# --
+console.log(${1:this});

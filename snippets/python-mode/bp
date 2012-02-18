@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: bp
+# binding: direct-keybinding
+# --
+import ipdb; ipdb.set_trace()

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: removepyc
+# key: 
+# binding: direct-keybinding
+# type: command
+# --
+find . -name "*.pyc" -exec rm -rf {} \;
