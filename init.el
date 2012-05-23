@@ -4,9 +4,8 @@
 ;;(add-to-list 'pymacs-load-path "~/.emacs.d/el-get/pymacs")
 ;;(pymacs-load "ropemacs")))
 
-
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-(add-to-list 'load-path "~/.emacs.d/swank")
+;;(add-to-list 'load-path "~/.emacs.d/swank")
 
 (unless (require 'el-get nil t)
   (url-retrieve
@@ -15,26 +14,33 @@
      (end-of-buffer)
      (eval-print-last-sexp))))
 
+
 (add-to-list 'load-path "~/.emacs.d/contrib")
-(require 'el-get)
+;;(require 'el-get)
 (add-to-list 'el-get-recipe-path "~/.emacs.d/recipes")
 (setq my-packages
       (append
        ;;'(slime)
+;;       '(wanderlust)
        '(org-mode);;!!!!
-       '(el-get package bbdb color-theme ioccur autopair yasnippet auto-complete) 
+       '(el-get package color-theme ioccur autopair yasnippet auto-complete)
+       '(calfw)
                 '(magit emacs-jabber htmlize)
-                '(mwe-log-commands tail)
+                '(mwe-log-commands)
                 '(emacs-w3m)
-                '(haml-mode js2-mode js-comint yaml-mode)
-                '(python pylookup sass-mode)
-                '(edit-server)
+                '(js2-mode js-comint json-mode json)
+                '(haml-mode yaml-mode )
+                '(python pylookup)
+                ;; '(edit-server)
                 '(django-mode weblogger-el feature-mode)))
+
 
 (setq my-emwiki-packages 
       (append 
        '(fullscreen redo+ browse-kill-ring xml-rpc)       
        '(pianobar )
+       '(session)
+;;       '(list-registers)
        ))
 
 (el-get 'sync my-packages my-emwiki-packages)
@@ -73,21 +79,28 @@
 (require 'my-functions)
 (require 'init_python)
 (require 'contrib-functions)
-;;(require 'my-wl-settings)
+(require 'my-wl-settings)
 ;;(require 'my-alt-wl-settings)
 (require 'my-org-settings)
+(require 'my-cal-settings)
 (require 'my-keybindings)
 (require 'my-settings)
 ;;(require 'weblogger-setup)
 (require 'my-macros)
+(require 'rcodetools)
+
+
+(add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/"))
+
+
 
 ;;everything has been defined (post setup setup)
-(google-calendar-download)
+;; (google-calendar-download)
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(dictionary-default-dictionary "wn")
  '(dictionary-server "dictionary.bishopston.net")
  '(haml-indent-offset 4)
@@ -129,18 +142,21 @@
  '(weblogger-server-url "http://wordpress.spysoundlab.com/xmlrpc.php"))
 
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(hi-blue-b ((((min-colors 88)) (:foreground "#46657B"))))
  '(magit-diff-add ((t (:inherit diff-added :background "black" :foreground "#98fecc"))))
  '(magit-diff-del ((t (:inherit diff-removed :background "black" :foreground "orange"))))
  '(magit-diff-file-header ((t (:inherit diff-file-header :background "black" :foreground "grey" :underline nil :slant italic))))
  '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :background "black" :foreground "grey" :underline "grey" :slant italic))))
- '(muse-bad-link ((t (:foreground "DeepPink" :underline "DeepPink" :weight bold)))))
+ '(muse-bad-link ((t (:foreground "DeepPink" :underline "DeepPink" :weight bold))))
+ '(speck-mouse ((t (:background "black" :foreground "dark orange"))))
+ '(speck-query ((t (:background "black" :foreground "dark orange")))))
 
 
 
 
 
+(put 'downcase-region 'disabled nil)
