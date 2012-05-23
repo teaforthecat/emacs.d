@@ -1,4 +1,6 @@
 (ergoemacs-global-set-key "\M-x" 'execute-extended-command)
+(ergoemacs-global-set-key (kbd "C-p") 'nil)
+
 ;; move
 (ergoemacs-global-set-key "\M-d" 'beginning-of-buffer)
 (ergoemacs-global-set-key "\M-D" 'end-of-buffer)
@@ -25,12 +27,14 @@
 
 ;;--edit in app --(move to app key maps someday)
 (ergoemacs-global-set-key (kbd "C-x 9") 'dired-omit-mode)
+(ergoemacs-global-set-key (kbd "C-x <f9>") 'find-lisp-find-dired-subdirectories)
 (ergoemacs-global-set-key (kbd "<C-tab>") 'magit-show-only-files)
 (ergoemacs-global-set-key (kbd "C-c li") 'org-clock-in)
 (ergoemacs-global-set-key (kbd "C-c lo") 'org-clock-out)
 (ergoemacs-global-set-key (kbd "C-c lu") 'org-clock-update-time-maybe)
 (ergoemacs-global-set-key (kbd "<M-kp-right>") 'org-table-insert-column)
 (ergoemacs-global-set-key (kbd "<M-kp-down>") 'org-table-insert-row)
+(ergoemacs-global-set-key (kbd "C-x rv") 'list-registers)
 
 
 ;;(ergoemacs-global-set-key (kbd "") 'org-insert-subheading)
@@ -80,6 +84,10 @@
                            (define-key dired-mode-map "e" `dired-up-directory)
                            (define-key dired-mode-map "o" `dired-display-file)
                            (define-key dired-mode-map "k" `dired-kill-subdir)))
+
+(eval-after-load 'rspec-mode '(progn
+				(define-key rspec-mode-map (kbd "C-c t") 
+				  `rspec-verify-single)))
 
 ;;try: find-lisp-find-dired
 ;;try: find-lisp-find-dired-subdirectories
