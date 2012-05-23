@@ -1,3 +1,11 @@
+;;http://stackoverflow.com/questions/435847/emacs-mode-to-edit-json/7934783#7934783
+(defun beautify-json ()
+  (interactive)
+  (let ((b (if mark-active (min (point) (mark)) (point-min)))
+        (e (if mark-active (max (point) (mark)) (point-max))))
+    (shell-command-on-region b e
+     "python -mjson.tool" (current-buffer) t)))
+
 ;;http://stackoverflow.com/questions/4551283/what-is-wrong-with-my-emacs-slime-setup-compile-and-load-eval-not-working
 (defun slime-clojure ()
   (interactive)
