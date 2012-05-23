@@ -57,9 +57,66 @@
  org-reverse-note-order t
 )
 (setq org-completion-use-ido t)
+(defun push-to-stewart ()
+  (start-process-shell-command "push-rsync" 'nil 
+                               "rsync" 
+                 "-tvzrL" "~/org/public_html/stewart/"
+                 "cthompson@stewart:public_html") )
+
+;;(push-to-stewart)
 ;; html export
+(require 'org-publish)
+(setq org-publish-use-timestamps-flag 'nil)
+(setq org-publish-project-alist
+      '(
+        ("stewart-static"
+         :base-directory "~/org/stewart"
+         :publishing-directory "~/org/public_html/stewart"
+         :recursive t
+         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+         :publishing-function org-publish-attachment
+         :completion-function push-to-stewart)
+        ("stewart-html"
+         :base-directory "~/org/stewart"
+         :base-extension "org"
+         :publishing-directory "~/org/public_html/stewart"
+         :recursive t
+         :publishing-function org-publish-org-to-html
+         :headline-levels 4             ; Just the default for this project.
+         :auto-preamble t
+         :completion-function push-to-stewart)
+        ("stewart" :components ("stewart-html" "stewart-static"))
+
+        ("colman"
+         :base-directory "~/org/colman"
+         :base-extension "org"
+         :publishing-directory "~/org/public_html/colman"
+         :recursive t
+         :publishing-function org-publish-org-to-html
+         :headline-levels 4             ; Just the default for this project.
+         :auto-preamble t
+         :title "Colman Project"
+         ;; :completion-function push-to-stewart
+         )
+
+        ))
+
+
 (setq org-export-html-preamble 'nil)
 (setq org-export-html-postamble 'nil)
+;; html export styles
+(setq org-export-html-style
+  " <style type=\"text/css\">
+    <![CDATA[
+
+    ]]>
+   </style>"
+)
+(setq org-export-html-style-include-default 'nil)
+(setq org-export-html-style-extra 'nil)
+
+(add-to-list 'load-path "~/.emacs.d/el-get/org-mode/EXPERIMENTAL/")
+(require 'org-mediawiki)
 
 ;; #+HTML: Literal html
 ;; #+BEGIN_HTML
