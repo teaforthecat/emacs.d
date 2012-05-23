@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: supd
+# key: supd
+# --
+sudo /home/walkerart/virtenv/bin/supervisorctl -c /home/walkerart/walkerart/deploy/supervisord.conf

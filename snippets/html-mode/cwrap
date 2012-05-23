@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: cwrap
+# key: cwrap
+# --
+
+<!-- start ${$1} -->
+
+    $0
+
+<!-- end $1 -->
