@@ -29,18 +29,51 @@
 
 
 ;; app settings
+(setq gnus-select-method '(nnimap "gmail"
+				  (nnimap-address "imap.gmail.com")
+				  (nnimap-server-port 993)
+				  (nnimap-stream ssl)))
+(setq message-send-mail-function 'smtpmail-send-it
+      smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
+      smtpmail-auth-credentials '(("smtp.gmail.com" 587 "teaforthecat@gmail.com" nil))
+      smtpmail-default-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-service 587
+;;      smtpmail-local-domain "yourcompany.org"
+)
+(setq gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]") ;enable GMAIL mailbox prefix
 
+(setq nxml-child-indent 4)
 (setq edit-server-url-major-mode-alist
       '(("github\\.com" . markdown-mode)))
 
 (setq diary-show-holidays-flag nil)
+(setq diary-file "~/org/.diary")
+(add-hook 'diary-hook 'appt-make-list)
+(appt-activate 1)
+
 (setq yas/snippet-dirs "~/.emacs.d/snippets")
 (yas/load-directory "~/.emacs.d/el-get/django-mode/snippets")
 (yas/load-directory "~/.emacs.d/snippets")
 (setq flymake-gui-warnings-enabled nil)
+(setq temporary-file-directory "~/.emacs.d/tmp/")
 
 (add-to-list 'auto-mode-alist '("\\.html$" . django-html-mode))
 (add-to-list 'auto-mode-alist '("\\.hamlpy$" . haml-mode))
+(add-to-list 'auto-mode-alist '("\\.rb" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rake" . ruby-mode))
+
+
+(add-to-list 'kill-emacs-hook 'org-mobile-push)
+(add-hook 'after-init-hook 'org-mobile-pull)
+
+;;from elpa
+(require 'ruby-end)
+(require 'ruby-electric)
+(rvm-use "1.9.3-p0" "collections")
+
+(add-to-list 'auto-mode-alist '("Gemfile" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
 
 (setq jabber-account-list
     '(("teaforthecat@gmail.com" 
@@ -52,6 +85,11 @@
 (setq jabber-roster-show-bindings nil)
 (setq jabber-alert-presence-message-function 'no-presence-message )
 (setq jabber-alert-info-message-function 'no-info-message )
+
+
+(when (require 'session nil t)
+  (add-hook 'after-init-hook 'session-initialize)
+  (add-to-list 'session-globals-exclude 'org-mark-ring))
 
 ;; hooks
 (add-hook 'after-init-hook '(lambda () (org-agenda-list)
@@ -87,6 +125,7 @@
       (quote (("default"
 	       ("colbert" (filename . ".*colbert\\.walkerart.*"))
 	       ("python" (mode . python-mode))
+	       ("Ruby" (mode . ruby-mode))
 	       ("dired" (mode . dired-mode))
 	       ("shell" (or
 			 (name . "^\\*shell\\*$")
@@ -104,9 +143,10 @@
 (put 'dired-find-alternate-file 'disabled nil)
 
 (server-mode t)
-(edit-server-start)
+;; (edit-server-start)
 
 (setq pianobar-username "chris@spysoundlab.com")
+(setq pianobar-password "change")
 
 (setq pianobar-station  "0")
 
@@ -123,6 +163,7 @@
 
 ;; (setq google-calendar-url            "https://www.google.com/calendar/ical/teaforthecat%40gmail.com/private-c4e2b6727458393cebe9f30388ca0204/basic.ics")  ;;; URL TO YOUR GOOGLE CALENDAR
 
+(setq thesaurus-bhl-api-key "3a3713c8c6ea7c53e6c03d80ccdd3083")
 
 ;; (add-hook 'slime-repl-mode-hook
 ;;           (defun clojure-mode-slime-font-lock ()
@@ -131,5 +172,5 @@
 ;;               ;; (sldb-debug nil t id) 
 ;;               (load-library "my-keybindings"))))
 ;; (featurep 'slime) => nil
-
+(setq haml-indent-offset 2)
 (provide 'my-settings)
