@@ -26,7 +26,7 @@
 (setq browse-url-browser-function 'browse-url-firefox)
 (setq uniquify-buffer-name-style 'forward)
 (put 'upcase-region 'disabled nil)
-
+(put 'downcase-region 'disabled nil)
 
 ;; app settings
 (setq gnus-select-method '(nnimap "gmail"
