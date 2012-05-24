@@ -86,7 +86,7 @@
                            (define-key dired-mode-map "k" `dired-kill-subdir)))
 
 (eval-after-load 'rspec-mode '(progn
-				(define-key rspec-mode-map (kbd "C-c t") 
+				(define-key rspec-mode-keymap (kbd "C-c t")
 				  `rspec-verify-single)))
 
 ;;try: find-lisp-find-dired
