@@ -7,6 +7,7 @@
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 ;;(add-to-list 'load-path "~/.emacs.d/swank")
 
+
 (unless (require 'el-get nil t)
   (url-retrieve
    "https://github.com/dimitri/el-get/raw/master/el-get-install.el"
@@ -17,33 +18,37 @@
 
 (add-to-list 'load-path "~/.emacs.d/contrib")
 ;;(require 'el-get)
-(add-to-list 'el-get-recipe-path "~/.emacs.d/recipes")
+;;(add-to-list 'el-get-recipe-path "~/.emacs.d/recipes")
 (setq my-packages
       (append
        ;;'(slime)
-;;       '(wanderlust)
+       
+       '(package)
        '(org-mode);;!!!!
-       '(el-get package color-theme ioccur autopair yasnippet auto-complete)
+       '(el-get color-theme ioccur autopair yasnippet auto-complete)
        '(calfw)
-                '(magit emacs-jabber htmlize)
+                '(magit htmlize)
                 '(mwe-log-commands)
                 '(emacs-w3m)
-                '(js2-mode js-comint json-mode json)
+                '(js2-mode js-comint json)
                 '(haml-mode yaml-mode )
                 '(python pylookup)
                 ;; '(edit-server)
-                '(django-mode weblogger-el feature-mode)))
+                '(django-mode weblogger-el)))
 
 
 (setq my-emwiki-packages 
       (append 
        '(fullscreen redo+ browse-kill-ring xml-rpc)       
-       '(pianobar )
+      
        '(session)
 ;;       '(list-registers)
        ))
 
 (el-get 'sync my-packages my-emwiki-packages)
+
+;;package is available after el-get(?)
+(add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/"))
 
 ;; (setq inferior-lisp-program "/usr/bin/sbcl")
 ;; (require 'slime)
@@ -90,7 +95,6 @@
 (require 'rcodetools)
 
 
-(add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/"))
 
 
 
