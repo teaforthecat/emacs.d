@@ -158,5 +158,5 @@
 
 
 
+(load-file "~/.emacs.d/el-get/bbdb/lisp/bbdb-hooks.el")
 
-(put 'downcase-region 'disabled nil)
