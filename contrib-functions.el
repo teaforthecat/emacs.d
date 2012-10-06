@@ -7,7 +7,7 @@
      "python -mjson.tool" (current-buffer) t)))
 
 ;;http://stackoverflow.com/questions/4551283/what-is-wrong-with-my-emacs-slime-setup-compile-and-load-eval-not-working
-(defun slime-clojure ()
+(defun contrib/slime-clojure ()
   (interactive)
   ;; (add-to-list 'load-path "~/hacking/lisp/elpa-slime")
   (require 'slime)
