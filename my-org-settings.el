@@ -2,9 +2,15 @@
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
 (setq org-directory "~/org/")
-(setq org-remember-templates (quote (( "Task" 116 "* TODO %?
-   %u" "~/org/todo.org" "Tasks") ("Note" 110 "* %u %?" "~/org/notes.org" "Notes"))))
-
+(setq org-remember-templates (quote (
+                                     ( "Task" 116 "* TODO %?
+   %u" "~/org/todo.org" "Tasks")
+                                     ("Walker Schedule" 119 "* TODO %?    
+   %u  " "~/org/walker_schedule.org" "Walker Schedule" nil)
+                                     ("TODO" 120 "* TODO %?    
+   %u  " nil "TODO" nil)
+                                     ("Note" 110 "* 
+   %u %?" "~/org/notes.org" "Notes"))))
 
 ;; ;; the 'w' corresponds with the 'w' used before as in:
 ;;   emacsclient \"org-protocol:/capture:/w/  [...]
