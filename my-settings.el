@@ -4,6 +4,8 @@
 ;; basic emacs behavior
 ;;(desktop-save-mode 1)
 (setq confirm-nonexistent-file-or-buffer nil)
+(setq compilation-ask-about-save nil)
+(setq compilation-save-buffers-predicate '(lambda () nil))
 (fset 'yes-or-no-p 'y-or-n-p)
 ;;visuals
 ;;(color-theme-zen-and-art)
@@ -113,7 +115,9 @@
             (setq comint-prompt-regexp "^[^#$%>\n]*[#$%>] *")
             (setq scroll-conservatively 10)))
 
-
+;; (defun turn-on-paredit () (paredit-mode 1))
+;; (add-hook 'clojure-mode-hook 'turn-on-paredit)
+;; paredit squashes key-bindings!
 ;; remove
 ;; (defun my-shell-setup ()
 ;;   (setq comint-prompt-regexp "^[^#$%>\n]*[#$%>] *")
