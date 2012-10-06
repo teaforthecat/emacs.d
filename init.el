@@ -1,14 +1,5 @@
-;;neccessary first, needs not to run
-;;(eval-after-load "pymacs"
-;;(progn
-;;(add-to-list 'pymacs-load-path "~/.emacs.d/el-get/pymacs")
-;;(pymacs-load "ropemacs")))
-
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-(add-to-list 'load-path "~/.emacs.d/contrib/slime")
-;;(add-to-list 'load-path "~/.emacs.d/swank")
-
-
+(add-to-list 'load-path "~/.emacs.d/contrib")
 (unless (require 'el-get nil t)
   (url-retrieve
    "https://github.com/dimitri/el-get/raw/master/el-get-install.el"
@@ -16,14 +7,9 @@
      (end-of-buffer)
      (eval-print-last-sexp))))
 
-
-(add-to-list 'load-path "~/.emacs.d/contrib")
-;;(require 'el-get)
-;;(add-to-list 'el-get-recipe-path "~/.emacs.d/recipes")
 (setq my-packages
       (append
-       ;;'(slime)
-       
+
        '(package)
        '(org-mode);;!!!!
        '(el-get color-theme ioccur autopair yasnippet auto-complete)
@@ -34,41 +20,36 @@
                 '(js2-mode js-comint json)
                 '(haml-mode yaml-mode )
                 '(python pylookup)
-                ;; '(edit-server)
                 '(django-mode weblogger-el)))
 
 
-(setq my-emwiki-packages 
-      (append 
-       '(fullscreen redo+ browse-kill-ring xml-rpc)       
-      
-       '(session)
+;;(setq my-emwiki-packages 
+;;      (append 
+;;       '(fullscreen redo+ browse-kill-ring xml-rpc)       
+;;      
+;;       '(session)
 ;;       '(list-registers)
-       ))
+;;       ))
 
-(el-get 'sync my-packages my-emwiki-packages)
+;;(el-get 'sync my-packages my-emwiki-packages)
 
 ;;package is available after el-get(?)
 (add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/"))
 
-;; (setq inferior-lisp-program "/usr/bin/sbcl")
-;; (require 'slime)
-;; (slime-setup)
-
 ;; recipe fixes
 ;; (require 'ob-python)
-(require 'fullscreen)
+;;(require 'fullscreen)
 ;;;(require 'django-html-mode)
 ;; emacs' own packages
-(require 'uniquify)
-(require 'diary-lib)
-(require 'dictionary)
-(require 'org-install) ;;provided by el-get
-(require 'python)
-(require 'flymake)
-(require 'dired-x)
-(require 'ansi-color)
-(require 'org-protocol)
+;;(require 'uniquify)
+;;(require 'diary-lib)
+;;;(require 'dictionary)
+;(require 'org-install) ;;provided by el-get
+;(require 'python)
+;(require 'flymake)
+;(require 'dired-x)
+;(require 'ansi-color)
+;(require 'org-protocol)
 
 (add-to-list 'load-path "~/.emacs.d/ergoemacs-keybindings-5.3.4")
 (add-to-list 'load-path "~/.emacs.d")
@@ -82,33 +63,32 @@
 
 
 
-(require 'my-functions)
-(require 'init_python)
-(require 'contrib-functions)
-(require 'my-wl-settings)
+;(require 'my-functions)
+;(require 'init_python)
+;(require 'contrib-functions)
+;(require 'my-wl-settings)
 ;;(require 'my-alt-wl-settings)
-(require 'my-org-settings)
-(require 'my-cal-settings)
-(require 'my-keybindings)
-(require 'my-settings)
+;(require 'my-org-settings)
+;(require 'my-cal-settings)
+;(require 'my-keybindings)
+;(require 'my-settings)
 ;;(require 'weblogger-setup)
-(require 'my-macros)
-(require 'rcodetools)
+;(require 'my-macros)
+;(require 'rcodetools)
 
-
+;;(add-hook 'after-init-hook (lambda (load-file "spawn-shells")))
 
 
 
 ;;everything has been defined (post setup setup)
 ;; (google-calendar-download)
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(dictionary-default-dictionary "wn")
- '(dictionary-server "dictionary.bishopston.net")
- '(haml-indent-offset 4)
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ ;;'(dictionary-default-dictionary "wn")
+ ;;'(dictionary-server "dictionary.bishopston.net")
  '(list-command-history-max 60)
  '(max-lisp-eval-depth 1200)
  '(max-specpdl-size 3000)
@@ -142,15 +122,16 @@
  '(python-guess-indent nil)
  '(remember-annotation-functions (quote (org-remember-annotation)))
  '(remember-handler-functions (quote (org-remember-handler)))
+ '(safe-local-variable-values (quote ((eval ignore-errors "Write-contents-functions is a buffer-local alternative to before-save-hook" (add-hook (quote write-contents-functions) (lambda nil (delete-trailing-whitespace) nil)) (require (quote whitespace)) "Sometimes the mode needs to be toggled off and on." (whitespace-mode 0) (whitespace-mode 1)) (whitespace-line-column . 80) (whitespace-style face trailing lines-tail) (require-final-newline . t) (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby"))))
  '(weblogger-save-password t)
  '(weblogger-server-password "^emacs$")
  '(weblogger-server-url "http://wordpress.spysoundlab.com/xmlrpc.php"))
 
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
  '(hi-blue-b ((((min-colors 88)) (:foreground "#46657B"))))
  '(magit-diff-add ((t (:inherit diff-added :background "black" :foreground "#98fecc"))))
  '(magit-diff-del ((t (:inherit diff-removed :background "black" :foreground "orange"))))
@@ -159,9 +140,4 @@
  '(muse-bad-link ((t (:foreground "DeepPink" :underline "DeepPink" :weight bold))))
  '(speck-mouse ((t (:background "black" :foreground "dark orange"))))
  '(speck-query ((t (:background "black" :foreground "dark orange")))))
-
-
-
-
-(load-file "~/.emacs.d/el-get/bbdb/lisp/bbdb-hooks.el")
 
