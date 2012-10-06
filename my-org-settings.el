@@ -98,6 +98,11 @@
          :title "Colman Project"
          ;; :completion-function push-to-stewart
          )
+        ("s5-presentation"
+         :base-directory "~/org/s5-presentation"
+         :base-extension "org"
+         :publishing-directory "~//"
+         )
 
         ))
 
