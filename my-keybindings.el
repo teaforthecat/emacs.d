@@ -46,7 +46,7 @@
 (ergoemacs-global-set-key "\M-v" 'ibuffer)
 (ergoemacs-global-set-key (kbd "C-c C-r") 'rename-file-and-buffer)
 (ergoemacs-global-set-key (kbd "M-'") 'switch-window)
-(ergoemacs-global-set-key (kbd "C-c v") 'eval-buffer)
+(ergoemacs-global-set-key (kbd "C-c e b") 'eval-buffer)
 (ergoemacs-global-set-key (kbd "C-x k") 'close-current-buffer)
 ;; apps
 (ergoemacs-global-set-key (kbd "C-c r") 'remember)
@@ -63,7 +63,6 @@
 (ergoemacs-global-set-key (kbd "<C-f2>") 'django-testserver)
 (ergoemacs-global-set-key (kbd "<C-f3>") 'django-shell)
 
-
 ;;(ergoemacs-global-unset-key (kbd "C-s"))
 ;; (wl-summary-yank-saved-message)
 ;; (wl-summary-save-current-message)
@@ -71,12 +70,15 @@
 (define-key global-map (kbd "C-s") 'save-buffer)
 
 
-
+(eval-after-load 'slime 
+  '(progn
+     (define-key slime-mode-map (kbd "M-n") 'forward-char)
+     ))
 
 (eval-after-load 'shell
   '(progn
      (define-key shell-mode-map (kbd "C-s") 'comint-history-isearch-backward)
-     (define-key global-map (kbd "C-s") 'save-buffer)
+     ;; (define-key global-map (kbd "C-s") 'save-buffer)
      ))
 
 
@@ -85,13 +87,17 @@
                            (define-key dired-mode-map "o" `dired-display-file)
                            (define-key dired-mode-map "k" `dired-kill-subdir)))
 
-(eval-after-load 'rspec-mode '(progn
-				(define-key rspec-mode-keymap (kbd "C-c t")
-				  `rspec-verify-single)))
+(eval-after-load 'org-remember-mode '(progn
+                 (local-set-key (kbd "C-2") ctl-x-map)))
+
+(eval-after-load 'rspec
+  '(progn
+     (define-key rspec-mode-keymap (kbd "C-c v s")
+       `rspec-verify-single)))
 
 ;;try: find-lisp-find-dired
 ;;try: find-lisp-find-dired-subdirectories
-
+(ergoemacs-global-set-key (kbd "C-8") 'find-file-at-point)
 (ergoemacs-global-set-key (kbd "C-\-") 'toggle-hiding)
 (ergoemacs-global-set-key (kbd "C-\\") 'toggle-selective-display)
 ;; (eval-after-load 'w3m
@@ -101,12 +107,12 @@
 
 
 ;; (org-set-tags-to)
-
-;; (eval-after-load 'occur '(progn
-;;   (define-key occur-mode-map "d" `occur-mode-display-occurance)
-;;   (define-key occur-mode-map "k" `occur-goto)
-;;   (define-key occur-mode-map "n" `occur-next)
-;;   (define-key occur-mode-map "p" `occur-previous)))
+(ergoemacs-global-set-key (kbd "M-1") 'ioccur)
+(eval-after-load 'ioccur '(progn
+  (define-key ioccur-mode-map "d" `ioccur-jump-without-quit)
+  (define-key ioccur-mode-map "k" `ioccur-jump-and-quit)
+  (define-key ioccur-mode-map "n" `ioccur-next-line)
+  (define-key ioccur-mode-map "p" `ioccur-precedent-line)))
 
 ;; (flyspell-correct-word-before-point)
 ;;(ergoemacs-global-set-key "\" 'bookmark-jump)
