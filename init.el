@@ -5,6 +5,7 @@
 ;;(pymacs-load "ropemacs")))
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+(add-to-list 'load-path "~/.emacs.d/contrib/slime")
 ;;(add-to-list 'load-path "~/.emacs.d/swank")
 
 
