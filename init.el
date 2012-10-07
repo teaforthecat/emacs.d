@@ -7,33 +7,37 @@
      (end-of-buffer)
      (eval-print-last-sexp))))
 
-(setq my-packages
-      (append
+(setq required-recipes '(anything
+                         auto-complete
+                         autopair
+                         browse-kill-ring
+                         color-theme
+                         dired+
+                         fullscreen
+                         list-register
+                         magit
+                         redo+
+                         yasnippet))
 
-       '(package)
-       '(org-mode);;!!!!
-       '(el-get color-theme ioccur autopair yasnippet auto-complete)
-       '(calfw)
-                '(magit htmlize)
-                '(mwe-log-commands)
-                '(emacs-w3m)
-                '(js2-mode js-comint json)
-                '(haml-mode yaml-mode )
-                '(python pylookup)
-                '(django-mode weblogger-el)))
+(setq optional-recipes '(autopair 
+			 ioccur
+			 yaml-mode))
 
+(setq js-recipes '(js2-mode js-comint json))
 
-;;(setq my-emwiki-packages 
-;;      (append 
-;;       '(fullscreen redo+ browse-kill-ring xml-rpc)       
-;;      
-;;       '(session)
-;;       '(list-registers)
-;;       ))
+(setq python-recipes '(python pylookup django-mode))
 
-;;(el-get 'sync my-packages my-emwiki-packages)
+(defun load-rails-recipes ()
+  (let ((rails-development-packages (append optional-recipes
+					    js-recipes
+					    '(rinari ruby-end rvm))))
+  (if (consp rails-development-packages)
+      (message "LIST"))
+  (el-get 'sync rails-development-packages)))
 
-;;package is available after el-get(?)
+(el-get 'sync required-recipes)
+;(load-rails-recipes)
+
 (add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/"))
 
 ;; recipe fixes
@@ -70,8 +74,8 @@
 ;;(require 'my-alt-wl-settings)
 ;(require 'my-org-settings)
 ;(require 'my-cal-settings)
-;(require 'my-keybindings)
-;(require 'my-settings)
+(require 'my-keybindings)
+(require 'my-settings)
 ;;(require 'weblogger-setup)
 ;(require 'my-macros)
 ;(require 'rcodetools)
@@ -80,58 +84,12 @@
 
 
 
-;;everything has been defined (post setup setup)
-;; (google-calendar-download)
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- ;;'(dictionary-default-dictionary "wn")
- ;;'(dictionary-server "dictionary.bishopston.net")
- '(list-command-history-max 60)
- '(max-lisp-eval-depth 1200)
- '(max-specpdl-size 3000)
- '(muse-blosxom-base-directory "~/proj/wiki/blog/")
- '(muse-colors-autogen-headings (quote outline))
- '(muse-colors-inline-image-method (quote muse-colors-use-publishing-directory))
- '(muse-completing-read-function (quote ido-completing-read))
- '(muse-html-charset-default "utf-8")
- '(muse-html-encoding-default (quote utf-8))
- '(muse-html-footer "~/personal-site/muse/generic-footer.html")
- '(muse-html-header "~/personal-site/muse/generic-header.html")
- '(muse-html-meta-content-encoding (quote utf-8))
- '(muse-html-style-sheet "<link rel=\"stylesheet\" type=\"text/css\" charset=\"utf-8\" media=\"all\" href=\"/common.css\" />
-<link rel=\"stylesheet\" type=\"text/css\" charset=\"utf-8\" media=\"screen\" href=\"/screen.css\" />
-<link rel=\"stylesheet\" type=\"text/css\" charset=\"utf-8\" media=\"print\" href=\"/print.css\" />")
- '(muse-latex-header "~/muse/latex-header.tex")
- '(muse-latexcjk-footer "
-\\end{CJK*}
-\\end{document}
-")
- '(muse-mode-hook (quote (flyspell-mode footnote-mode)))
- '(muse-publish-comments-p t)
- '(muse-publish-date-format "%b. %e, %Y")
- '(muse-publish-desc-transforms (quote (muse-wiki-publish-pretty-title muse-wiki-publish-pretty-interwiki muse-publish-strip-URL)))
- '(muse-wiki-publish-small-title-words (quote ("the" "and" "at" "on" "of" "for" "in" "an" "a" "page")))
- '(muse-xhtml-footer "~/personal-site/muse/generic-footer.html")
- '(muse-xhtml-header "~/personal-site/muse/generic-header.html")
- '(muse-xhtml-style-sheet "<link rel=\"stylesheet\" type=\"text/css\" charset=\"utf-8\" media=\"all\" href=\"/common.css\" />
-<link rel=\"stylesheet\" type=\"text/css\" charset=\"utf-8\" media=\"screen\" href=\"/screen.css\" />
-<link rel=\"stylesheet\" type=\"text/css\" charset=\"utf-8\" media=\"print\" href=\"/print.css\" />")
- '(python-guess-indent nil)
- '(remember-annotation-functions (quote (org-remember-annotation)))
- '(remember-handler-functions (quote (org-remember-handler)))
- '(safe-local-variable-values (quote ((eval ignore-errors "Write-contents-functions is a buffer-local alternative to before-save-hook" (add-hook (quote write-contents-functions) (lambda nil (delete-trailing-whitespace) nil)) (require (quote whitespace)) "Sometimes the mode needs to be toggled off and on." (whitespace-mode 0) (whitespace-mode 1)) (whitespace-line-column . 80) (whitespace-style face trailing lines-tail) (require-final-newline . t) (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby"))))
- '(weblogger-save-password t)
- '(weblogger-server-password "^emacs$")
- '(weblogger-server-url "http://wordpress.spysoundlab.com/xmlrpc.php"))
 
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(hi-blue-b ((((min-colors 88)) (:foreground "#46657B"))))
  '(magit-diff-add ((t (:inherit diff-added :background "black" :foreground "#98fecc"))))
  '(magit-diff-del ((t (:inherit diff-removed :background "black" :foreground "orange"))))
@@ -141,3 +99,9 @@
  '(speck-mouse ((t (:background "black" :foreground "dark orange"))))
  '(speck-query ((t (:background "black" :foreground "dark orange")))))
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-agenda-files nil))
