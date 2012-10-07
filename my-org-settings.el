@@ -29,9 +29,11 @@
 ;;redundant?
 (setq org-directory "~/org")
 
-(setq org-mobile-inbox-for-pull "~/org/flagged.org")
+;; (setq org-mobile-inbox-for-pull "~/org/flagged.org")
 ;; Set to <your Dropbox root directory>/MobileOrg.
 (setq org-mobile-directory "~/Dropbox/MobileOrg")
+(add-to-list 'kill-emacs-hook 'org-mobile-push)
+(add-hook 'after-init-hook 'org-mobile-pull)
 
 ;; damn
 ;; (setq org-agenda-custom-commands '(quote ("d" todo "DELEGATED" nil)
@@ -50,7 +52,6 @@
 ;;                                                                     (quote regexp) "<[^>]+>")))
 ;;                                                       (org-agenda-overriding-header "Unscheduled TODO entries: ")))))
 ;; )
-
 (setq 
  org-agenda-ndays 30
  org-agenda-show-all-dates t
