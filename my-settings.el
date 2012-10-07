@@ -1,4 +1,5 @@
 ;; Get rid of the startup screen
+;; :depends '(yasnippet autopair dired+ org-mobile)
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message nil)
 ;; basic emacs behavior
@@ -55,27 +56,24 @@
 (appt-activate 1)
 
 (setq yas/snippet-dirs "~/.emacs.d/snippets")
-(yas/load-directory "~/.emacs.d/el-get/django-mode/snippets")
+;(yas/load-directory "~/.emacs.d/el-get/django-mode/snippets")
 (yas/load-directory "~/.emacs.d/snippets")
 (setq flymake-gui-warnings-enabled nil)
 (setq temporary-file-directory "~/.emacs.d/tmp/")
 
-(add-to-list 'auto-mode-alist '("\\.html$" . django-html-mode))
-(add-to-list 'auto-mode-alist '("\\.hamlpy$" . haml-mode))
-(add-to-list 'auto-mode-alist '("\\.rb" . ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.rake" . ruby-mode))
+;; (add-to-list 'auto-mode-alist '("\\.html$" . django-html-mode))
+;; (add-to-list 'auto-mode-alist '("\\.hamlpy$" . haml-mode))
+;; (add-to-list 'auto-mode-alist '("\\.rb" . ruby-mode))
+;; (add-to-list 'auto-mode-alist '("\\.rake" . ruby-mode))
 
-
-(add-to-list 'kill-emacs-hook 'org-mobile-push)
-(add-hook 'after-init-hook 'org-mobile-pull)
 
 ;;from elpa
-(require 'ruby-end)
-(require 'ruby-electric)
-(rvm-use "1.9.3-p0" "collections")
+;; (require 'ruby-end)
+;; (require 'ruby-electric)
+;; (rvm-use "1.9.3-p0" "collections")
 
-(add-to-list 'auto-mode-alist '("Gemfile" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
+;; (add-to-list 'auto-mode-alist '("Gemfile" . ruby-mode))
+;; (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
 
 (setq jabber-account-list
     '(("teaforthecat@gmail.com" 
@@ -87,7 +85,7 @@
 (setq jabber-roster-show-bindings nil)
 (setq jabber-alert-presence-message-function 'no-presence-message )
 (setq jabber-alert-info-message-function 'no-info-message )
-
+;; (add-hook 'el-get-post-init-hooks 'jabber-connect-all)
 
 (when (require 'session nil t)
   (add-hook 'after-init-hook 'session-initialize)
@@ -95,12 +93,13 @@
 
 ;; hooks
 (add-hook 'after-init-hook '(lambda () (org-agenda-list)
-                              (switch-to-buffer-other-window (or (get-buffer "timelog.org")
-                                                    (get-buffer "*scratch*") ))))
+                              (switch-to-buffer-other-window 
+                               (or (get-buffer "timelog.org")
+                                   (get-buffer "*scratch*") ))))
 
 (add-hook 'after-init-hook 'color-theme-subtle-hacker)
 
-(add-hook 'desktop-after-read-hook 'jabber-connect-all)
+
 (add-hook 'comint-mode-hook 
           (lambda () 
             (set (make-local-variable 'comint-file-name-prefix) 
