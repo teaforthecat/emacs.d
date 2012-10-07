@@ -24,7 +24,8 @@
 
 
 
-(setq org-agenda-files '("~/org"))
+(setq org-agenda-files '("~/org/agendas/user-groups.org"
+                         "~/org/agendas/walker.org"))
 ;;redundant?
 (setq org-directory "~/org")
 
