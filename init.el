@@ -16,6 +16,7 @@
                          fullscreen
                          list-register
                          magit
+                         wanderlust
                          redo+
                          yasnippet))
 
@@ -30,7 +31,7 @@
 (defun load-rails-recipes ()
   (let ((rails-development-packages (append optional-recipes
 					    js-recipes
-					    '(rinari ruby-end rvm))))
+					    '(rinari ruby-end rvm haml-mode))))
   (if (consp rails-development-packages)
       (message "LIST"))
   (el-get 'sync rails-development-packages)))
@@ -38,14 +39,15 @@
 (el-get 'sync required-recipes)
 ;(load-rails-recipes)
 
-(add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/"))
+(add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/")
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
 
 ;; recipe fixes
 ;; (require 'ob-python)
 ;;(require 'fullscreen)
 ;;;(require 'django-html-mode)
 ;; emacs' own packages
-;;(require 'uniquify)
+(require 'uniquify)
 ;;(require 'diary-lib)
 ;;;(require 'dictionary)
 ;(require 'org-install) ;;provided by el-get
@@ -69,7 +71,7 @@
 
 ;(require 'my-functions)
 ;(require 'init_python)
-;(require 'contrib-functions)
+(require 'contrib-functions)
 ;(require 'my-wl-settings)
 ;;(require 'my-alt-wl-settings)
 ;(require 'my-org-settings)
