@@ -64,7 +64,8 @@
 ;; (add-to-list 'auto-mode-alist '("\\.html$" . django-html-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.hamlpy$" . haml-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.rb" . ruby-mode))
-;; (add-to-list 'auto-mode-alist '("\\.rake" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rake" . ruby-mode))
+(add-to-list 'auto-mode-alist '("GemFile" . ruby-mode))
 
 
 ;;from elpa
