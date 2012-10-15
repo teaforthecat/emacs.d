@@ -54,7 +54,7 @@
 (require 'uniquify)
 ;;(require 'diary-lib)
 ;;;(require 'dictionary)
-;(require 'org-install) ;;provided by el-get
+(require 'org-install) ;;provided by el-get
 ;(require 'python)
 ;(require 'flymake)
 ;(require 'dired-x)
