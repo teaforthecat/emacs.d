@@ -9,34 +9,38 @@
 
 (setq required-recipes '(anything
                          auto-complete
-                         autopair
                          browse-kill-ring
                          color-theme
                          dired+
-                         fullscreen
+                         org
                          list-register
-                         magit
-                         wanderlust
                          redo+
                          yasnippet))
 
 (setq optional-recipes '(autopair 
 			 ioccur
+             fullscreen
+             magit
+             emacs-w3m
+             wanderlust
+
+;error             pianobar
 			 yaml-mode))
 
 (setq js-recipes '(js2-mode js-comint json))
-
-(setq python-recipes '(python pylookup django-mode))
-
+(setq python-recipes '(python pylookup django-mode
+                              js-recipes))
+;(setq rails-recipes '(js-recipes) rinari ruby-end rvm haml-mode coffee-mode )
 (defun load-rails-recipes ()
   (let ((rails-development-packages (append optional-recipes
 					    js-recipes
-					    '(rinari ruby-end rvm haml-mode))))
+					    '(rinari ruby-end rvm haml-mode coffee-mode))))
   (if (consp rails-development-packages)
       (message "LIST"))
   (el-get 'sync rails-development-packages)))
 
 (el-get 'sync required-recipes)
+(el-get 'sync optional-recipes)
 ;(load-rails-recipes)
 
 (add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/")
