@@ -47,7 +47,7 @@
                               :type built-in)
                        (:name el-get
                               :after (lambda ()
-                                       (if (monday? (current_time))
+                                       (if (monday? (current-time))
                                            (progn
                                              (el-get-self-update)
                                              (el-get-emacswiki-refresh el-get-recipe-path-emacswiki)
