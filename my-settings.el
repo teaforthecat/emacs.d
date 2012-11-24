@@ -22,6 +22,8 @@
 (ido-mode 1)
 (global-linum-mode 1)
 (autopair-global-mode 1)
+(flyspell-mode 1)
+(flyspell-prog-mode)
 (show-paren-mode t)
 (setq show-paren-style 'mixed)
 (setq-default indent-tabs-mode nil)
