@@ -1,68 +1,75 @@
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (add-to-list 'load-path "~/.emacs.d/contrib")
-(unless (require 'el-get nil t)
-  (url-retrieve
-   "https://github.com/dimitri/el-get/raw/master/el-get-install.el"
-   (lambda (s)
-     (end-of-buffer)
-     (eval-print-last-sexp))))
+(add-to-list 'load-path "~/.emacs.d/ergoemacs-keybindings-5.3.4")
+(add-to-list 'load-path "~/.emacs.d")
 
-(setq required-recipes '(anything
-                         auto-complete
-                         browse-kill-ring
-                         color-theme
-                         dired+
-                         org
-                         list-register
-                         redo+
-                         yasnippet))
+(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("gnu" . "http://elpa.gnu.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
 
-(setq optional-recipes '(autopair 
-			 ioccur
-             fullscreen
-             magit
-             emacs-w3m
-             wanderlust
 
-;error             pianobar
-			 yaml-mode))
+(require 'el-get nil t)
 
-(setq js-recipes '(js2-mode js-comint json))
-(setq python-recipes '(python pylookup django-mode
-                              js-recipes))
-;(setq rails-recipes '(js-recipes) rinari ruby-end rvm haml-mode coffee-mode )
-(defun load-rails-recipes ()
-  (let ((rails-development-packages (append optional-recipes
-					    js-recipes
-					    '(rinari ruby-end rvm haml-mode coffee-mode))))
-  (if (consp rails-development-packages)
-      (message "LIST"))
-  (el-get 'sync rails-development-packages)))
+(add-to-list 'el-get-recipe-path "~/.emacs.d/recipes")
+(setq el-get-user-package-directory el-get-recipe-path)
 
-(el-get 'sync required-recipes)
-(el-get 'sync optional-recipes)
-;(load-rails-recipes)
+; NOTE: source def without :type will inherit from recipe with same name
 
-(add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/")
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
+;(unless (string-match "apple-darwin" system-configuration))
 
+(defun monday? (time)
+  "(monday? (current-time))"
+  (= 1 (nth 6 (decode-time time))))
+
+(setq 
+ el-get-sources
+ '(
+   anything autopair auto-complete 
+            browse-kill-ring
+                       cl-lib color-theme 
+                       dired+
+                       emacs-jabber emacs-w3m
+                       fullscreen feature-mode
+                       htmlize
+                       ioccur
+                       js2-mode js-comint json
+                       list-register
+                       magit
+                       org org-redmine
+                       pianobar
+                       python pylookup django-mode
+                       redo+
+                       rinari ruby-end rvm haml-mode coffee-mode
+                       wanderlust
+                       yaml-mode yasnippet                       
+                       (:name uniquify
+                              :type built-in)
+                       (:name el-get
+                              :after (lambda ()
+                                       (if (monday? (current_time))
+                                           (progn
+                                             (el-get-self-update)
+                                             (el-get-emacswiki-refresh el-get-recipe-path-emacswiki)
+                                             (el-get-elpa-build-local-recipes)))))))
+
+
+
+(el-get)
 ;; recipe fixes
 ;; (require 'ob-python)
 ;;(require 'fullscreen)
 ;;;(require 'django-html-mode)
 ;; emacs' own packages
-(require 'uniquify)
+;(require 'uniquify)
 ;;(require 'diary-lib)
 ;;;(require 'dictionary)
-(require 'org-install) ;;provided by el-get
 ;(require 'python)
 ;(require 'flymake)
 ;(require 'dired-x)
 ;(require 'ansi-color)
 ;(require 'org-protocol)
 
-(add-to-list 'load-path "~/.emacs.d/ergoemacs-keybindings-5.3.4")
-(add-to-list 'load-path "~/.emacs.d")
 (setenv "ERGOEMACS_KEYBOARD_LAYOUT" "dv")
 (require 'ergoemacs-mode)
 (ergoemacs-mode 1)
@@ -71,7 +78,12 @@
 (defun no-presence-message (who oldstatus newstatus statustext)  nil  )
 (defun no-info-message (infotype buffer)  nil  )
 
-
+;; full screen
+(defun fullscreen ()
+  (interactive)
+  (set-frame-parameter nil 'fullscreen
+		       (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
+(global-set-key [f11] 'fullscreen)
 
 ;(require 'my-functions)
 ;(require 'init_python)
