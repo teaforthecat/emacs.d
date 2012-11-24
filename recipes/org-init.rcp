@@ -1,0 +1,6 @@
+(:name org-init
+ :description "OrgMode customizations"
+ :type no-op
+ :depends org-mode
+ :after (progn ()
+          (message "org-init after hook")))

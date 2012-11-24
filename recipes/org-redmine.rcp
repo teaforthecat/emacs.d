@@ -1,0 +1,4 @@
+(:name org-redmine
+       :type git
+       :depends (anything org-mode)
+       :url "git://github.com/gongo/org-redmine.git")

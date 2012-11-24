@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: dbpush
+# type: command
+# --
+fab rake:db:push;RAILS_ENV=production rake db:push; rake db:prod2dev; rake db:push;
