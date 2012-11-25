@@ -17,7 +17,7 @@
 (display-time)
 
 ;; globals
-(yas/global-mode t)
+(yas-global-mode t)
 (setq w3m-use-cookies t)
 (ido-mode 1)
 (global-linum-mode 1)
@@ -96,9 +96,9 @@
 (setq jabber-alert-info-message-function 'no-info-message )
 ;; (add-hook 'el-get-post-init-hooks 'jabber-connect-all)
 
-(when (require 'session nil t)
-  (add-hook 'after-init-hook 'session-initialize)
-  (add-to-list 'session-globals-exclude 'org-mark-ring))
+;(when (require 'session nil t)
+;  (add-hook 'after-init-hook 'session-initialize)
+;  (add-to-list 'session-globals-exclude 'org-mark-ring))
 
 ;; hooks
 (add-hook 'after-init-hook '(lambda () (org-agenda-list)
