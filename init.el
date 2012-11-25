@@ -9,9 +9,17 @@
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 
 
-(require 'el-get nil t)
+(unless (require 'el-get nil 'noerror)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+    (goto-char (point-max))
+    (eval-print-last-sexp)
+    (el-get-emacswiki-refresh el-get-recipe-path-emacswiki)
+    (el-get-elpa-build-local-recipes)))
 
 (add-to-list 'el-get-recipe-path "~/.emacs.d/recipes")
+
 (setq el-get-user-package-directory el-get-recipe-path)
 
 ; NOTE: source def without :type will inherit from recipe with same name
@@ -24,51 +32,54 @@
 
 (setq 
  el-get-sources
- '(
-   anything autopair auto-complete 
-            browse-kill-ring
-                       cl-lib color-theme 
-                       dired+
-                       emacs-jabber emacs-w3m
-                       fullscreen feature-mode
-                       htmlize
-                       ioccur
-                       js2-mode js-comint json
-                       list-register
-                       magit
-                       org org-redmine
-                       pianobar
-                       python pylookup django-mode
-                       redo+
-                       rinari ruby-end rvm haml-mode coffee-mode
-                       wanderlust
-                       yaml-mode yasnippet                       
-                       (:name uniquify
-                              :type built-in)
-                       (:name el-get
-                              :after (lambda ()
-                                       (if (monday? (current-time))
-                                           (progn
-                                             (el-get-self-update)
-                                             (el-get-emacswiki-refresh el-get-recipe-path-emacswiki)
-                                             (el-get-elpa-build-local-recipes)))))))
+ '((:name el-get
+	  :after (progn ()
+			(if (monday? (current-time))
+			    (progn
+			      (el-get-self-update)
+			      (el-get-emacswiki-refresh el-get-recipe-path-emacswiki)
+			      (el-get-elpa-build-local-recipes)))))))
 
+(setq recipes
+      '(anything autopair 
+		 browse-kill-ring
+		 cl-lib color-theme clojure-mode color-theme-ubuntu2
+		 dired+
+		 emacs-jabber emacs-w3m
+		 fullscreen feature-mode
+		 htmlize
+		 ioccur
+		 js2-mode js-comint json
+		 list-register
+		 magit
+		 org org-redmine
+		 pianobar
+		 python pylookup django-mode
+		 redo+
+		 ruby-end rvm haml-mode coffee-mode
+		 wanderlust
+		 yaml-mode yasnippet))
 
+(setq recipes
+      (append
+       recipes
+       (loop for src in el-get-sources
+	     collect (el-get-source-name src))))
 
-(el-get)
+(el-get 'sync recipes)
 ;; recipe fixes
 ;; (require 'ob-python)
 ;;(require 'fullscreen)
 ;;;(require 'django-html-mode)
 ;; emacs' own packages
-;(require 'uniquify)
+					;(require 'uniquify)
 ;;(require 'diary-lib)
 ;;;(require 'dictionary)
-;(require 'python)
-;(require 'flymake)
-;(require 'dired-x)
-;(require 'ansi-color)
-;(require 'org-protocol)
+					;(require 'python)
+					;(require 'flymake)
+					;(require 'dired-x)
+					;(require 'ansi-color)
+					;(require 'org-protocol)
 
 (setenv "ERGOEMACS_KEYBOARD_LAYOUT" "dv")
 (require 'ergoemacs-mode)
@@ -85,18 +96,18 @@
 		       (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
 (global-set-key [f11] 'fullscreen)
 
-;(require 'my-functions)
-;(require 'init_python)
-(require 'contrib-functions)
-;(require 'my-wl-settings)
+					;(require 'my-functions)
+					;(require 'init_python)
+					;(require 'contrib-functions)
+					;(require 'my-wl-settings)
 ;;(require 'my-alt-wl-settings)
-;(require 'my-org-settings)
-;(require 'my-cal-settings)
+					;(require 'my-org-settings)
+					;(require 'my-cal-settings)
 (require 'my-keybindings)
 (require 'my-settings)
 ;;(require 'weblogger-setup)
-;(require 'my-macros)
-;(require 'rcodetools)
+					;(require 'my-macros)
+					;(require 'rcodetools)
 
 ;;(add-hook 'after-init-hook (lambda (load-file "spawn-shells")))
 
