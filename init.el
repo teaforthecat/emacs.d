@@ -24,7 +24,7 @@
 
 ; NOTE: source def without :type will inherit from recipe with same name
 
-;(unless (string-match "apple-darwin" system-configuration))
+
 
 (defun monday? (time)
   "(monday? (current-time))"
@@ -45,7 +45,7 @@
 		 browse-kill-ring
 		 cl-lib color-theme clojure-mode color-theme-ubuntu2
 		 dired+
-		 emacs-jabber emacs-w3m
+		 emacs-w3m
 		 fullscreen feature-mode
 		 htmlize
 		 ioccur
@@ -65,6 +65,9 @@
        recipes
        (loop for src in el-get-sources
 	     collect (el-get-source-name src))))
+
+(unless (string-match "apple-darwin" system-configuration)
+  (add-to-list 'recipes 'emacs-jabber))
 
 (el-get 'sync recipes)
 ;; recipe fixes
