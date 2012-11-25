@@ -1,5 +1,4 @@
-
-(progn
+(:name init-org-redmine
+ :after
   (message "init-org-redmine hello"))
 
-(provide 'init-org-redmine)
