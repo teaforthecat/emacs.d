@@ -1,6 +1,7 @@
 *.svn*
 *~
 *#
+*.elc
 .emacs.desktop
 .emacs.desktop.lock
 .org-id-locations
@@ -21,3 +22,4 @@ url/cookies
 places
 .smex-items
 tmp
+recipes/private.el
