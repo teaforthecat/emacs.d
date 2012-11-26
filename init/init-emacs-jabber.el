@@ -13,4 +13,4 @@
 (setq jabber-alert-presence-message-function 'no-presence-message )
 (setq jabber-alert-info-message-function 'no-info-message )
 
-(add-hook 'el-get-post-init-hooks 'jabber-connect-all)
+;;(add-hook 'el-get-post-init-hooks 'jabber-connect-all)
