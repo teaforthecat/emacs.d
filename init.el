@@ -1,4 +1,3 @@
-
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (add-to-list 'load-path "~/.emacs.d/contrib")
 (add-to-list 'load-path "~/.emacs.d/ergoemacs-keybindings-5.3.4")
@@ -35,7 +34,6 @@
 	  :after (progn ()
 			(if (monday? (current-time))
 			    (progn
-			      (el-get-self-update)
 			      (el-get-emacswiki-refresh el-get-recipe-path-emacswiki)
 			      (el-get-elpa-build-local-recipes)))))
    (:name ibuffer
@@ -87,8 +85,7 @@
 		 magit
 		 org org-publish org-redmine
 		 pianobar private python pylookup
-		 redo+
-		 ruby-end ruby-electric rvm
+		 redo+ rinari ruby-end ruby-electric rvm
 		 wanderlust
 		 yaml-mode))
 
@@ -99,6 +96,7 @@
 	     collect (el-get-source-name src))))
 
 (unless (string-match "apple-darwin" system-configuration)
+  ;;doesn't compile on mac
   (add-to-list 'recipes 'emacs-jabber))
 
 (el-get 'sync recipes)
