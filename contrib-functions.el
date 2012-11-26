@@ -1,30 +1,3 @@
-;;http://stackoverflow.com/questions/435847/emacs-mode-to-edit-json/7934783#7934783
-(defun beautify-json ()
-  (interactive)
-  (let ((b (if mark-active (min (point) (mark)) (point-min)))
-        (e (if mark-active (max (point) (mark)) (point-max))))
-    (shell-command-on-region b e
-     "python -mjson.tool" (current-buffer) t)))
-
-;;http://stackoverflow.com/questions/4551283/what-is-wrong-with-my-emacs-slime-setup-compile-and-load-eval-not-working
-(defun contrib/slime-clojure ()
-  (interactive)
-  ;; (add-to-list 'load-path "~/hacking/lisp/elpa-slime")
-  (require 'slime)
-  (slime-setup '(slime-repl))
-  (slime-connect "localhost" 4005))
-
-
-;; unknown
-(require 'ansi-color)
-(defun colorize-compilation-buffer ()
-  (toggle-read-only)
-  (ansi-color-apply-on-region (point-min) (point-max))
-  (toggle-read-only))
-(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
-(add-hook 'ibuffer-mode-hook
-	  (lambda ()
-	    (ibuffer-switch-to-saved-filter-groups "default")))
 
 
 ;; http://www.emacswiki.org/emacs/AlignCommands
