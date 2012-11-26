@@ -85,7 +85,7 @@
 		 js2-mode js-comint json-mode
 		 list-register
 		 magit
-		 org org-publish
+		 org org-publish org-redmine
 		 pianobar private python pylookup
 		 redo+
 		 ruby-end ruby-electric rvm
