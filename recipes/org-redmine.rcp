@@ -1,4 +1,7 @@
 (:name org-redmine
        :type git
        :depends (anything org-mode)
-       :url "git://github.com/gongo/org-redmine.git")
+       :features org-redmine
+       :url "git://github.com/gongo/org-redmine.git"
+       :post-init (progn 
+                    (setq org-redmine-uri "http://redmine.walkerart.org")))
