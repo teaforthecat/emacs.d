@@ -22,5 +22,5 @@ url/cookies
 places
 .smex-items
 tmp
-recipes/private.el
-/private.el
+recipes/private.rcp
+
