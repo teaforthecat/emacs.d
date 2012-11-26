@@ -52,7 +52,11 @@
 (ergoemacs-global-set-key (kbd "C-c r") 'remember)
 (ergoemacs-global-set-key (kbd "C-x g") 'magit-status)
 (ergoemacs-global-set-key (kbd "C-c a") 'org-agenda)
-(ergoemacs-global-set-key (kbd "<f11>") 'fullscreen-toggle)
+
+(if (string-match "apple-darwin" system-configuration)
+    (global-set-key [f11] 'ns-toggle-fullscreen)
+  (global-set-key [f11] 'fullscreen))
+
 (ergoemacs-global-set-key (kbd "<f6>") 'whitespace-mode)
 (ergoemacs-global-set-key (kbd "M-<f6>") 'whitespace-cleanup)
 (ergoemacs-global-set-key (kbd "<f5>") 'flyspell-mode)
