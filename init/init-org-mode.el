@@ -13,12 +13,26 @@
                                      ("Note" 110 "* 
    %u %?" "~/org/notes.org" "Notes"))))
 
+;; NOTE: currently deciding which to use, remember or capture
+
+(setq org-capture-templates '(("t" "Todo" entry
+                               (file+headline "~/org/mygtd.org" "Tasks")
+                               "* TODO %^{Brief Description} %^g\n%?\nAdded: %U" :prepend t)
+                              ("w" "WorkAgenda" entry
+                               (file+headline "~/org/agendas/walker.org" "Walker")
+                               "* TODO %^{Brief Description}\n%a\n%?Added: %U\n" :prepend t)
+                              ("j" "Journal" entry
+                               (file+headline "~/org/journal.org" "")
+                               "\n %^{topic} %T \n%i%?\n" :prepend t)
+                              ("e" "Email Todo" entry
+                               (file+headline "~/org/mygtd.org" "Tasks")
+                               "* TODO %^{Brief Description}\n%a\n%?Added: %U\n" :prepend t)))
 
 (setq org-agenda-files '("~/org/agendas/user-groups.org"
                          "~/org/agendas/walker.org"))
 
 (setq 
- org-agenda-ndays 30
+ org-agenda-span 30
  org-agenda-show-all-dates t
  org-agenda-skip-deadline-if-done t
  org-agenda-skip-scheduled-if-done t
