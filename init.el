@@ -89,7 +89,9 @@
 		 magit
 		 org org-publish org-redmine
 		 pianobar private python pylookup
-		 redo+ rinari ruby-end ruby-electric rvm
+		 redo+ rinari ruby-end
+         ;ruby-electric conficts with pair
+         rvm
 		 wanderlust
 		 yaml-mode))
 
