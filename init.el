@@ -63,6 +63,10 @@
           :after (progn
                    (add-to-list 'auto-mode-alist '("\\.rake" . ruby-mode))
                    (add-to-list 'auto-mode-alist '("GemFile" . ruby-mode))))
+   (:name  coffee-mode
+          :after (progn
+                   (add-to-list 'auto-mode-alist '("\\.coffee" . coffee-mode))
+                   (add-to-list 'auto-mode-alist '("\\.coffee\\.erb" . coffee-mode))))
    (:name uniquify
           :type builtin
           :after (progn ()
@@ -74,7 +78,7 @@
 (setq recipes
       '(anything
 		 browse-kill-ring
-         cl-lib clojure-mode coffee-mode color-theme color-theme-ubuntu2
+         cl-lib clojure-mode color-theme color-theme-ubuntu2
 		 dired+ django-mode
 		 emacs-w3m
 		 fullscreen feature-mode
