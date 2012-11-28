@@ -24,3 +24,5 @@ places
 tmp
 recipes/private.rcp
 
+/private.el
+/recipes/private.el
