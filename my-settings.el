@@ -1,6 +1,7 @@
 (display-time)
 
 (global-linum-mode 1) ;linum
+(column-number-mode) ;simple
 (show-paren-mode t) ;paren
 (setq show-paren-style 'mixed) ;paren
 (setq-default indent-tabs-mode nil)
@@ -10,12 +11,12 @@
 (put 'downcase-region 'disabled nil)
 
 
-(setq diary-show-holidays-flag nil)
-(setq diary-file "~/org/.diary")
-(add-hook 'diary-hook 'appt-make-list)
-(appt-activate 1)
+(setq diary-show-holidays-flag nil) ;calendar
+(setq diary-file "~/org/.diary") ;calendar
+(add-hook 'diary-hook 'appt-make-list) ;diary-lib ;appt
+(appt-activate 1) ;appt
 
-(when (eq system-type 'darwin) ;; mac specific settings
+(when (eq system-type 'darwin) ;; homebrew
   (setq mac-option-modifier 'alt)
   (setq mac-command-modifier 'meta)
   (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
