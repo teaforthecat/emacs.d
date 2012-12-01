@@ -53,8 +53,6 @@
          (wl-draft-folder . "+draft")
          (wl-local-domain . "spysoundlab.com"))))
 
-(setq wl-message-id-domain "gmail.com");;hush warning
-
 ;; biff does not work with gmail
 (setq wl-biff-check-folder-list 
       '("%Inbox:\"chris.thompson+spysoundlab.com\"/clear@box715.bluehost.com:993!") )
@@ -116,3 +114,14 @@
          wl-modeline-biff-state-on
          wl-modeline-biff-state-off)
        global-mode-string))
+
+#default smtp
+(setq wl-smtp-posting-server "box715.bluehost.com"
+      wl-smtp-posting-user "chris.thompson@spysoundlab.com"
+      wl-from "Chris Thompson <chris.thompson@spysoundlab.com>"
+      wl-smtp-authenticate-type  "login"
+      wl-local-domain "spysoundlab.com"
+      wl-smtp-authenticate-type "login"
+      wl-smtp-connection-type 'ssl
+      wl-smtp-posting-port 465
+      wl-draft-folder "+draft")
