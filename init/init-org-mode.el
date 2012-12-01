@@ -29,7 +29,8 @@
                                "* TODO %^{Brief Description}\n%a\n%?Added: %U\n" :prepend t)))
 
 (setq org-agenda-files '("~/org/agendas/user-groups.org"
-                         "~/org/agendas/walker.org"))
+                         "~/org/agendas/walker.org"
+                         "~/org/mygtd.org"))
 
 (setq 
  org-agenda-span 30
