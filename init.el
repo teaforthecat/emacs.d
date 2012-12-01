@@ -69,11 +69,12 @@
                    (add-to-list 'auto-mode-alist '("\\.coffee\\.erb" . coffee-mode))))
    (:name uniquify
           :type builtin
+          :features (uniquify)
           :after (progn ()
                   (setq uniquify-buffer-name-style 'forward)))
    ))
 
-
+;; future recipe: http://gitorious.org/emacs-rails/emacs-rails/blobs/master/rails-speedbar-feature.el
 
 (setq recipes
       '(anything
