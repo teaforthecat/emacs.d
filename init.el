@@ -63,6 +63,14 @@
           :after (progn
                    (add-to-list 'auto-mode-alist '("\\.rake" . ruby-mode))
                    (add-to-list 'auto-mode-alist '("GemFile" . ruby-mode))))
+   (:name rspec-mode
+          :type github
+          :pkgname "teaforthecat/rspec-mode"
+          :after(progn
+                  (setq rspec-use-rvm t)
+                  (setq rspec-use-bundler-when-possible nil)
+                  (setq rspec-use-rake-flag nil)))
+
    (:name  coffee-mode
           :after (progn
                    (add-to-list 'auto-mode-alist '("\\.coffee" . coffee-mode))
@@ -91,7 +99,7 @@
          nrepl
 		 org org-publish org-redmine
 		 pianobar private python pylookup
-		 redo+ rinari ruby-end
+		 redo+ rinari rspec-mode ruby-end
          ;ruby-electric conficts with pair
          rvm
 		 wanderlust
