@@ -98,7 +98,7 @@
 		 magit
          nrepl
 		 org org-publish org-redmine
-		 pianobar private python pylookup
+		 pianobar private puppet-mode python pylookup
 		 redo+ rinari rspec-mode ruby-end
          ;ruby-electric conficts with pair
          rvm
