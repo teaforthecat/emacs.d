@@ -37,18 +37,22 @@
 (add-hook 'after-init-hook 'color-theme-subtle-hacker)
 
 
+;; not sure why I have this
 (add-hook 'comint-mode-hook 
           (lambda () 
             (set (make-local-variable 'comint-file-name-prefix) 
                  (or (file-remote-p default-directory) ""))))
 
 (add-hook 'shell-mode-hook 'dirtrack-mode)
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+;; really neccessary?
+;; (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 (add-hook 'dired-mode-hook
           (lambda ()
             (dired-omit-mode 1)))
 
+;; not sure I want this
 (add-hook 'shell-mode-hook 
           (lambda () 
             (setq comint-prompt-regexp "^[^#$%>\n]*[#$%>] *")
