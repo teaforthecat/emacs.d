@@ -45,3 +45,8 @@
  org-reverse-note-order t
 )
 (setq org-completion-use-ido t)
+
+
+
+(org-babel-do-load-languages 'org-babel-load-languages
+                             '((emacs-lisp . t) (dot . t)))
