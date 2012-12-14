@@ -1,6 +1,9 @@
 (require 'w3m)
 (require 'mime-w3m)
 
+;; think about moving into the directory
+(setq wl-folders-file "~/.folders" )
+
 (setq wl-user-mail-address-list (quote ("teaforthecat@gmail.com"
                                         "chris.thompson@spysoundlab.com"
                                         "chris.at.walker@gmail.com")))
@@ -115,12 +118,13 @@
          wl-modeline-biff-state-off)
        global-mode-string))
 
-#default smtp
+;;default smtp
 (setq wl-smtp-posting-server "box715.bluehost.com"
       wl-smtp-posting-user "chris.thompson@spysoundlab.com"
       wl-from "Chris Thompson <chris.thompson@spysoundlab.com>"
       wl-smtp-authenticate-type  "login"
       wl-local-domain "spysoundlab.com"
+;;      wl-message-id-domain "spysoundlab.com"
       wl-smtp-authenticate-type "login"
       wl-smtp-connection-type 'ssl
       wl-smtp-posting-port 465
