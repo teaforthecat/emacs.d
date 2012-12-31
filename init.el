@@ -105,6 +105,7 @@
 		 redo+ rinari rspec-mode ruby-end
          ;ruby-electric conficts with pair
          rvm
+;;         swank-js too much setup required
 		 wanderlust
 		 yaml-mode
          zencoding-mode))
