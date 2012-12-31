@@ -1,5 +1,5 @@
 (display-time)
-
+(pending-delete-mode t)
 (global-linum-mode 1) ;linum
 (column-number-mode) ;simple
 (show-paren-mode t) ;paren
