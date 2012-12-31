@@ -35,7 +35,8 @@
 			(if (monday? (current-time))
 			    (progn
 			      (el-get-emacswiki-refresh el-get-recipe-path-emacswiki)
-			      (el-get-elpa-build-local-recipes)))))
+;			      (el-get-elpa-build-local-recipes)
+))))
    (:name ibuffer
           :type builtin)
    (:name yasnippet
@@ -89,11 +90,12 @@
 		 browse-kill-ring
          cl-lib clojure-mode color-theme color-theme-ubuntu2
 		 dired+ django-mode
-		 emacs-w3m
+		 emacs-w3m ;;evernote-mode
 		 fullscreen feature-mode
 		 haml-mode htmlize
-		 ioccur
+		 ioccur iy-go-to-char
 		 js2-mode js-comint json-mode
+                 key-chord
 		 list-register
 		 magit
          nrepl
