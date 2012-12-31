@@ -22,6 +22,12 @@
   (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
   )
 
+;; TODO: quickurl-url-file
+
+;; NOTE:
+;;    Typically you would bind `hippie-expand' to `M-/' with
+;; `dabbrev-expand', the standard binding of `M-/', providing one of the
+;; expansion possibilities.
 
 (setq temporary-file-directory "~/.emacs.d/tmp/")
 
