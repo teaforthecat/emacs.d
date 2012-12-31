@@ -2,8 +2,7 @@
 (require 'mime-w3m)
 
 ;; think about moving into the directory
-(setq wl-folders-file "~/.folders" )
-
+(setq wl-folders-file "~/.emacs.d/.folders")
 (setq wl-user-mail-address-list (quote ("teaforthecat@gmail.com"
                                         "chris.thompson@spysoundlab.com"
                                         "chris.at.walker@gmail.com")))
