@@ -86,16 +86,17 @@
 ;; future recipe: http://gitorious.org/emacs-rails/emacs-rails/blobs/master/rails-speedbar-feature.el
 
 (setq recipes
-      '(anything
+      '(anything ace-jump-mode
 		 browse-kill-ring
          cl-lib clojure-mode color-theme color-theme-ubuntu2
 		 dired+ django-mode
 		 emacs-w3m ;;evernote-mode
 		 fullscreen feature-mode
 		 haml-mode htmlize
-		 ioccur iy-go-to-char
+		 ioccur
+         iy-go-to-char ;;maybe remove in lue of ace-jump-mode
 		 js2-mode js-comint json-mode
-                 key-chord
+         key-chord
 		 list-register
 		 magit
          nrepl
@@ -105,7 +106,8 @@
          ;ruby-electric conficts with pair
          rvm
 		 wanderlust
-		 yaml-mode))
+		 yaml-mode
+         zencoding-mode))
 
 (setq recipes
       (append
