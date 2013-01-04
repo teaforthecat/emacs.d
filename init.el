@@ -25,7 +25,7 @@
 
 (defun monday? (time)
   "(monday? (current-time))"
-  (= 1 (nth 6 (decode-time time))))
+  (= 1 (nth 6 (decode-time time))) nil)
 
 ;; NOTE: source :name without :type will inherit from recipe with same name
 (setq 
@@ -35,7 +35,7 @@
 			(if (monday? (current-time))
 			    (progn
 			      (el-get-emacswiki-refresh el-get-recipe-path-emacswiki)
-			      (el-get-elpa-build-local-recipes)))))
+			      ))))
    (:name ibuffer
           :type builtin)
    (:name yasnippet
