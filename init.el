@@ -66,10 +66,16 @@
    (:name rspec-mode
           :type github
           :pkgname "teaforthecat/rspec-mode"
-          :after(progn
+          :after (progn
                   (setq rspec-use-rvm t)
+                  (setq rspec-use-opts-file-when-available nil)
                   (setq rspec-use-bundler-when-possible nil)
-                  (setq rspec-use-rake-flag nil)))
+                  (setq rspec-use-rake-flag nil)
+                  (add-hook 'rinari-minor-mode-hook 'rspec-verifiable-mode)
+                  (add-hook 'after-save-hook (lambda ()
+                                               (if (rspec-buffer-is-spec-p)
+                                                   (rspec-verify-single))))
+                  ))
 
    (:name  coffee-mode
           :after (progn
