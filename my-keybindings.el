@@ -17,7 +17,8 @@
 ;; edit
 (ergoemacs-global-set-key "\M-\\" 'yas/expand)
 (ergoemacs-global-set-key "\M-j" 'clipboard-kill-ring-save)
-(ergoemacs-global-set-key "\C-k" 'clipboard-yank)
+(ergoemacs-global-set-key "\M-k" 'clipboard-yank)
+(ergoemacs-global-set-key "\C-k" 'kill-whole-line)
 (ergoemacs-global-set-key (kbd "C-.") 'comint-previous-input)
 (ergoemacs-global-set-key "\C-e" 'comint-next-input)
 (ergoemacs-global-set-key (kbd "C-r") 'comment-or-uncomment-region)
@@ -108,7 +109,7 @@
 ;;      (define-key w3m-mode-map "f" 'w3m-next-form)
 ;;     ))
 
-
+(global-set-key (kbd "C-c C-x C-j") 'org-clock-goto)
 ;; (org-set-tags-to)
 
 (eval-after-load 'ioccur '(progn
