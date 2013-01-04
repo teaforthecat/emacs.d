@@ -1,0 +1,8 @@
+(:name yasnippet-rails
+       :type github
+       :pkgname "eschulte/yasnippets-rails"
+       :features json-mode
+       :post-init (progn 
+                    (require 'yasnippet)
+                    (yas/load-directory
+                     (concat el-get-dir "yasnippet-rails/" "rails-snippets"))))
