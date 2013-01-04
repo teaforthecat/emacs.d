@@ -6,15 +6,16 @@
     '(("teaforthecat@gmail.com" 
        (:network-server . "talk.google.com")
        (:connection-type . ssl)
-       (:port . 443))
-      ("teaforthecat@colbert" 
-       (:network-server . "colbert")
-       (:connection-type . ssl)
-       (:port . 5223))
-      ("chris@colbert" 
-       (:network-server . "colbert")
-       (:connection-type . ssl)
-       (:port . 5223)))
+       (:port . 443)))
+      ;; ("teaforthecat@colbert" 
+      ;;  (:network-server . "colbert")
+      ;;  (:connection-type . ssl)
+      ;;  (:port . 5223))
+      ;; ("chris@colbert" 
+      ;;  (:network-server . "colbert")
+      ;;  (:connection-type . ssl)
+      ;;  (:port . 5223))
+
     jabber-chat-buffer-show-avatar nil)
 
 (setq jabber-roster-show-bindings nil)
