@@ -99,7 +99,7 @@
          nrepl
 		 org org-publish org-redmine
 		 pianobar private puppet-mode python pylookup
-		 redo+ rinari rspec-mode ruby-end
+		 redo+ rinari rhtml-mode rspec-mode ruby-end
          ;ruby-electric conficts with pair
          rvm
 		 wanderlust
