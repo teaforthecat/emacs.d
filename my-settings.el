@@ -1,5 +1,17 @@
 (display-time)
 
+(setq ido-enable-flex-matching t) ;ido.el
+(setq ido-use-filename-at-point 'guess)
+;;(setq ido-use-filename-at-point t)
+(setq ido-use-url-at-point t)
+;;(setq ido-unc- stuff ) ; samba servers
+(setq ido-use-virtual-buffers t) ;remember previously opened files
+(ido-everywhere t) ;ido.el both files and buffers
+(ido-mode t) ;ido.el
+
+;; (add-hook 'ido-setup-hook 'ido-my-keys)
+;; change keybindings here
+
 (global-linum-mode 1) ;linum
 (column-number-mode) ;simple
 (show-paren-mode t) ;paren
