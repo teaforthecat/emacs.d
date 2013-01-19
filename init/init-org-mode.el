@@ -3,8 +3,9 @@
 (org-clock-persistence-insinuate)
 (setq org-time-clocksum-format
       `(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
+
 (setq org-todo-keywords
-       '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
+       '((sequence "TODO(t)" "WAIT(w@)" "|" "DONE(d)" "CANCELED(c@)"))
 
 (setq org-capture-templates '(("t" "Todo" entry
                                (file+headline "~/org/mygtd.org" "Tasks")
