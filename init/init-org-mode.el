@@ -16,10 +16,13 @@
 ;; NOTE: currently deciding which to use, remember or capture
 
 (setq org-capture-templates '(("t" "Todo" entry
-                               (file+headline "~/org/mygtd.org" "Tasks")
+                               (file+headline "~/org/refile.org" "Tasks")
                                "* TODO %^{Brief Description} %^g\n%?\nAdded: %U" :prepend t)
                               ("w" "WorkAgenda" entry
                                (file+headline "~/org/agendas/walker.org" "Walker")
+                               "* TODO %^{Brief Description}\n%a\n%?Added: %U\n" :prepend t)
+                              ("r" "Reference" entry
+                               (file+headline "~/org/reference.org" "Reference")
                                "* TODO %^{Brief Description}\n%a\n%?Added: %U\n" :prepend t)
                               ("j" "Journal" entry
                                (file+headline "~/org/journal.org" "")
