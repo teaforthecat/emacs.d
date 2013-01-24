@@ -1,19 +1,11 @@
 (setq org-agenda-include-diary t)
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
-(setq org-directory "~/org/")
+(setq org-time-clocksum-format
+      `(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
 
-(setq org-remember-templates (quote (
-                                     ( "Task" 116 "* TODO %?
-   %u" "~/org/todo.org" "Tasks")
-                                     ("Walker Schedule" 119 "* TODO %?    
-   %u  " "~/org/walker_schedule.org" "Walker Schedule" nil)
-                                     ("TODO" 120 "* TODO %?    
-   %u  " nil "TODO" nil)
-                                     ("Note" 110 "* 
-   %u %?" "~/org/notes.org" "Notes"))))
-
-;; NOTE: currently deciding which to use, remember or capture
+(setq org-todo-keywords
+       '((sequence "TODO(t)" "WAIT(w@)" "|" "DONE(d)" "CANCELED(c@)"))
 
 (setq org-capture-templates '(("t" "Todo" entry
                                (file+headline "~/org/refile.org" "Tasks")
@@ -33,7 +25,8 @@
 
 (setq org-agenda-files '("~/org/agendas/user-groups.org"
                          "~/org/agendas/walker.org"
-                         "~/org/mygtd.org"))
+                         "~/org/mygtd.org"
+                         "~/org/timelog.org"))
 
 (setq 
  org-agenda-span 30
@@ -46,8 +39,10 @@
  org-fast-tag-selection-single-key (quote expert)
  org-remember-store-without-hprompt t
  org-reverse-note-order t
+ org-completion-use-ido t
+ org-log-into-drawer "LOG"
 )
-(setq org-completion-use-ido t)
+
 
 
 
