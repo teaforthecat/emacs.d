@@ -5,7 +5,7 @@
       `(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
 
 (setq org-todo-keywords
-       '((sequence "TODO(t)" "WAIT(w@)" "|" "DONE(d)" "CANCELED(c@)"))
+       '((sequence "TODO(t)" "WAIT(w@)" "|" "DONE(d)" "CANCELED(c@)")))
 
 (setq org-capture-templates '(("t" "Todo" entry
                                (file+headline "~/org/refile.org" "Tasks")
@@ -48,3 +48,5 @@
 
 (org-babel-do-load-languages 'org-babel-load-languages
                              '((emacs-lisp . t) (dot . t)))
+;; Fontify org-mode code blocks
+(setq org-src-fontify-natively t)
