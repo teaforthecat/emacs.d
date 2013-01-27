@@ -37,6 +37,7 @@
 			      (el-get-emacswiki-refresh el-get-recipe-path-emacswiki)
 			      ))))
    (:name ediff
+          :type builtin
           :after (progn ()
                         (setq ediff-diff-options "-w")
                         (setq ediff-split-window-function 'split-window-horizontally)
@@ -61,7 +62,7 @@
                    (yas/load-directory "~/.emacs.d/snippets")))
    (:name autopair
           :after (progn ()
-                       (autopair-global-mode 1)))
+                        (autopair-global-mode 1)))
    (:name emacs-w3m
           :after (progn ()
                         (setq browse-url-browser-function 'w3m-browse-url)))
@@ -79,55 +80,55 @@
           :type github
           :pkgname "teaforthecat/rspec-mode"
           :after (progn
-                  (setq rspec-use-rvm t)
-                  (setq rspec-use-opts-file-when-available nil)
-                  (setq rspec-use-bundler-when-possible nil)
-                  (setq rspec-use-rake-flag nil)
-                  (add-hook 'rinari-minor-mode-hook 'rspec-verifiable-mode)
-                  (add-hook 'after-save-hook (lambda ()
-                                               (if (rspec-buffer-is-spec-p)
-                                                   (rspec-verify-single))))
-                  ))
+                   (setq rspec-use-rvm t)
+                   (setq rspec-use-opts-file-when-available nil)
+                   (setq rspec-use-bundler-when-possible nil)
+                   (setq rspec-use-rake-flag nil)
+                   (add-hook 'rinari-minor-mode-hook 'rspec-verifiable-mode)
+                   (add-hook 'after-save-hook (lambda ()
+                                                (if (rspec-buffer-is-spec-p)
+                                                    (rspec-verify-single))))
+                   ))
 
    (:name  coffee-mode
-          :after (progn
-                   (add-to-list 'auto-mode-alist '("\\.coffee" . coffee-mode))
-                   (add-to-list 'auto-mode-alist '("\\.coffee\\.erb" . coffee-mode))))
+           :after (progn
+                    (add-to-list 'auto-mode-alist '("\\.coffee" . coffee-mode))
+                    (add-to-list 'auto-mode-alist '("\\.coffee\\.erb" . coffee-mode))))
    (:name  undo-tree
-          :after (progn
-                   (setq undo-tree-mode-lighter "")
-                   (global-undo-tree-mode)))
+           :after (progn
+                    (setq undo-tree-mode-lighter "")
+                    (global-undo-tree-mode)))
 
    (:name uniquify
           :type builtin
           :features (uniquify)
           :after (progn ()
-                  (setq uniquify-buffer-name-style 'forward)))
+                        (setq uniquify-buffer-name-style 'forward)))
    ))
 
 ;; future recipe: http://gitorious.org/emacs-rails/emacs-rails/blobs/master/rails-speedbar-feature.el
 
 (setq recipes
       '(anything
-		 browse-kill-ring
-         cl-lib clojure-mode color-theme color-theme-ubuntu2
-		 dash dired+ django-mode
-		 emacs-w3m
-		 fullscreen feature-mode
-		 haml-mode htmlize
-		 ioccur
-		 js2-mode js-comint json-mode
-		 list-register
-		 magit
-         nrepl
-		 org org-publish org-redmine
-		 pianobar private puppet-mode python pylookup
-		 redo+ rinari rhtml-mode rspec-mode ruby-end
-         ;ruby-electric conficts with pair
-         rvm
-         smooth-scrolling
-		 wanderlust
-		 yaml-mode))
+        browse-kill-ring
+        cl-lib clojure-mode color-theme color-theme-ubuntu2
+        dash dired+ django-mode
+        emacs-w3m
+        fullscreen feature-mode
+        haml-mode htmlize
+        ioccur
+        js2-mode js-comint json-mode
+        list-register
+        magit
+        nrepl
+        org org-publish org-redmine
+        pianobar private puppet-mode python pylookup
+        redo+ rinari rhtml-mode rspec-mode ruby-end
+                                        ;ruby-electric conficts with pair
+        rvm
+        smooth-scrolling
+        wanderlust
+        yaml-mode))
 
 (setq recipes
       (append
