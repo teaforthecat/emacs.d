@@ -237,3 +237,5 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (server-mode t)
+(color-theme-subtle-hacker)
+(ns-toggle-fullscreen)
