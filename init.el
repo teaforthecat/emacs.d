@@ -222,8 +222,7 @@
 (when (eq system-type 'darwin) ;; homebrew
   (setq mac-option-modifier 'alt)
   (setq mac-command-modifier 'meta)
-  
-  )
+  (setq ns-function-modifier 'hyper))
 
 (setq temporary-file-directory "~/.emacs.d/tmp/")
 
