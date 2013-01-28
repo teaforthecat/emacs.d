@@ -28,6 +28,9 @@
  el-get-sources
  '((:name ibuffer
           :type builtin)
+   (:name org-mobile :type builtin)
+   (:name el-get 
+	  :after (progn () nil) )
    (:name ido
           :type builtin)
    (:name tramp
@@ -112,7 +115,7 @@
         list-register
         magit
         nrepl
-        org org-publish org-redmine org-mobile
+        org org-publish org-redmine
         pianobar private puppet-mode python pylookup
         redo+ rinari rhtml-mode rspec-mode ruby-end
                                         ;ruby-electric conficts with pair

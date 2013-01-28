@@ -2,14 +2,29 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("init.el"
+(("org"
+ (filename . "~/org/")
+ (front-context-string . "projects\n  -rw-r")
+ (rear-context-string . "36 Jan 27 20:48 ")
+ (position . 340))
+("org-capture-last-stored-marker"
+ (filename . "~/org/refile.org")
+ (front-context-string . "** TODO verify o")
+ (rear-context-string . "29]\n* TODO Test\n")
+ (position . 451))
+("org-refile-last-stored"
+ (filename . "~/org/refile.org")
+ (front-context-string . "** TODO verify o")
+ (rear-context-string . "29]\n* TODO Test\n")
+ (position . 451))
+("init.el"
  (filename . "~/.emacs.d/init.el")
  (front-context-string . "(add-to-list 'lo")
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/org/mygtd.org")
- (front-context-string . "** TODO test    ")
- (rear-context-string)
- (position . 9))
+ (filename . "~/org/projects/emacs.org")
+ (front-context-string . "** SOMEDAY org m")
+ (rear-context-string . "map]]\n* Tickler\n")
+ (position . 167))
 )
