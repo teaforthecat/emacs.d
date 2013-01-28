@@ -4,8 +4,10 @@
 (setq org-time-clocksum-format
       `(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
 
+(setq org-tags-alist '(pd collections emacs))
+
 (setq org-todo-keywords
-       '((sequence "TODO(t)" "WAIT(w@)" "|" "DONE(d)" "CANCELED(c@)")))
+       '((sequence "TODO(t)" "WAIT(w@)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELED(c@)")))
 
 (setq org-capture-templates '(("t" "Todo" entry
                                (file+headline "~/org/refile.org" "Tasks")
@@ -13,32 +15,32 @@
                               ("w" "WorkAgenda" entry
                                (file+headline "~/org/agendas/walker.org" "Walker")
                                "* TODO %^{Brief Description}\n%a\n%?Added: %U\n" :prepend t)
+                              ("e" "Emacs" entry
+                               (file+headline "~/org/projects/emacs.org" "Tickler")
+                               "* SOMEDAY %^{Brief Description}\n%a\n%?Added: %U\n" :prepend t)
                               ("r" "Reference" entry
                                (file+headline "~/org/reference.org" "Reference")
                                "* TODO %^{Brief Description}\n%a\n%?Added: %U\n" :prepend t)
                               ("j" "Journal" entry
                                (file+headline "~/org/journal.org" "")
-                               "\n %^{topic} %T \n%i%?\n" :prepend t)
-                              ("e" "Email Todo" entry
-                               (file+headline "~/org/mygtd.org" "Tasks")
-                               "* TODO %^{Brief Description}\n%a\n%?Added: %U\n" :prepend t)))
+                               "\n %^{topic} %T \n%i%?\n" :prepend t)))
 
-(setq org-agenda-files '("~/org/agendas/user-groups.org"
-                         "~/org/agendas/walker.org"
-                         "~/org/mygtd.org"
-                         "~/org/timelog.org"))
+(setq org-agenda-diary-file "~/org/.diary")
+
+(setq org-directory "~/org/")
+
+;;weird that a file with a dir listed is required to load an entire directory
+(setq org-agenda-files "~/org/agenda-files.txt" )
 
 (setq 
- org-agenda-span 30
- org-agenda-show-all-dates t
+ org-agenda-span 7
+ org-agenda-show-all-dates nil
  org-agenda-skip-deadline-if-done t
  org-agenda-skip-scheduled-if-done t
  org-agenda-start-on-weekday nil
- org-deadline-warning-days 14
+ org-deadline-warning-days 3
  org-default-notes-file "~/org/notes.org"
- org-fast-tag-selection-single-key (quote expert)
- org-remember-store-without-hprompt t
- org-reverse-note-order t
+ ;not sure what this does org-fast-tag-selection-single-key (quote expert)
  org-completion-use-ido t
  org-log-into-drawer "LOG"
 )

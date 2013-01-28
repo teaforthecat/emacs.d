@@ -121,7 +121,7 @@
         list-register
         magit
         nrepl
-        org org-publish org-redmine
+        org org-publish org-redmine org-mobile
         pianobar private puppet-mode python pylookup
         redo+ rinari rhtml-mode rspec-mode ruby-end
                                         ;ruby-electric conficts with pair
