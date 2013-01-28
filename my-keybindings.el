@@ -17,13 +17,17 @@
 ;; edit
 (ergoemacs-global-set-key "\M-\\" 'yas/expand)
 (ergoemacs-global-set-key "\M-j" 'clipboard-kill-ring-save)
-(ergoemacs-global-set-key "\C-k" 'clipboard-yank)
+(ergoemacs-global-set-key "\M-k" 'clipboard-yank)
+(ergoemacs-global-set-key "\C-k" 'kill-whole-line)
 (ergoemacs-global-set-key (kbd "C-.") 'comint-previous-input)
 (ergoemacs-global-set-key "\C-e" 'comint-next-input)
 (ergoemacs-global-set-key (kbd "C-r") 'comment-or-uncomment-region)
 (ergoemacs-global-set-key (kbd "M-<f5>") 'flyspell-correct-word-before-point)
 (ergoemacs-global-set-key (kbd "C-=") 'select-text-in-quote)
 (ergoemacs-global-set-key (kbd "C-M-,") 'kmacro-call-macro)
+;;(ergoemacs-global-set-key (kbd "M-e") 'autopair-backward-delete) ;;except minibuffer-map
+;;(ergoemacs-global-set-key (kbd "M-e") 'delete-backward-char-untabify) ?
+
 
 ;;--edit in app --(move to app key maps someday)
 (ergoemacs-global-set-key (kbd "C-x 9") 'dired-omit-mode)
@@ -49,7 +53,7 @@
 (ergoemacs-global-set-key (kbd "C-c e b") 'eval-buffer)
 (ergoemacs-global-set-key (kbd "C-x k") 'close-current-buffer)
 ;; apps
-(ergoemacs-global-set-key (kbd "C-c r") 'remember)
+(ergoemacs-global-set-key (kbd "C-c r") 'org-capture)
 (ergoemacs-global-set-key (kbd "C-x g") 'magit-status)
 (ergoemacs-global-set-key (kbd "C-c a") 'org-agenda)
 
@@ -108,7 +112,7 @@
 ;;      (define-key w3m-mode-map "f" 'w3m-next-form)
 ;;     ))
 
-
+(global-set-key (kbd "C-c C-x C-j") 'org-clock-goto)
 ;; (org-set-tags-to)
 
 (eval-after-load 'ioccur '(progn
@@ -134,7 +138,6 @@
 ;;(ergoemacs-global-set-key "\" 'term-send-down)
 ;; 'compare-windows
 
-(require 'ibuffer)
 
 (eval-after-load 'ibuffer
   '(progn

@@ -2,19 +2,14 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-((".notes"
- (filename . "~/.notes")
- (front-context-string . "\n** Sun Dec 30 1")
- (rear-context-string)
- (position . 1))
-("init.el"
+(("init.el"
  (filename . "~/.emacs.d/init.el")
  (front-context-string . "(add-to-list 'lo")
  (rear-context-string)
  (position . 1))
-("my-keybindings.el"
- (filename . "~/.emacs.d/my-keybindings.el")
- (front-context-string . "(eval-after-load")
- (rear-context-string . "uire 'ibuffer)\n\n")
- (position . 5336))
+("org-capture-last-stored"
+ (filename . "~/org/mygtd.org")
+ (front-context-string . "** TODO test    ")
+ (rear-context-string)
+ (position . 9))
 )
