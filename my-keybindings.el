@@ -25,6 +25,7 @@
 (ergoemacs-global-set-key (kbd "M-<f5>") 'flyspell-correct-word-before-point)
 (ergoemacs-global-set-key (kbd "C-=") 'select-text-in-quote)
 (ergoemacs-global-set-key (kbd "C-M-,") 'kmacro-call-macro)
+(ergoemacs-global-set-key (kbd "M-e") 'delete-backward-char-untabify)
 
 ;;--edit in app --(move to app key maps someday)
 (ergoemacs-global-set-key (kbd "C-x 9") 'dired-omit-mode)
