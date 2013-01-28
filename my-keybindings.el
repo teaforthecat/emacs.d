@@ -136,7 +136,6 @@
 ;;(ergoemacs-global-set-key "\" 'term-send-down)
 ;; 'compare-windows
 
-(require 'ibuffer)
 
 (eval-after-load 'ibuffer
   '(progn
