@@ -1,3 +1,14 @@
+;;http://blog.jayfields.com/2012/11/elisp-duplicate-line.html
+(defun duplicate-line ()
+  (interactive)
+  (let* ((cursor-column (current-column)))
+    (move-beginning-of-line 1)
+    (kill-line)
+    (yank)
+    (open-line 1)
+    (next-line 1)
+    (yank)
+    (move-to-column cursor-column)))
 
 ;; http://www.emacswiki.org/emacs/AlignCommands
 ;; use with [[:space:]]+
@@ -25,6 +36,7 @@
                 (error t))
               (hs-show-all))
         (toggle-selective-display column)))
+
 ;;http://www.emacswiki.org/emacs/RaymondZeitler
 (defun shellfn ()
   "Invokes the shell using the current buffer file name as a parameter."
