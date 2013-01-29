@@ -25,6 +25,9 @@
 (ergoemacs-global-set-key (kbd "M-<f5>") 'flyspell-correct-word-before-point)
 (ergoemacs-global-set-key (kbd "C-=") 'select-text-in-quote)
 (ergoemacs-global-set-key (kbd "C-M-,") 'kmacro-call-macro)
+;;(ergoemacs-global-set-key (kbd "M-e") 'autopair-backward-delete) ;;except minibuffer-map
+;;(ergoemacs-global-set-key (kbd "M-e") 'delete-backward-char-untabify) ?
+
 
 ;;--edit in app --(move to app key maps someday)
 (ergoemacs-global-set-key (kbd "C-x 9") 'dired-omit-mode)
@@ -50,7 +53,7 @@
 (ergoemacs-global-set-key (kbd "C-c e b") 'eval-buffer)
 (ergoemacs-global-set-key (kbd "C-x k") 'close-current-buffer)
 ;; apps
-(ergoemacs-global-set-key (kbd "C-c r") 'remember)
+(ergoemacs-global-set-key (kbd "C-c r") 'org-capture)
 (ergoemacs-global-set-key (kbd "C-x g") 'magit-status)
 (ergoemacs-global-set-key (kbd "C-c a") 'org-agenda)
 
@@ -135,7 +138,6 @@
 ;;(ergoemacs-global-set-key "\" 'term-send-down)
 ;; 'compare-windows
 
-(require 'ibuffer)
 
 (eval-after-load 'ibuffer
   '(progn

@@ -1,0 +1,6 @@
+(:name emacs-test-simple
+       :description "used in rocky/dbgr"
+       :type github
+       :pkgname "rocky/emacs-test-simple"
+       :build ("./autogen.sh" "./configure" "make")
+       :features test-simple)
