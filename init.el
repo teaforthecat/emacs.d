@@ -113,7 +113,7 @@
         ioccur
         js2-mode js-comint json-mode
         list-register
-        magit
+        magit markdown-mode
         nrepl
         org org-publish org-redmine
         pianobar private puppet-mode python pylookup
@@ -233,3 +233,15 @@
 (server-mode t)
 (color-theme-subtle-hacker)
 (ns-toggle-fullscreen)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(diredp-compressed-file-suffix ((t (:foreground "dark Blue")))))
