@@ -33,12 +33,7 @@
                         (setq ediff-diff-options "-w")
                         (setq ediff-split-window-function 'split-window-horizontally)
                         (setq ediff-window-setup-function 'ediff-setup-windows-plain)))
- '((:name el-get
-	  :after (progn ()
-			(if (monday? (current-time))
-			    (progn
-			      (el-get-emacswiki-refresh el-get-recipe-path-emacswiki)
-			      ))))
+ 
    (:name ibuffer
           :type builtin)
    (:name org-mobile :type builtin)
