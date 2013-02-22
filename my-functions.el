@@ -1,3 +1,35 @@
+(defun touch-app ()
+  (interactive)
+  (compile "touch config/application.rb"))
+
+(defun production-jobs-count ()
+  (interactive)
+  (compile "ssh deployer@citra cd collections \\&\\& rake jobs:count"))
+
+(defun production-jobs-tail ()
+  (interactive)
+  (compile "ssh deployer@citra tail -f collections/log/delayed_job.log"))
+
+(defun production-console ()
+  (interactive)
+  (interact-with "*PRODUCTION CONSOLE*"
+   (compile "ssh deployer@citra cd collections \\&\\& ./bin/rails c")))
+
+(defmacro interact-with (name compilation)
+  `(list ,compilation
+         (switch-to-buffer-other-window "*compilation*")
+         (shell-mode)
+         (toggle-read-only -1)
+         (end-of-buffer)
+         (unwind-protect
+             (rename-buffer ,name)
+           (rename-uniquely))))
+
+(defun zeus-console ()
+  (interactive)
+  (interact-with "console"
+   (compile "./bin/zeus c")))
+
 (defun lookup-word-def() 
   (interactive)
   (let (myword myurl) 
