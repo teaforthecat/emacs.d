@@ -1,5 +1,10 @@
 (setq eproject-completing-read-function 'eproject--ido-completing-read)
 
+
+(define-project-type emacs.d (generic)
+  (look-for "init.el")
+  :irrelevant-files ("el-get/.*" ))
+
 (define-project-type ruby-on-rails (generic)
   (and (look-for "Gemfile") (look-for "config/application.rb"))
 
