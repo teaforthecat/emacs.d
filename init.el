@@ -23,10 +23,6 @@
 
 (setq el-get-user-package-directory "~/.emacs.d/init")
 
-(defun monday? (time)
-  "(monday? (current-time))"
-  (= 1 (nth 6 (decode-time time))))
-
 ;; NOTE: source :name without :type will inherit from recipe with same name
 (setq 
  el-get-sources
@@ -45,6 +41,9 @@
 			      ))))
    (:name ibuffer
           :type builtin)
+   (:name org-mobile :type builtin)
+   (:name el-get 
+	  :after (progn () nil) )
    (:name ido
           :type builtin)
    (:name tramp
@@ -55,6 +54,28 @@
           :type builtin)
    (:name diary-lib
           :type builtin)
+   (:name ediff
+          :type builtin
+          :after (progn ()
+                        (setq ediff-diff-options "-w")
+                        (setq ediff-split-window-function 'split-window-horizontally)
+                        (setq ediff-window-setup-function 'ediff-setup-windows-plain)))
+   (:name uniquify
+          :type builtin
+          :features (uniquify)
+          :after (progn ()
+                        (setq uniquify-buffer-name-style 'forward)))
+   (:name flyspell
+          :type builtin
+          :after (progn ()
+                        (flyspell-mode 1)
+                        (flyspell-prog-mode)))
+   (:name ruby
+          :type builtin
+          :after (progn
+                   (add-to-list 'auto-mode-alist '("\\.rake" . ruby-mode))
+                   (add-to-list 'auto-mode-alist '("GemFile" . ruby-mode))))
+
    (:name yasnippet
           :before (progn
                     (setq yas/snippet-dirs "~/.emacs.d/snippets"))
@@ -67,16 +88,6 @@
    (:name emacs-w3m
           :after (progn ()
                         (setq browse-url-browser-function 'w3m-browse-url)))
-   (:name flyspell
-          :type builtin
-          :after (progn ()
-                        (flyspell-mode 1)
-                        (flyspell-prog-mode)))
-   (:name ruby
-          :type builtin
-          :after (progn
-                   (add-to-list 'auto-mode-alist '("\\.rake" . ruby-mode))
-                   (add-to-list 'auto-mode-alist '("GemFile" . ruby-mode))))
    (:name rspec-mode
           :type github
           :pkgname "teaforthecat/rspec-mode"
@@ -100,11 +111,6 @@
                     (setq undo-tree-mode-lighter "")
                     (global-undo-tree-mode)))
 
-   (:name uniquify
-          :type builtin
-          :features (uniquify)
-          :after (progn ()
-                        (setq uniquify-buffer-name-style 'forward)))
    ))
 
 ;; future recipe: http://gitorious.org/emacs-rails/emacs-rails/blobs/master/rails-speedbar-feature.el
@@ -114,16 +120,16 @@
         browse-kill-ring
         cl-lib clojure-mode color-theme color-theme-ubuntu2
         dash dired+ django-mode
-        emacs-w3m
+        el-get emacs-w3m
         fullscreen feature-mode
         haml-mode htmlize
         ioccur
         js2-mode js-comint json-mode
         key-chord
         list-register
-        magit
+        magit markdown-mode
         nrepl
-        org org-publish org-redmine org-mobile
+        org org-publish org-redmine
         pianobar private puppet-mode python pylookup
         redo+ rinari rhtml-mode rspec-mode ruby-end
                                         ;ruby-electric conficts with pair
@@ -243,3 +249,10 @@
 (server-mode t)
 (color-theme-subtle-hacker)
 (ns-toggle-fullscreen)
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(diredp-compressed-file-suffix ((t (:foreground "dark Blue")))))

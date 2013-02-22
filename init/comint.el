@@ -15,3 +15,12 @@
 
 
 (compilation-start "cd ~/ruby; ls")
+
+(defun start-message ()
+  (delete-region 1 compilation-filter-start))
+
+(make-variable-buffer-local 'compilation-filter-hook)
+(add-hook 'compilation-filter-hook 'start-message)
+
+
+	      
