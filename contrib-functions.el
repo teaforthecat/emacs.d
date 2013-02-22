@@ -1,3 +1,16 @@
+
+;;http://blog.jayfields.com/2012/11/elisp-duplicate-line.html
+(defun duplicate-line ()
+  (interactive)
+  (let* ((cursor-column (current-column)))
+    (move-beginning-of-line 1)
+    (kill-line)
+    (yank)
+    (open-line 1)
+    (next-line 1)
+    (yank)
+    (move-to-column cursor-column)))
+
 ;; http://stackoverflow.com/questions/5194294/how-to-remove-all-newlines-from-selected-region-in-emacs
 (defun remove-newlines-in-region ()
   "Removes all newlines in the region."
