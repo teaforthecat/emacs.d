@@ -26,7 +26,14 @@
 ;; NOTE: source :name without :type will inherit from recipe with same name
 (setq 
  el-get-sources
- '((:name ibuffer
+ '((:name el-get)
+   (:name ediff
+          :type builtin
+          :after (progn ()
+                        (setq ediff-diff-options "-w")
+                        (setq ediff-split-window-function 'split-window-horizontally)
+                        (setq ediff-window-setup-function 'ediff-setup-windows-plain)))
+   (:name ibuffer
           :type builtin)
    (:name org-mobile :type builtin)
    (:name el-get 
@@ -103,7 +110,7 @@
 ;; future recipe: http://gitorious.org/emacs-rails/emacs-rails/blobs/master/rails-speedbar-feature.el
 
 (setq recipes
-      '(anything
+      '(anything ace-jump-mode
         browse-kill-ring
         cl-lib clojure-mode color-theme color-theme-ubuntu2
         dash dired+ django-mode
@@ -112,6 +119,7 @@
         haml-mode htmlize
         ioccur
         js2-mode js-comint json-mode
+        key-chord
         list-register
         magit markdown-mode
         nrepl
@@ -122,7 +130,9 @@
         rvm
         smooth-scrolling
         wanderlust
-        yaml-mode))
+        yaml-mode
+        zencoding-mode))
+
 
 (setq recipes
       (append
