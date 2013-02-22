@@ -1,3 +1,56 @@
+(defmacro .emacs-curry (function &rest args)
+  `(lambda () (interactive)
+     (,function ,@args)))
+
+(defmacro .emacs-eproject-key (key command)
+  (cons 'progn
+        (loop for (k . p) in (list (cons key 4) (cons (upcase key) 1))
+              collect
+              `(global-set-key
+                (kbd ,(format "C-x p %s" k))
+                (.emacs-curry ,command ,p)))))
+
+(.emacs-eproject-key "k" eproject-kill-project-buffers)
+(.emacs-eproject-key "v" eproject-revisit-project)
+(.emacs-eproject-key "b" eproject-ibuffer)
+(.emacs-eproject-key "o" eproject-open-all-project-files)
+
+(defmacro C (key command)
+  `(global-set-key (kbd ,(format "C-%s" key)) ,command))
+
+(defmacro M (key command)
+  `(global-set-key (kbd ,(format "M-%s" key)) ,command))
+
+; move cursor
+(M t 'next-line)
+(M c 'previous-line)
+(M n 'forward-char)
+(M h 'backward-char)
+(M r 'subword-forward)
+(M g 'subword-backward)
+(M m 'previous-buffer)
+(M w 'next-buffer)
+(M l 'recenter-top-bottom)              ;timid
+
+; shortcuts
+(M b 'keyboard-quit)
+(M v 'eproject-ibuffer)                 ;new
+(M z 'toggle-letter-case)               ;timid
+(M s 'ace-jump-mode)                    ;new
+(M - 'comment-dwim)                     ;timid
+
+
+
+(C t 'move-cursor-next-pane)
+(C t 'move-cursor-previous-pane)
+
+(C f 'sudo-find-file)
+
+;; mode-maps
+;; (apropos-variable "-mode-map$" (quote (4)))
+;; mode-hooks
+;; (apropos-variable "-mode-hook$" (quote (4)))
+
 (ergoemacs-global-set-key "\M-x" 'execute-extended-command)
 (ergoemacs-global-set-key (kbd "C-p") 'nil)
 
@@ -9,10 +62,10 @@
 (ergoemacs-global-set-key (kbd "C-x -") 'goto-line)
 (ergoemacs-global-set-key (kbd "M-O") 'isearch-occur)
 (ergoemacs-global-set-key (kbd "M-C-S") 'isearch-other-window)
-(ergoemacs-global-set-key (kbd "C-t") 'move-cursor-next-pane)
-(ergoemacs-global-set-key (kbd "C-h") 'move-cursor-previous-pane)
+;; (ergoemacs-global-set-key (kbd "C-t") 'move-cursor-next-pane)
+;; (ergoemacs-global-set-key (kbd "C-h") 'move-cursor-previous-pane)
 
-(ergoemacs-global-set-key (kbd "C-f") 'sudo-find-file)
+;; (ergoemacs-global-set-key (kbd "C-f") 'sudo-find-file)
 
 ;; edit
 (ergoemacs-global-set-key "\M-\\" 'yas/expand)
