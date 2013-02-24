@@ -42,7 +42,7 @@
 
 
 (C t 'move-cursor-next-pane)
-(C t 'move-cursor-previous-pane)
+(C h 'move-cursor-previous-pane)
 
 (C f 'sudo-find-file)
 
