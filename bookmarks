@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("lemur/collections"
+(("my-keybindings.el"
+ (filename . "~/.emacs.d/my-keybindings.el")
+ (front-context-string . "(defmacro .emacs")
+ (rear-context-string)
+ (position . 1))
+("lemur/collections"
  (filename . "/ssh:cthompson@lemur.local:/home/cthompson/ruby/collections/")
  (front-context-string . ".bundle\n  drwxr-")
  (rear-context-string . "96 Nov 29 13:56 ")
