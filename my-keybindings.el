@@ -15,10 +15,28 @@
 (.emacs-eproject-key "b" eproject-ibuffer)
 (.emacs-eproject-key "o" eproject-open-all-project-files)
 
-(defmacro C (key command &rest shift-command)
-  `(global-set-key (kbd ,(format "C-%s" key)) ,command))
+;; (defun gskey (key command)
+;;   (global-set-key (kbd key) command))
+ 
+;; (defmacro Ctl (key command &rest shift-command)
+;;   (list 'progn
+;;      (gskey (format "C-%s" key) command)
+;;      (if (symbolp shift-command) 
+;;          (gskey (format "C-S-%s" key) shift-command))))
 
-(defmacro M (key command)
+;;(Ctl m 'newline-and-indent)
+
+(defmacro C (key command &optional shift-command)
+  `(progn
+     (global-set-key (kbd ,(format "C-%s" key)) ,command)
+     (if (symbolp ,shift-command)
+         (global-set-key (kbd ,(format "C-%s" (upcase (symbol-name key))) ) ,shift-command ))))
+
+(C m 'newline-and-indent 'previous-line)
+
+
+
+(defmacro M (key command &optional shift-command)
   `(global-set-key (kbd ,(format "M-%s" key)) ,command))
 
 ; move cursor
@@ -103,7 +121,6 @@
 (C t 'other-frame)
 (C h 'other-window)
 (C n 'forward-page)
-(C p 'backward-page)
 (C s 'save-buffer)
 (C - 'toggle-hiding)                    ;void
 (C b 'nil)
@@ -144,7 +161,7 @@
 (C "'" 'nil)
 (C "," 'nil)
 (C "." 'comint-previous-input)
-(C p 'nil)
+(C p 'backward-page)
 (C y 'nil)
 (C i 'indent-for-tab-command)
 ;(C u 'universal-argument)               ;built-in
@@ -182,8 +199,13 @@
 
 (global-set-key (kbd "C-x f") 'recentf-open-files)
 
-(C f 'sudo-find-file)
-;;remember ispell-word (M $ ispell-word)
+(C "<enter>" 'minibuffer-complete-and-exit)
+
+;; remember
+;; ispell-word (M $ ispell-word)
+;; undo-tree-redo (M _ undo-tree-redo)
+
+
 ;; mode-maps
 ;; (apropos-variable "-mode-map$" (quote (4)))
 ;; mode-hooks
