@@ -25,27 +25,32 @@
 ;;          (gskey (format "C-S-%s" key) shift-command))))
 
 ;;(Ctl m 'newline-and-indent)
-
+ 
 (defmacro C (key command &optional shift-command)
   `(progn
      (global-set-key (kbd ,(format "C-%s" key)) ,command)
-     (if (symbolp ,shift-command)
-         (global-set-key (kbd ,(format "C-%s" (upcase (symbol-name key))) ) ,shift-command ))))
-
-(C m 'newline-and-indent 'previous-line)
-
+     (message ,shift-command)
+     (if (symbol-value ,shift-command)
+         (global-set-key (kbd ,(format "C-%s" (upcase (format "%s" key))) ) ,shift-command ))))
 
 
 (defmacro M (key command &optional shift-command)
-  `(global-set-key (kbd ,(format "M-%s" key)) ,command))
+ `(progn
+    (global-set-key (kbd ,(format "M-%s" key)) ,command)
+    (if (symbolp ,shift-command)
+        (global-set-key (kbd ,(format "M-%s" (upcase (format "%s" key))) ) ,shift-command ))))
 
+
+;; (defmacro M (key command &optional shift-command)
+;;    `(global-set-key (kbd ,(format "M-%s" key)) ,command))
+ 
 ; move cursor
 (M t 'next-line)
 (M c 'previous-line)
 (M n 'forward-char)
 (M h 'backward-char)
-(M r 'subword-forward)
-(M g 'subword-backward)
+(M r 'subword-forward 'end-of-line)
+(M g 'subword-backward 'beginning-of-line)
 (M m 'previous-buffer)
 (M w 'next-buffer)
 (M l 'recenter-top-bottom)              ;timid
@@ -62,22 +67,22 @@
 ;(M \ 'yas/expand)                       ;replace
 (M = 'count-words-region)
 (M / 'dabbrev-expand)                   ;default
-(M "]" 'nil)                            ;empty
-(M "[" 'nil)                            ;empty
+;(M "]" 'nil)                            ;empty
+;(M "[" 'nil)                            ;empty
 
-(M 0 'delete-window)
-(M 9 'nil)
-(M 8 'extend-selection)                 ;important
-(M 7 'nil)
-(M 7 'nil)
-(M 6 'nil)
+;(M 0 'delete-window)
+;(M 9 'nil)
+;(M 8 'extend-selection)                 ;important
+;(M 7 'nil)
+;(M 7 'nil)
+;(M 6 'nil)
 
 ; left hand
 (M 5 'query-replace)
 (M 4 'split-window-vertically)
 (M 3 'delete-other-windows)
-(M 2 'nil)
-(M 1 'nil)
+;(M 2 'nil)
+;(M 1 'nil)
 (M "`" 'switch-to-next-frame)           ;timid
 (M "'" 'ido-switch-buffer-other-window) ;timid
 (M o   'ido-switch-buffer)              ;muscle conflicts with M-a
@@ -97,19 +102,19 @@
 (M k   'clipboard-yank)
 
 
-(M <f1> 'nil)
-(M <f2> 'nil)
-(M <f3> 'nil)
-(M <f4> 'nil)
-(M <f4> 'nil)
+;(M <f1> 'nil)
+;(M <f2> 'nil)
+;(M <f3> 'nil)
+;(M <f4> 'nil)
+;(M <f4> 'nil)
 (M <f5> 'flyspell-correct-word-before-point)
 (M <f6> 'whitespace-cleanup)
 (M <f7> 'pianobar)
-(M <f8> 'nil)
-(M <f9> 'nil)
-(M <f10> 'nil)
-(M <f11> 'nil)
-(M <f12> 'nil)
+;(M <f8> 'nil)
+;(M <f9> 'nil)
+;(M <f10> 'nil)
+;(M <f11> 'nil)
+;(M <f12> 'nil)
 
 
 
@@ -123,14 +128,14 @@
 (C n 'forward-page)
 (C s 'save-buffer)
 (C - 'toggle-hiding)                    ;void
-(C b 'nil)
+;(C b 'nil)
 (C m 'autopair-newline)                  ;timid
 (C w 'close-current-buffer)
-(C v 'nil)
-(C z 'nil)
+;(C v 'nil)
+;(C z 'nil)
 (C = 'select-text-in-quote)             ;important
 (C / 'undo-tree-undo)                   ;dup of M-;
-(C l 'nil)
+;(C l 'nil)
 (C r 'comment-or-uncomment-region)
 ;(C c 'prefix)
 
@@ -138,12 +143,12 @@
 ;(C g 'keyboard-quit)
 
 (C f 'sudo-find-file)
-(C "]" 'abort-recursive-edit)           ;timid
+;(C "]" 'abort-recursive-edit)           ;timid
 ;(C "[" 'escape)                        ;built-in
-(C 9 'nil)
-(C 8 'nil)
-(C 7 'nil)
-(C 6 'nil)
+;(C 9 'nil)
+;(C 8 'nil)
+;(C 7 'nil)
+;(C 6 'nil)
 
 ; left hand
 (C 5 'find-lisp-find-dired)             ;dup of M-5
@@ -158,11 +163,11 @@
 (C 2 'find-tag-name)                    ;important
 (C 1 'ioccur)                           ;important
 
-(C "'" 'nil)
-(C "," 'nil)
+;(C "'" 'nil)
+;(C "," 'nil)
 (C "." 'comint-previous-input)
 (C p 'backward-page)
-(C y 'nil)
+;(C y 'nil)
 (C i 'indent-for-tab-command)
 ;(C u 'universal-argument)               ;built-in
 (C e 'comint-next-input)
@@ -170,24 +175,24 @@
 (C a 'mark-whole-buffer)
 (C <tab> 'magit-show-only-files)
 
-(C ";" 'nil)
+;(C ";" 'nil)
 ;(C q 'quoted-insert)                   ;built-in
-(C j 'nil)
+;(C j 'nil)
 (C k 'kill-whole-line)
 ;(C x 'prefix)                          ;prefix
 ;(C <f2> 'void)
 ;(C <f3> 'mac)
-(C <f4> 'nil)
-(C <f5> 'nil)
-(C <f6> 'nil)
-(C <f7> 'nil)
+;(C <f4> 'nil)
+;(C <f5> 'nil)
+;(C <f6> 'nil)
+;(C <f7> 'nil)
 ;(C <f8> 'mac)???
-(C <f7> 'nil)
-(C <f8> 'nil)
-(C <f9> 'nil)
-(C <f10> 'nil)
-(C <f11> 'nil)
-(C <f12> 'nil)
+;(C <f7> 'nil)
+;(C <f8> 'nil)
+;(C <f9> 'nil)
+;(C <f10> 'nil)
+;(C <f11> 'nil)
+;(C <f12> 'nil)
 
 
 
