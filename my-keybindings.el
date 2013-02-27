@@ -15,7 +15,7 @@
 (.emacs-eproject-key "b" eproject-ibuffer)
 (.emacs-eproject-key "o" eproject-open-all-project-files)
 
-(defmacro C (key command)
+(defmacro C (key command &rest shift-command)
   `(global-set-key (kbd ,(format "C-%s" key)) ,command))
 
 (defmacro M (key command)
@@ -78,6 +78,7 @@
 (M j   'clipboard-kill-ring-save)
 (M k   'clipboard-yank)
 
+
 (M <f1> 'nil)
 (M <f2> 'nil)
 (M <f3> 'nil)
@@ -99,9 +100,10 @@
 ;control
 
 ; right hand
-(C t 'move-cursor-next-pane)
-(C h 'move-cursor-previous-pane)
-(C n 'new-empty-buffer)                 ;remove
+(C t 'other-frame)
+(C h 'other-window)
+(C n 'forward-page)
+(C p 'backward-page)
 (C s 'save-buffer)
 (C - 'toggle-hiding)                    ;void
 (C b 'nil)
@@ -178,19 +180,17 @@
 (global-set-key (kbd "<f9>") 'flymake-mode)
 
 
-
-(C t 'move-cursor-next-pane)
-(C h 'move-cursor-previous-pane)
+(global-set-key (kbd "C-x f") 'recentf-open-files)
 
 (C f 'sudo-find-file)
-
+;;remember ispell-word (M $ ispell-word)
 ;; mode-maps
 ;; (apropos-variable "-mode-map$" (quote (4)))
 ;; mode-hooks
 ;; (apropos-variable "-mode-hook$" (quote (4)))
 
-(ergoemacs-global-set-key "\M-x" 'execute-extended-command)
-(ergoemacs-global-set-key (kbd "C-p") 'nil)
+;(ergoemacs-global-set-key "\M-x" 'execute-extended-command)
+;(ergoemacs-global-set-key (kbd "C-p") 'nil)
 
 ;; move
 ;; (ergoemacs-global-set-key "\M-d" 'beginning-of-buffer)
@@ -263,16 +263,16 @@
     (global-set-key [f11] 'ns-toggle-fullscreen)
   (global-set-key [f11] 'fullscreen))
 
-(ergoemacs-global-set-key (kbd "<f6>") 'whitespace-mode)
-(ergoemacs-global-set-key (kbd "M-<f6>") 'whitespace-cleanup)
-(ergoemacs-global-set-key (kbd "<f5>") 'flyspell-mode)
-(ergoemacs-global-set-key (kbd "M-<f7>") 'pianobar)
-(ergoemacs-global-set-key (kbd "<f9>") 'flymake-mode)
+;(ergoemacs-global-set-key (kbd "<f6>") 'whitespace-mode)
+;(ergoemacs-global-set-key (kbd "M-<f6>") 'whitespace-cleanup)
+;(ergoemacs-global-set-key (kbd "<f5>") 'flyspell-mode)
+;(ergoemacs-global-set-key (kbd "M-<f7>") 'pianobar)
+;(ergoemacs-global-set-key (kbd "<f9>") 'flymake-mode)
 
 ;; servers
-(ergoemacs-global-set-key (kbd "<C-f1>") 'django-server)
-(ergoemacs-global-set-key (kbd "<C-f2>") 'django-testserver)
-(ergoemacs-global-set-key (kbd "<C-f3>") 'django-shell)
+;(ergoemacs-global-set-key (kbd "<C-f1>") 'django-server)
+;(ergoemacs-global-set-key (kbd "<C-f2>") 'django-testserver)
+;(ergoemacs-global-set-key (kbd "<C-f3>") 'django-shell)
 
 ;;(ergoemacs-global-unset-key (kbd "C-s"))
 ;; (wl-summary-yank-saved-message)
@@ -307,8 +307,8 @@
 ;;try: find-lisp-find-dired
 ;;try: find-lisp-find-dired-subdirectories
 
-(ergoemacs-global-set-key (kbd "C-\-") 'toggle-hiding)
-(ergoemacs-global-set-key (kbd "C-\\") 'toggle-selective-display)
+;(ergoemacs-global-set-key (kbd "C-\-") 'toggle-hiding)
+;(ergoemacs-global-set-key (kbd "C-\\") 'toggle-selective-display)
 ;; (eval-after-load 'w3m
 ;;   '(progn
 ;;      (define-key w3m-mode-map "f" 'w3m-next-form)
