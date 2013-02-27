@@ -1,6 +1,6 @@
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (add-to-list 'load-path "~/.emacs.d/contrib")
-(add-to-list 'load-path "~/.emacs.d/ergoemacs-keybindings-5.3.4")
+;; (add-to-list 'load-path "~/.emacs.d/ergoemacs-keybindings-5.3.4")
 (add-to-list 'load-path "~/.emacs.d")
 (require 'minimals)
 
@@ -146,9 +146,9 @@
 
 (el-get 'sync recipes)
 
-(setenv "ERGOEMACS_KEYBOARD_LAYOUT" "dv")
-(require 'ergoemacs-mode)
-(ergoemacs-mode 1)
+;; (setenv "ERGOEMACS_KEYBOARD_LAYOUT" "dv")
+;; (require 'ergoemacs-mode)
+;; (ergoemacs-mode 1)
 
 
 (require 'my-keybindings)
@@ -213,8 +213,6 @@
 ;; Sentences do not need double spaces to end. Period.
 (set-default 'sentence-end-double-space nil)
 
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
 
 ;; UTF-8 please
 (setq locale-coding-system 'utf-8) ; pretty
