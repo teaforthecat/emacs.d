@@ -40,8 +40,8 @@
 
 
 ; move cursor
-(M t 'next-line)
-(M c 'previous-line)
+(M t 'next-line 'forward-page)
+(M c 'previous-line 'backward-page)
 (M n 'forward-char 'end-of-line)
 (M h 'backward-char 'beginning-of-line)
 (M r 'subword-forward 'end-of-line)
@@ -52,7 +52,7 @@
 
 ; shortcuts
 (M b 'keyboard-quit)
-(M v 'eproject-ibuffer)                 ;new
+(M v 'eproject-ibuffer 'ibuffer)                 ;new
 (M z 'toggle-letter-case)               ;timid
 (M s 'ace-jump-mode 'isearch-forward)                    ;new
 (M - 'comment-dwim)                     ;timid
@@ -129,8 +129,8 @@
 (C w 'close-current-buffer)
 ;(C v 'nil)
 ;(C z 'nil)
-(C = 'select-text-in-quote)             ;important
-(C / 'undo-tree-undo)                   ;dup of M-;
+;(C = 'select-text-in-quote)             ;important
+;(C / 'undo-tree-undo)                   ;dup of M-;
 ;(C l 'nil)
 (C r 'comment-or-uncomment-region)
 ;(C c 'prefix)
@@ -167,9 +167,9 @@
 (C i 'indent-for-tab-command)
 ;(C u 'universal-argument)               ;built-in
 ;(C e 'comint-next-input)        ;move to comint-keymap
-(C o 'eproject-find-file)                    ;important
+(C o 'eproject-find-file 'recentf-open-files)                    ;important
 (C a 'mark-whole-buffer)
-(C <tab> 'magit-show-only-files)
+(C "\t" 'magit-show-only-files)
 
 ;(C ";" 'nil)
 ;(C q 'quoted-insert)                   ;built-in
@@ -190,17 +190,16 @@
 ;(C <f11> 'nil)
 ;(C <f12> 'nil)
 
-
-
+    
 ; function keys
 (global-set-key (kbd "<f6>") 'whitespace-mode)
 (global-set-key (kbd "<f5>") 'flyspell-mode)
 (global-set-key (kbd "<f9>") 'flymake-mode)
 
 
-(global-set-key (kbd "C-x f") 'recentf-open-files)
+(G (kbd "C-x f") 'recentf-open-files)
 
-(C "<enter>" 'minibuffer-complete-and-exit)
+(G (kbd "<return>") 'newline-and-indent)
 
 ;; remember
 ;; ispell-word (M $ ispell-word)
