@@ -30,12 +30,14 @@
         (global-set-key (kbd ,(format "M-%s" (upcase (format "%s" key))) ) ,shift-command ))))
 (kbd "M--")
 
-(defun Cs (key command)
-  (let (control-key (format "C-%s" key))
-  (global-set-key (kbd control-key) command)))
 
 
-(global-set-key (kbd "<return>") 'newline-and-indent) ;fixes autopair-newline
+(defun G (key command)
+  (global-set-key key command))
+
+
+(G (kbd "C--") 'undo-tree-undo)
+
 
 ; move cursor
 (M t 'next-line)
