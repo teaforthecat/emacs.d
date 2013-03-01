@@ -167,9 +167,9 @@
 (C i 'indent-for-tab-command)
 ;(C u 'universal-argument)               ;built-in
 ;(C e 'comint-next-input)        ;move to comint-keymap
-(C o 'eproject-find-file 'recentf-open-files)                    ;important
+(C o 'eproject-find-file)                    ;important
 (C a 'mark-whole-buffer)
-(C "\t" 'magit-show-only-files)
+;;(C "\t" 'magit-show-only-files) move and retry
 
 ;(C ";" 'nil)
 ;(C q 'quoted-insert)                   ;built-in
