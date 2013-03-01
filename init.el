@@ -114,7 +114,7 @@
         browse-kill-ring
         cl-lib clojure-mode color-theme color-theme-ubuntu2
         dash dired+ django-mode
-        el-get emacs-w3m
+        el-get emacs-w3m eproject
         fullscreen feature-mode
         haml-mode htmlize
         ioccur
