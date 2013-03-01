@@ -15,21 +15,10 @@
 (.emacs-eproject-key "b" eproject-ibuffer)
 (.emacs-eproject-key "o" eproject-open-all-project-files)
 
-;; (defun gskey (key command)
-;;   (global-set-key (kbd key) command))
- 
-;; (defmacro Ctl (key command &rest shift-command)
-;;   (list 'progn
-;;      (gskey (format "C-%s" key) command)
-;;      (if (symbolp shift-command) 
-;;          (gskey (format "C-S-%s" key) shift-command))))
-
-;;(Ctl m 'newline-and-indent)
  
 (defmacro C (key command &optional shift-command)
   `(progn
      (global-set-key (kbd ,(format "C-%s" key)) ,command)
-     (message ,shift-command)
      (if (symbol-value ,shift-command)
          (global-set-key (kbd ,(format "C-%s" (upcase (format "%s" key))) ) ,shift-command ))))
 
@@ -39,16 +28,20 @@
     (global-set-key (kbd ,(format "M-%s" key)) ,command)
     (if (symbolp ,shift-command)
         (global-set-key (kbd ,(format "M-%s" (upcase (format "%s" key))) ) ,shift-command ))))
+(kbd "M--")
+
+(defun Cs (key command)
+  (let (control-key (format "C-%s" key))
+  (global-set-key (kbd control-key) command)))
 
 
-;; (defmacro M (key command &optional shift-command)
-;;    `(global-set-key (kbd ,(format "M-%s" key)) ,command))
- 
+(global-set-key (kbd "<return>") 'newline-and-indent) ;fixes autopair-newline
+
 ; move cursor
 (M t 'next-line)
 (M c 'previous-line)
-(M n 'forward-char)
-(M h 'backward-char)
+(M n 'forward-char 'end-of-line)
+(M h 'backward-char 'beginning-of-line)
 (M r 'subword-forward 'end-of-line)
 (M g 'subword-backward 'beginning-of-line)
 (M m 'previous-buffer)
@@ -59,7 +52,7 @@
 (M b 'keyboard-quit)
 (M v 'eproject-ibuffer)                 ;new
 (M z 'toggle-letter-case)               ;timid
-(M s 'ace-jump-mode)                    ;new
+(M s 'ace-jump-mode 'isearch-forward)                    ;new
 (M - 'comment-dwim)                     ;timid
 (M x 'execute-extended-command)         ;timid
 (M f 'nil)                              ;empty
@@ -95,7 +88,7 @@
 (M y   'call-keyword-completion)        ;timid
 (M i   'kill-line)                      ;timid
 (M u   'delete-char)
-(M e   'autopair-backspace)
+(M e   'delete-backward-char 'subword-backward-kill)
 (M ";" 'undo-tree-undo)
 (M q   'kill-region)
 (M j   'clipboard-kill-ring-save)
@@ -116,18 +109,19 @@
 ;(M <f11> 'nil)
 ;(M <f12> 'nil)
 
-
+
 
 ;--------------
 
 ;control
 
 ; right hand
-(C t 'other-frame)
+(C t 'previous-multiframe-window)
 (C h 'other-window)
 (C n 'forward-page)
 (C s 'save-buffer)
-(C - 'toggle-hiding)                    ;void
+(C - 'undo-tree-undo)
+;(C _ 'undo-tree-redo)    ;lib
 ;(C b 'nil)
 (C m 'autopair-newline)                  ;timid
 (C w 'close-current-buffer)
@@ -165,13 +159,13 @@
 
 ;(C "'" 'nil)
 ;(C "," 'nil)
-(C "." 'comint-previous-input)
+;(C "." 'comint-previous-input)  ;move to comint-keymap
 (C p 'backward-page)
 ;(C y 'nil)
 (C i 'indent-for-tab-command)
 ;(C u 'universal-argument)               ;built-in
-(C e 'comint-next-input)
-(C o 'ido-find-file)                    ;important
+;(C e 'comint-next-input)        ;move to comint-keymap
+(C o 'eproject-find-file)                    ;important
 (C a 'mark-whole-buffer)
 (C <tab> 'magit-show-only-files)
 
