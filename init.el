@@ -110,7 +110,7 @@
 ;; future recipe: http://gitorious.org/emacs-rails/emacs-rails/blobs/master/rails-speedbar-feature.el
 
 (setq recipes
-      '(anything ace-jump-mode
+      '( ace-jump-mode
         browse-kill-ring
         cl-lib clojure-mode color-theme color-theme-ubuntu2
         dash dired+ django-mode
@@ -123,7 +123,7 @@
         list-register
         magit markdown-mode
         nrepl
-        org org-publish org-redmine
+        org org-publish
         pianobar private puppet-mode python pylookup
         redo+ rinari rhtml-mode rspec-mode ruby-end
                                         ;ruby-electric conficts with pair
