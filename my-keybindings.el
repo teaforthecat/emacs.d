@@ -32,14 +32,14 @@
   `(progn
      (global-set-key (kbd ,(format "C-%s" key)) ,command)
      (if ,shift-command
-         (global-set-key (kbd ,(format "C-S-%s" (format "%s" key)) ) ,shift-command ))))
+         (global-set-key (kbd ,(format "C-%s" (upcase (format "%s" key)))) ,shift-command ))))
 
 
 (defmacro M (key command &optional shift-command)
  `(progn
     (global-set-key (kbd ,(format "M-%s" key)) ,command)
     (if ,shift-command
-        (global-set-key (kbd ,(format "M-S-%s" (format "%s" key)) ) ,shift-command ))))
+        (global-set-key (kbd ,(format "M-%s" (upcase (format "%s" key)))) ,shift-command ))))
 
 (defun G (key command)
   (global-set-key key command))
