@@ -151,6 +151,8 @@
 ;; (ergoemacs-mode 1)
 
 
+(require 'contrib-functions)
+(require 'my-functions)
 (require 'my-keybindings)
 
 ;; from magnars
