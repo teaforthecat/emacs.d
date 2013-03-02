@@ -218,7 +218,7 @@
 
 
 (eval-after-load 'rspec
-  '((progn
+  '(progn
      (define-key rspec-mode-keymap (kbd "C-c v s") `rspec-verify-single)))
 
 
@@ -230,8 +230,7 @@
 
 (eval-after-load 'slime
   '(progn
-     (define-key slime-mode-map (kbd "M-n") 'forward-char)
-     ))
+     (define-key slime-mode-map (kbd "M-n") 'forward-char)))
 
 
 
