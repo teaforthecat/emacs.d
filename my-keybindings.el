@@ -38,14 +38,14 @@
   `(progn
      (global-set-key (kbd ,(format "C-%s" key)) ,command)
      (if ,shift-command
-         (global-set-key (kbd ,(format "C-%s" (upcase (format "%s" key))) ) ,shift-command ))))
+         (global-set-key (kbd ,(format "C-S-%s" (format "%s" key)) ) ,shift-command ))))
 
 
 (defmacro M (key command &optional shift-command)
  `(progn
     (global-set-key (kbd ,(format "M-%s" key)) ,command)
     (if ,shift-command
-        (global-set-key (kbd ,(format "M-%s" (upcase (format "%s" key))) ) ,shift-command ))))
+        (global-set-key (kbd ,(format "M-S-%s" (format "%s" key)) ) ,shift-command ))))
 
 (defun G (key command)
   (global-set-key key command))
@@ -54,56 +54,56 @@
 (G (kbd "C--") 'undo-tree-undo)
 (define-key global-map (kbd "C-s") 'save-buffer)
 
-
-; move cursor
+;; M Right Hand (movement)
+;dhtns-
 (M t 'next-line 'scroll-up)
-(M c 'previous-line 'scroll-down)
-(M n 'forward-char 'end-of-line)
 (M h 'backward-char 'beginning-of-line)
-(M r 'subword-forward 'end-of-line)
-(M g 'subword-backward 'beginning-of-line)
-(M m 'previous-buffer)
-(M w 'next-buffer)
-(M l 'recenter-top-bottom)              ;timid
-
-; shortcuts
-(M b 'keyboard-quit)
-(M v 'eproject-ibuffer 'ibuffer)                 ;new
-(M z 'toggle-letter-case)               ;timid
+(M n 'forward-char 'end-of-line)
 (M s 'ace-jump-mode 'isearch-forward)                    ;new
 (M - 'comment-dwim)                     ;timid
-(M x 'execute-extended-command)         ;timid
-(M f 'nil)                              ;empty
-
+;bmwvz
+(M b 'keyboard-quit)
+(M m 'previous-buffer)
+(M w 'next-buffer)
+(M v 'eproject-ibuffer 'ibuffer)                 ;new
+(M z 'toggle-letter-case)               ;timid
+;fgcrl/=\
+(M r 'subword-forward 'end-of-line)
+(M g 'subword-backward 'beginning-of-line)
+(M l 'recenter-top-bottom)              ;timid
+(M c 'previous-line 'scroll-down)
 (M = 'count-words-region)
-(M "SPC" 'dabbrev-expand)                   ;default
-
+;67890[]
 (M 0 'delete-window)
 
-; left hand
+
+; M Left Hand (editing)
+;iueoa
+(M i   'kill-line)                      ;timid
+(M u   'delete-forward-char)
+(M e   'delete-backward-char 'subword-backward-kill)
+(M o   'ido-switch-buffer)              ;muscle conflicts with M-a
+(M a   'execute-extended-command)       ;dup of M-x
+;xkjq;
+(M x 'execute-extended-command)         ;timid
+(M k   'clipboard-yank)
+(M j   'clipboard-kill-ring-save)
+(M q   'kill-region)
+(M ";" 'undo-tree-undo)
+(M "SPC" 'dabbrev-expand)                   ;default
+;yp.,'
+(M y   'call-keyword-completion)        ;timid
+(M p   'subword-kill)
+(M "." 'subword-backward-kill)
+(M "'" 'ido-switch-buffer-other-window) ;timid
+;54321`
 (M 5 'query-replace)
 (M 4 'split-window-vertically)
 (M 3 'delete-other-windows)
 (M "`" 'switch-to-next-frame)           ;timid
-(M "'" 'ido-switch-buffer-other-window) ;timid
-(M o   'ido-switch-buffer)              ;muscle conflicts with M-a
-(M a   'execute-extended-command)       ;dup of M-x
-
-; edit (left hand)
-(M "." 'subword-backward-kill)
-(M p   'subword-kill)
-(M y   'call-keyword-completion)        ;timid
-(M i   'kill-line)                      ;timid
-(M u   'delete-char)
-(M e   'delete-backward-char 'subword-backward-kill)
-(M ";" 'undo-tree-undo)
-(M q   'kill-region)
-(M j   'clipboard-kill-ring-save)
-(M k   'clipboard-yank)
 (M <f5> 'flyspell-correct-word-before-point)
 (M <f6> 'whitespace-cleanup)
 (M <f7> 'pianobar)
-
 
 
 ;--------------
@@ -111,11 +111,14 @@
 ;control
 
 ; right hand
-(C t 'previous-multiframe-window)
+(C d 'duplicate-line-or-region)
 (C h 'other-window)
+(C t 'previous-multiframe-window)
 (C n 'forward-page)
 (C s 'save-buffer)
 (C - 'undo-tree-undo)
+(C b 'browse-kill-ring 'browse-kill-ring-insert-and-quit)
+
 (C w 'close-current-buffer)
 (C r 'comment-or-uncomment-region)
 
@@ -130,7 +133,7 @@
 
 (C p 'backward-page)
 (C i 'indent-for-tab-command)
-(C o 'eproject-find-file)                    ;important
+(C o 'eproject-find-file 'find-file)
 (C a 'mark-whole-buffer)
 
 (C k 'kill-whole-line)
@@ -145,6 +148,8 @@
 (G (kbd "C-x f") 'recentf-open-files)
 
 
+;; C-x-* Initialize apps
+(G (kbd "C-x g") 'magit-status)
 
 ;; TODO set these
 ;; (ergoemacs-global-set-key "\M-D" 'end-of-buffer)
