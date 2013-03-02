@@ -5,15 +5,9 @@
 ;; find-lisp-find-dired-subdirectories
 ;; wl-summary-yank-saved-message
 ;; wl-summary-save-current-message
-;; browse-kill-ring
-;; browse-kill-ring-insert-and-quit
 
 
 
-;; needs placement in a keymap:
-;; (C "." 'comint-previous-input)  ;move to comint-mode-keymap
-;; (C e 'comint-next-input)        ;move to comint-mode-keymap
-;; (C "\t" 'magit-show-only-files) ;move to magit-mode-keymap
 
 
 (defmacro .emacs-curry (function &rest args)
@@ -145,11 +139,12 @@
 (global-set-key (kbd "<f9>") 'flymake-mode)
 
 
-(G (kbd "C-x f") 'recentf-open-files)
-
 
 ;; C-x-* Initialize apps
 (G (kbd "C-x g") 'magit-status)
+(G (kbd "C-x f") 'recentf-open-files)
+
+
 
 ;; TODO set these
 ;; (ergoemacs-global-set-key "\M-D" 'end-of-buffer)
@@ -173,7 +168,6 @@
 ;; (ergoemacs-global-set-key (kbd "C-x k") 'close-current-buffer)
 ;; (ergoemacs-global-set-key (kbd "C-c C-r") 'rename-file-and-buffer)
 ;; (ergoemacs-global-set-key (kbd "C-c r") 'org-capture)
-;; (ergoemacs-global-set-key (kbd "C-x g") 'magit-status)
 ;; (ergoemacs-global-set-key (kbd "C-c a") 'org-agenda)
 ;; (global-set-key (kbd "C-c C-x C-j") 'org-clock-goto)
 ;; (ergoemacs-global-set-key (kbd "<C-tab>") 'magit-show-only-files)
@@ -194,47 +188,57 @@
 
 
 
-(eval-after-load 'slime
+(eval-after-load 'dired
   '(progn
-     (define-key slime-mode-map (kbd "M-n") 'forward-char)
-     ))
+     (define-key dired-mode-map "e" `dired-up-directory)
+     (define-key dired-mode-map "o" `dired-display-file)
+     (define-key dired-mode-map "k" `dired-kill-subdir)))
 
-(eval-after-load 'shell
+
+(eval-after-load 'ioccur
   '(progn
-     (define-key shell-mode-map (kbd "C-s") 'comint-history-isearch-backward)
-     ;; (define-key global-map (kbd "C-s") 'save-buffer)
-     ))
+     (define-key ioccur-mode-map "d" `ioccur-jump-without-quit)
+     (define-key ioccur-mode-map "k" `ioccur-jump-and-quit)
+     (define-key ioccur-mode-map "n" `ioccur-next-line)
+     (define-key ioccur-mode-map "p" `ioccur-precedent-line)
+     (define-key ioccur-mode-map "N" `ioccur-scroll-down)
+     (define-key ioccur-mode-map "P" `ioccur-scroll-up)))
 
 
-(eval-after-load 'dired '(progn
-                           (define-key dired-mode-map "e" `dired-up-directory)
-                           (define-key dired-mode-map "o" `dired-display-file)
-                           (define-key dired-mode-map "k" `dired-kill-subdir)))
-                           ;; v = view-mode
-
-(eval-after-load 'rspec
-  '(progn
-     (define-key rspec-mode-keymap (kbd "C-c v s")
-       `rspec-verify-single)))
-
-
-(eval-after-load 'ioccur '(progn
-  (define-key ioccur-mode-map "d" `ioccur-jump-without-quit)
-  (define-key ioccur-mode-map "k" `ioccur-jump-and-quit)
-  (define-key ioccur-mode-map "n" `ioccur-next-line)
-  (define-key ioccur-mode-map "p" `ioccur-precedent-line)
-  (define-key ioccur-mode-map "N" `ioccur-scroll-down)
-  (define-key ioccur-mode-map "P" `ioccur-scroll-up)))
-
-
-(define-key minibuffer-local-completion-map (kbd "SPC") 'minibuffer-complete-and-exit)
 
 (eval-after-load 'ibuffer
   '(progn
      (define-key ibuffer-mode-map "e" 'ibuffer-ediff-marked-buffers)
      (define-key ibuffer-mode-map (kbd "M-RET") 'ibuffer-bs-toggle-all)
-     (define-key ibuffer-mode-map (kbd "TAB") 'ibuffer-toggle-filter-group)
+     (define-key ibuffer-mode-map (kbd "TAB") 'ibuffer-toggle-filter-group)))
+
+(eval-after-load 'magit
+  '(progn
+     (define-key magit-mode-map (kbd "C-\t") 'magit-show-only-files)))
+
+
+(eval-after-load 'rspec
+  '((progn
+     (define-key rspec-mode-keymap (kbd "C-c v s") `rspec-verify-single)))
+
+
+(eval-after-load 'shell
+  '(progn
+     (define-key shell-mode-map (kbd "C-s") 'comint-history-isearch-backward)
+     (define-key shell-mode-map (kbd "C-.") 'comint-previous-input)
+     (define-key shell-mode-map (kbd "C-e") 'comint-next-input)))
+
+(eval-after-load 'slime
+  '(progn
+     (define-key slime-mode-map (kbd "M-n") 'forward-char)
      ))
+
+
+
+;timid
+(define-key minibuffer-local-completion-map (kbd "SPC") 'minibuffer-complete-and-exit)
+
+
 
 (if (string-match "apple-darwin" system-configuration)
     (global-set-key [f11] 'ns-toggle-fullscreen)
@@ -248,7 +252,7 @@
 ;; (M $ ispell-word)
 ;; (C "[" 'escape)
 ;; (C q 'quoted-insert)
-
+;; C-M\ 'indent-region
 
 
 ;; notes:

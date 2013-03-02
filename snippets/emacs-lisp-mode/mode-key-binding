@@ -1,0 +1,3 @@
+(eval-after-load '${1:mode} '(progn
+                           (define-key $1-mode-map (kbd "C-\t") '$2)))
+
