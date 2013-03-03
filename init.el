@@ -24,7 +24,7 @@
 (setq el-get-user-package-directory "~/.emacs.d/init")
 
 ;; NOTE: source :name without :type will inherit from recipe with same name
-(setq 
+(setq
  el-get-sources
  '((:name el-get)
    (:name ediff
@@ -36,7 +36,7 @@
    (:name ibuffer
           :type builtin)
    (:name org-mobile :type builtin)
-   (:name el-get 
+   (:name el-get
 	  :after (progn () nil) )
    (:name ido
           :type builtin)
@@ -48,12 +48,6 @@
           :type builtin)
    (:name diary-lib
           :type builtin)
-   (:name ediff
-          :type builtin
-          :after (progn ()
-                        (setq ediff-diff-options "-w")
-                        (setq ediff-split-window-function 'split-window-horizontally)
-                        (setq ediff-window-setup-function 'ediff-setup-windows-plain)))
    (:name uniquify
           :type builtin
           :features (uniquify)
@@ -64,6 +58,9 @@
           :after (progn ()
                         (flyspell-mode 1)
                         (flyspell-prog-mode)))
+   ;; (:name pretty-lambdada
+   ;;        :after (lambda () wtf?
+   ;;                      ))
    (:name ruby
           :type builtin
           :after (progn
@@ -113,7 +110,7 @@
       '( ace-jump-mode
         browse-kill-ring
         cl-lib clojure-mode color-theme color-theme-ubuntu2
-        dash dired+ django-mode
+        dash dictionary dired+ dired-details+ django-mode
         el-get emacs-w3m eproject
         fullscreen feature-mode
         haml-mode htmlize
@@ -215,6 +212,9 @@
 ;; Sentences do not need double spaces to end. Period.
 (set-default 'sentence-end-double-space nil)
 
+(setq pretty-lambda-auto-modes
+      '(emacs-lisp-mode python-mode clojure-mode ))
+(pretty-lambda-for-modes)
 
 ;; UTF-8 please
 (setq locale-coding-system 'utf-8) ; pretty
@@ -231,12 +231,12 @@
 (setq temporary-file-directory "~/.emacs.d/tmp/")
 
 (add-hook 'after-init-hook '(lambda () (org-agenda-list)
-                              (switch-to-buffer-other-window 
+                              (switch-to-buffer-other-window
                                (or (get-buffer "timelog.org")
                                    (get-buffer "*scratch*") ))))
 
 (add-hook 'write-contents-functions 'delete-trailing-whitespace)
-(setq require-final-newline  t)  
+(setq require-final-newline  t)
 
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
