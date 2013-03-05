@@ -58,14 +58,13 @@
           :after (progn ()
                         (flyspell-mode 1)
                         (flyspell-prog-mode)))
-   ;; (:name pretty-lambdada
-   ;;        :after (lambda () wtf?
-   ;;                      ))
    (:name ruby
           :type builtin
           :after (progn
                    (add-to-list 'auto-mode-alist '("\\.rake" . ruby-mode))
-                   (add-to-list 'auto-mode-alist '("GemFile" . ruby-mode))))
+                   (add-to-list 'auto-mode-alist '("GemFile" . ruby-mode))
+                   (add-hook 'ruby-mode-hook
+                             (lambda () (rvm-activate-corresponding-ruby)))))
 
    (:name yasnippet
           :before (progn
@@ -240,6 +239,8 @@
 
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
+(put 'erase-buffer 'disabled nil)
+
 (server-mode t)
 (color-theme-subtle-hacker)
 (ns-toggle-fullscreen)
