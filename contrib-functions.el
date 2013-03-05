@@ -226,6 +226,4 @@ With negative N, comment out original line and use the absolute value."
       (set-buffer-modified-p nil))))))
 
 
-;; from newartisans.com/2007/08/using-org-mode-as-a-day-planner.html
-(add-hook 'remember-mode-hook 'org-remember-apply-template)
 (provide 'contrib-functions)
