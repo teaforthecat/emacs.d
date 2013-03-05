@@ -45,8 +45,6 @@
   (global-set-key key command))
 
 
-(G (kbd "C--") 'undo-tree-undo)
-(G (kbd "C-_") 'undo-tree-redo)
 (define-key global-map (kbd "C-s") 'save-buffer)
 
 ;; M Right Hand (movement)
@@ -84,8 +82,7 @@
 (M k   'clipboard-yank)
 (M j   'clipboard-kill-ring-save)
 (M q   'kill-region)
-(M ";" 'undo-tree-undo)
-(M "SPC" 'dabbrev-expand)                   ;default
+(M "SPC" 'compile)
 ;yp.,'
 (M y   'call-keyword-completion)        ;timid
 (M p   'subword-kill)
@@ -111,7 +108,6 @@
 (C t 'previous-multiframe-window)
 (C n 'forward-page)
 (C s 'save-buffer)
-(C - 'undo-tree-undo)
 (C b 'browse-kill-ring 'browse-kill-ring-insert-and-quit)
 
 (C w 'close-current-buffer)
@@ -139,6 +135,7 @@
 (global-set-key (kbd "<f5>") 'flyspell-mode)
 (global-set-key (kbd "<f9>") 'flymake-mode)
 
+(global-set-key (kbd "<f7>") 'pianobar)
 
 
 ;; C-x-* Initialize apps
@@ -185,12 +182,26 @@
 ;(ergoemacs-global-set-key (kbd "<f5>") 'flyspell-mode)
 ;(ergoemacs-global-set-key (kbd "M-<f7>") 'pianobar)
 ;(ergoemacs-global-set-key (kbd "<f9>") 'flymake-mode)
+(defvar movement-mode)
+(add-to-list 'minor-mode-alist '(movement-mode movement-mode) t)
 
+(defvar movement-mode-map
+  (let ((map (make-sparse-keymap)))
+     (define-key map (kbd "C-t") `previous-multiframe-window)
+     (define-key map (kbd "C-h") `other-window)
+     (define-key map (kbd "M-n") `forward-char)
+     (define-key map (kbd "M-g" ) `keyboard-quit)
+     map))
 
+(add-to-list 'minor-mode-map-alist `(movement-mode . ,movement-mode-map) t)
 
 
 (eval-after-load 'dired
+  ;; Brash Bindings C-h C-k C-o C-t C-S-b C-n C-p M-everything
   '(progn
+     (define-key dired-mode-map (kbd "C-t") `previous-multiframe-window)
+     (define-key dired-mode-map (kbd "C-h") `other-window)
+     (define-key dired-mode-map (kbd "M-g" ) `keyboard-quit)
      (define-key dired-mode-map "e" `dired-up-directory)
      (define-key dired-mode-map "o" `dired-display-file)
      (define-key dired-mode-map "k" `dired-kill-subdir)))
@@ -226,6 +237,8 @@
 (eval-after-load 'shell
   ;; Brash Bindings: C-d, C-e, C-s, C-., M-RET, M-?, C-M-l, M-n, M-p, M-r  
   '(progn
+     (define-key shell-mode-map (kbd "M-r") 'subword-forward)
+     (define-key shell-mode-map (kbd "M-n") 'forward-char)
      (define-key shell-mode-map (kbd "C-s") 'comint-history-isearch-backward)
      (define-key shell-mode-map (kbd "C-.") 'comint-previous-input)
      (define-key shell-mode-map (kbd "C-e") 'comint-next-input)))
@@ -238,6 +251,7 @@
 
 ;timid
 (define-key minibuffer-local-completion-map (kbd "SPC") 'minibuffer-complete-and-exit)
+(define-key minibuffer-local-map (kbd "C-.") 'backward-kill-word)
 
 
 
@@ -249,13 +263,13 @@
 
 
 ; existing awesomeness to remember
+;; (C _ 'undo-tree-undo)
 ;; (M _ 'undo-tree-redo)
 ;; (M $ ispell-word)
 ;; (C "[" 'escape)
 ;; (C q 'quoted-insert)
 ;; C-M\ 'indent-region
-
-
+;; M-/ 'dabbrev-expand
 ;; notes:
 
 ;; mode-maps
