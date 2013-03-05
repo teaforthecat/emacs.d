@@ -46,6 +46,7 @@
 
 
 (G (kbd "C--") 'undo-tree-undo)
+(G (kbd "C-_") 'undo-tree-redo)
 (define-key global-map (kbd "C-s") 'save-buffer)
 
 ;; M Right Hand (movement)
@@ -223,6 +224,7 @@
 
 
 (eval-after-load 'shell
+  ;; Brash Bindings: C-d, C-e, C-s, C-., M-RET, M-?, C-M-l, M-n, M-p, M-r  
   '(progn
      (define-key shell-mode-map (kbd "C-s") 'comint-history-isearch-backward)
      (define-key shell-mode-map (kbd "C-.") 'comint-previous-input)
@@ -247,7 +249,7 @@
 
 
 ; existing awesomeness to remember
-;; (C _ 'undo-tree-redo)
+;; (M _ 'undo-tree-redo)
 ;; (M $ ispell-word)
 ;; (C "[" 'escape)
 ;; (C q 'quoted-insert)
