@@ -59,8 +59,8 @@
 (M m 'previous-buffer)
 (M w 'next-buffer)
 (M v 'eproject-ibuffer 'ibuffer)                 ;new
-(M z 'toggle-letter-case)               ;timid
-;fgcrl/=\
+
+;fgcrl/=\ 
 (M r 'subword-forward 'end-of-line)
 (M g 'subword-backward 'beginning-of-line)
 (M l 'recenter-top-bottom)              ;timid
@@ -84,6 +84,9 @@
 (M q   'kill-region)
 (M "SPC" 'compile)
 ;yp.,'
+(M ";" 'undo-tree-undo)
+
+(M ":" 'undo-tree-redo)
 (M y   'call-keyword-completion)        ;timid
 (M p   'subword-kill)
 (M "." 'subword-backward-kill)
@@ -119,7 +122,7 @@
 (C 5 'find-lisp-find-dired)             ;important
 (C 4 'find-grep)                        ;important
 (C 3 'find-file-at-point)               ;important
-(C 2 'find-tag-name)                    ;important
+(C 2 'find-tag)                         ;important
 (C 1 'ioccur)                           ;important
 
 (C p 'backward-page)
@@ -141,14 +144,12 @@
 ;; C-x-* Initialize apps
 (G (kbd "C-x g") 'magit-status)
 (G (kbd "C-x f") 'recentf-open-files)
+(G (kbd "C-x -") 'goto-line)
+(G (kbd "C-M-s") 'ioccur)
 
 
 
 ;; TODO set these
-;; (ergoemacs-global-set-key "\M-D" 'end-of-buffer)
-;; (ergoemacs-global-set-key "\M-H" 'move-beginning-of-line)
-;; (ergoemacs-global-set-key "\M-N" 'move-end-of-line)
-;; (ergoemacs-global-set-key (kbd "C-x -") 'goto-line)
 ;; (ergoemacs-global-set-key (kbd "M-O") 'isearch-occur)
 ;; (ergoemacs-global-set-key (kbd "M-C-S") 'isearch-other-window)
 ;; (ergoemacs-global-set-key "\M-\\" 'yas/expand)
@@ -182,6 +183,7 @@
 ;(ergoemacs-global-set-key (kbd "<f5>") 'flyspell-mode)
 ;(ergoemacs-global-set-key (kbd "M-<f7>") 'pianobar)
 ;(ergoemacs-global-set-key (kbd "<f9>") 'flymake-mode)
+
 (defvar movement-mode)
 (add-to-list 'minor-mode-alist '(movement-mode movement-mode) t)
 
@@ -190,7 +192,10 @@
      (define-key map (kbd "C-t") `previous-multiframe-window)
      (define-key map (kbd "C-h") `other-window)
      (define-key map (kbd "M-n") `forward-char)
+     (define-key map (kbd "M-o") `eproject-find-file)
      (define-key map (kbd "M-g" ) `keyboard-quit)
+     (define-key map (kbd "M-z" ) `undo-tree-undo)
+     (define-key map (kbd "M-Z" ) `undo-tree-redo)
      map))
 
 (add-to-list 'minor-mode-map-alist `(movement-mode . ,movement-mode-map) t)
@@ -263,8 +268,6 @@
 
 
 ; existing awesomeness to remember
-;; (C _ 'undo-tree-undo)
-;; (M _ 'undo-tree-redo)
 ;; (M $ ispell-word)
 ;; (C "[" 'escape)
 ;; (C q 'quoted-insert)
