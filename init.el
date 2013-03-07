@@ -1,6 +1,6 @@
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (add-to-list 'load-path "~/.emacs.d/contrib")
-(add-to-list 'load-path "~/.emacs.d/ergoemacs-keybindings-5.3.4")
+;; (add-to-list 'load-path "~/.emacs.d/ergoemacs-keybindings-5.3.4")
 (add-to-list 'load-path "~/.emacs.d")
 (require 'minimals)
 
@@ -24,7 +24,7 @@
 (setq el-get-user-package-directory "~/.emacs.d/init")
 
 ;; NOTE: source :name without :type will inherit from recipe with same name
-(setq 
+(setq
  el-get-sources
  '((:name el-get)
    (:name ediff
@@ -37,7 +37,7 @@
    (:name ibuffer
           :type builtin)
    (:name org-mobile :type builtin)
-   (:name el-get 
+   (:name el-get
 	  :after (progn () nil) )
    (:name ido
           :type builtin)
@@ -49,12 +49,6 @@
           :type builtin)
    (:name diary-lib
           :type builtin)
-   (:name ediff
-          :type builtin
-          :after (progn ()
-                        (setq ediff-diff-options "-w")
-                        (setq ediff-split-window-function 'split-window-horizontally)
-                        (setq ediff-window-setup-function 'ediff-setup-windows-plain)))
    (:name uniquify
           :type builtin
           :features (uniquify)
@@ -69,7 +63,9 @@
           :type builtin
           :after (progn
                    (add-to-list 'auto-mode-alist '("\\.rake" . ruby-mode))
-                   (add-to-list 'auto-mode-alist '("GemFile" . ruby-mode))))
+                   (add-to-list 'auto-mode-alist '("GemFile" . ruby-mode))
+                   (add-hook 'ruby-mode-hook
+                             (lambda () (rvm-activate-corresponding-ruby)))))
 
    (:name yasnippet
           :before (progn
@@ -111,11 +107,11 @@
 ;; future recipe: http://gitorious.org/emacs-rails/emacs-rails/blobs/master/rails-speedbar-feature.el
 
 (setq recipes
-      '(anything ace-jump-mode
+      '( ace-jump-mode
         browse-kill-ring
         cl-lib clojure-mode color-theme color-theme-ubuntu2
-        dash dired+ django-mode
-        el-get emacs-w3m
+        dash dictionary dired+ dired-details+ django-mode
+        el-get emacs-w3m eproject
         fullscreen feature-mode
         haml-mode htmlize
         ioccur
@@ -124,7 +120,7 @@
         list-register
         magit markdown-mode
         nrepl
-        org org-publish org-redmine
+        org org-publish
         pianobar private puppet-mode python pylookup
         redo+ rinari rhtml-mode rspec-mode ruby-end
                                         ;ruby-electric conficts with pair
@@ -147,11 +143,13 @@
 
 (el-get 'sync recipes)
 
-(setenv "ERGOEMACS_KEYBOARD_LAYOUT" "dv")
-(require 'ergoemacs-mode)
-(ergoemacs-mode 1)
+;; (setenv "ERGOEMACS_KEYBOARD_LAYOUT" "dv")
+;; (require 'ergoemacs-mode)
+;; (ergoemacs-mode 1)
 
 
+(require 'contrib-functions)
+(require 'my-functions)
 (require 'my-keybindings)
 
 ;; from magnars
@@ -214,8 +212,9 @@
 ;; Sentences do not need double spaces to end. Period.
 (set-default 'sentence-end-double-space nil)
 
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
+(setq pretty-lambda-auto-modes
+      '(emacs-lisp-mode python-mode clojure-mode ))
+(pretty-lambda-for-modes)
 
 ;; UTF-8 please
 (setq locale-coding-system 'utf-8) ; pretty
@@ -224,23 +223,28 @@
 (set-selection-coding-system 'utf-8) ; please
 (prefer-coding-system 'utf-8) ; with sugar on top
 
-(when (eq system-type 'darwin) ;; homebrew
+(when (eq system-type 'darwin)
   (setq mac-option-modifier 'alt)
   (setq mac-command-modifier 'meta)
   (setq ns-function-modifier 'hyper))
 
 (setq temporary-file-directory "~/.emacs.d/tmp/")
 
-(add-hook 'after-init-hook '(lambda () (org-agenda-list)
-                              (switch-to-buffer-other-window 
-                               (or (get-buffer "timelog.org")
-                                   (get-buffer "*scratch*") ))))
-
-(add-hook 'write-contents-functions 'delete-trailing-whitespace)
-(setq require-final-newline  t)  
+(setq require-final-newline  t)
 
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
+(put 'erase-buffer 'disabled nil)
+
+(add-hook 'write-contents-functions 'delete-trailing-whitespace)
+
+;; and...
+(add-hook 'after-init-hook '(lambda () (org-agenda-list)
+                              (switch-to-buffer-other-window
+                               (or (get-buffer "timelog.org")
+                                   (get-buffer "*scratch*") ))))
+
+; GO!
 (server-mode t)
 (color-theme-subtle-hacker)
 (ns-toggle-fullscreen)
@@ -255,10 +259,12 @@
  '(magit-diff-del ((t (:foreground "red1"))))
  '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))))
  '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))))
- '(magit-item-highlight ((t nil))))
+ '(magit-item-highlight ((t nil)))
+ '(diredp-compressed-file-suffix ((t (:foreground "dark Blue")))))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(tab-always-indent (quote complete)))

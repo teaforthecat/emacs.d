@@ -1,3 +1,8 @@
+(defun shell-clear ()
+  (interactive)
+  (let ((comint-buffer-maximum-size 0))
+    (comint-truncate-buffer)))
+
 (defun touch-app ()
   (interactive)
   (compile "touch config/application.rb"))

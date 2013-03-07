@@ -3,7 +3,7 @@
 
 (define-project-type emacs.d (generic)
   (look-for "init.el")
-  :irrelevant-files ("el-get/.*" ))
+  :irrelevant-files ("el-get/.*" "Gemfile.lock"))
 
 (define-project-type ruby-on-rails (generic)
   (and (look-for "Gemfile") (look-for "config/application.rb"))
