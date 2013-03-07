@@ -222,25 +222,28 @@
 (set-selection-coding-system 'utf-8) ; please
 (prefer-coding-system 'utf-8) ; with sugar on top
 
-(when (eq system-type 'darwin) ;; homebrew
+(when (eq system-type 'darwin)
   (setq mac-option-modifier 'alt)
   (setq mac-command-modifier 'meta)
   (setq ns-function-modifier 'hyper))
 
 (setq temporary-file-directory "~/.emacs.d/tmp/")
 
-(add-hook 'after-init-hook '(lambda () (org-agenda-list)
-                              (switch-to-buffer-other-window
-                               (or (get-buffer "timelog.org")
-                                   (get-buffer "*scratch*") ))))
-
-(add-hook 'write-contents-functions 'delete-trailing-whitespace)
 (setq require-final-newline  t)
 
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (put 'erase-buffer 'disabled nil)
 
+(add-hook 'write-contents-functions 'delete-trailing-whitespace)
+
+;; and...
+(add-hook 'after-init-hook '(lambda () (org-agenda-list)
+                              (switch-to-buffer-other-window
+                               (or (get-buffer "timelog.org")
+                                   (get-buffer "*scratch*") ))))
+
+; GO!
 (server-mode t)
 (color-theme-subtle-hacker)
 (ns-toggle-fullscreen)
@@ -251,3 +254,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(diredp-compressed-file-suffix ((t (:foreground "dark Blue")))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(tab-always-indent (quote complete)))
