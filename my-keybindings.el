@@ -85,15 +85,14 @@
 (M "SPC" 'compile)
 ;yp.,'
 (M ";" 'undo-tree-undo)
-
 (M ":" 'undo-tree-redo)
-(M y   'call-keyword-completion)        ;timid
+(M y   'browse-kill-ring)        ;timid
 (M p   'subword-kill)
 (M "." 'subword-backward-kill)
 (M "'" 'ido-switch-buffer-other-window) ;timid
 ;54321`
 (M 5 'query-replace)
-(M 4 'split-window-vertically)
+(M 4 'split-window-horizontally)
 (M 3 'delete-other-windows)
 (M "`" 'switch-to-next-frame)           ;timid
 (M <f5> 'flyspell-correct-word-before-point)
@@ -111,7 +110,7 @@
 (C t 'previous-multiframe-window)
 (C n 'forward-page)
 (C s 'save-buffer)
-(C b 'browse-kill-ring 'browse-kill-ring-insert-and-quit)
+;;(C b 'browse-kill-ring 'browse-kill-ring-insert-and-quit)
 
 (C w 'close-current-buffer)
 (C r 'comment-or-uncomment-region)
@@ -146,6 +145,7 @@
 (G (kbd "C-x f") 'recentf-open-files)
 (G (kbd "C-x -") 'goto-line)
 (G (kbd "C-M-s") 'ioccur)
+(G (kbd "C-x k") 'kill-this-buffer)
 
 
 
