@@ -181,21 +181,32 @@
 ;(ergoemacs-global-set-key (kbd "M-<f7>") 'pianobar)
 ;(ergoemacs-global-set-key (kbd "<f9>") 'flymake-mode)
 
-(defvar movement-mode)
-(add-to-list 'minor-mode-alist '(movement-mode movement-mode) t)
-
 (defvar movement-mode-map
   (let ((map (make-sparse-keymap)))
      (define-key map (kbd "C-t") `previous-multiframe-window)
      (define-key map (kbd "C-h") `other-window)
      (define-key map (kbd "M-n") `forward-char)
      (define-key map (kbd "M-o") `eproject-find-file)
-     (define-key map (kbd "M-g" ) `keyboard-quit)
-     (define-key map (kbd "M-z" ) `undo-tree-undo)
-     (define-key map (kbd "M-Z" ) `undo-tree-redo)
      map))
 
-(add-to-list 'minor-mode-map-alist `(movement-mode . ,movement-mode-map) t)
+(define-minor-mode movement-minor-mode
+  " set movement keys like ergoemacs "
+  nil
+  " >"
+  movement-mode-map)
+
+(defvar movement-hindering-modes
+  (if (boundp 'movement-hindering-modes)
+      movement-hindering-modes
+    (list 'org-mode-hook))
+  "Major Modes which are not friendly to keybindings")
+
+(dolist (hook movement-hindering-modes) (add-hook hook 'movement-minor-mode))
+
+
+;; not sure what this does
+;;(add-to-list 'minor-mode-alist '(movement-minor-mode movement-minor-mode) t)
+;; (add-to-list 'minor-mode-map-alist `(movement-minor-mode . ,movement-mode-map) t)
 
 
 (eval-after-load 'dired
