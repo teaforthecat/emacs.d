@@ -27,6 +27,8 @@
 (setq
  el-get-sources
  '((:name el-get)
+
+   ;; bultins
    (:name ediff
           :type builtin
           :after (progn ()
@@ -37,8 +39,6 @@
    (:name ibuffer
           :type builtin)
    (:name org-mobile :type builtin)
-   (:name el-get
-	  :after (progn () nil) )
    (:name ido
           :type builtin)
    (:name tramp
@@ -58,24 +58,28 @@
           :type builtin
           :after (progn ()
                         (flyspell-mode 1)
-                        (flyspell-prog-mode)))
+                        (setq ispell-program-name "/usr/local/bin/ispell")))
    (:name ruby
           :type builtin
-          :after (progn
+          :after (progn ()
                    (add-to-list 'auto-mode-alist '("\\.rake" . ruby-mode))
                    (add-to-list 'auto-mode-alist '("GemFile" . ruby-mode))
                    (add-hook 'ruby-mode-hook
-                             (lambda () (rvm-activate-corresponding-ruby)))))
+                             (lambda () 
+                               (rvm-activate-corresponding-ruby)
+                               (flyspell-prog-mode)))))
 
-   (:name yasnippet
-          :before (progn
-                    (setq yas/snippet-dirs "~/.emacs.d/snippets"))
-          :after (progn
-                   (yas-global-mode t)
-                   (yas/load-directory "~/.emacs.d/snippets")))
+   ;; non-builtin
    (:name autopair
           :after (progn ()
                         (autopair-global-mode 1)))
+   (:name browse-kill-ring
+          :after (progn ()
+                        (setq browse-kill-ring-quit-action 'save-and-restore)))
+   (:name  coffee-mode
+           :after (progn
+                    (add-to-list 'auto-mode-alist '("\\.coffee" . coffee-mode))
+                    (add-to-list 'auto-mode-alist '("\\.coffee\\.erb" . coffee-mode))))
    (:name emacs-w3m
           :after (progn ()
                         (setq browse-url-browser-function 'w3m-browse-url)))
@@ -93,14 +97,16 @@
                                                     (rspec-verify-single))))
                    ))
 
-   (:name  coffee-mode
-           :after (progn
-                    (add-to-list 'auto-mode-alist '("\\.coffee" . coffee-mode))
-                    (add-to-list 'auto-mode-alist '("\\.coffee\\.erb" . coffee-mode))))
    (:name  undo-tree
            :after (progn
                     (setq undo-tree-mode-lighter "")
                     (global-undo-tree-mode)))
+   (:name yasnippet
+          :before (progn
+                    (setq yas/snippet-dirs "~/.emacs.d/snippets"))
+          :after (progn
+                   (yas-global-mode t)
+                   (yas/load-directory "~/.emacs.d/snippets")))
 
    ))
 
@@ -108,7 +114,6 @@
 
 (setq recipes
       '( ace-jump-mode
-        browse-kill-ring
         cl-lib clojure-mode color-theme color-theme-ubuntu2
         dash dictionary dired+ dired-details+ django-mode
         el-get emacs-w3m eproject
@@ -212,6 +217,10 @@
 ;; Sentences do not need double spaces to end. Period.
 (set-default 'sentence-end-double-space nil)
 
+;; only split horizontally
+;; (setq split-height-threshold nil)
+;; (set split-horizontally-only)
+
 (setq pretty-lambda-auto-modes
       '(emacs-lisp-mode python-mode clojure-mode ))
 (pretty-lambda-for-modes)
@@ -235,6 +244,8 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (put 'erase-buffer 'disabled nil)
+
+(setenv "VAGRANTUP" "true") ; temp to figure out vagrant compatibility across users
 
 (add-hook 'write-contents-functions 'delete-trailing-whitespace)
 
