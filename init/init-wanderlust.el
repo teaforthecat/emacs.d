@@ -37,14 +37,7 @@
          (wl-local-domain . "gmail.com")
          (wl-draft-folder . "+draft"))
         ((string-match "teaforthecat" wl-draft-parent-folder)
-         (template . "teaforthecat")
-         (wl-smtp-posting-user . "teaforthecat")
-         (wl-smtp-posting-server . "smtp.gmail.com")
-         (wl-smtp-authenticate-type ."plain")
-         (wl-smtp-connection-type . 'starttls)
-         (wl-smtp-posting-port . 587)
-         (wl-draft-folder . "+draft")
-         (wl-local-domain . "gmail.com"))
+         (template . "teaforthecat"))
         ((string-match "spysoundlab" wl-draft-parent-folder)
          (template . "spy")
          (wl-smtp-posting-user . "chris.thompson@spysoundlab.com")
@@ -63,6 +56,13 @@
 (setq wl-template-alist
       '(("teaforthecat"
          (wl-from . "Chris Thompson <teaforthecat@gmail.com>")
+         (wl-smtp-posting-user . "teaforthecat")
+         (wl-smtp-posting-server . "smtp.gmail.com")
+         (wl-smtp-authenticate-type ."plain")
+         (wl-smtp-connection-type . 'starttls)
+         (wl-smtp-posting-port . 587)
+         (wl-draft-folder . "+draft")
+         (wl-local-domain . "gmail.com")
          ("From" . wl-from))
         ("work"
          (wl-from . "Chris Thompson <chris.at.walker@gmail.com>")
@@ -128,3 +128,4 @@
       wl-smtp-connection-type 'ssl
       wl-smtp-posting-port 465
       wl-draft-folder "+draft")
+
