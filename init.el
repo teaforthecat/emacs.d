@@ -35,7 +35,7 @@
                         (setq ediff-diff-options "-w")
                         (setq ediff-split-window-function 'split-window-horizontally)
                         (setq ediff-window-setup-function 'ediff-setup-windows-plain)))
- 
+
    (:name ibuffer
           :type builtin)
    (:name org-mobile :type builtin)
@@ -65,7 +65,7 @@
                    (add-to-list 'auto-mode-alist '("\\.rake" . ruby-mode))
                    (add-to-list 'auto-mode-alist '("GemFile" . ruby-mode))
                    (add-hook 'ruby-mode-hook
-                             (lambda () 
+                             (lambda ()
                                (rvm-activate-corresponding-ruby)
                                (flyspell-prog-mode)))))
 
