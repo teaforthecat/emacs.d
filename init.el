@@ -65,7 +65,7 @@
                    (add-to-list 'auto-mode-alist '("\\.rake" . ruby-mode))
                    (add-to-list 'auto-mode-alist '("GemFile" . ruby-mode))
                    (add-hook 'ruby-mode-hook
-                             (lambda () 
+                             (lambda ()
                                (rvm-activate-corresponding-ruby)
                                (flyspell-prog-mode)))))
 
@@ -114,8 +114,8 @@
 
 (setq recipes
       '( ace-jump-mode
-        cl-lib clojure-mode color-theme color-theme-ubuntu2
-        dash dictionary dired+ dired-details+ django-mode
+        cl-lib clojure-mode color-theme
+        dash dired+ dired-details+ django-mode
         el-get emacs-w3m eproject
         fullscreen feature-mode
         haml-mode htmlize
@@ -146,6 +146,14 @@
   ;;doesn't compile on mac
   (add-to-list 'recipes 'emacs-jabber))
 
+;;#needs to be set before packages initialize
+(if (string-match "apple-darwin" system-configuration)
+    (progn ()
+           (setq pianobar-program-command "/usr/local/bin/pianobar")
+           ;; not sure why this path doesn't find pianobar
+           (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))))
+
+
 (el-get 'sync recipes)
 
 ;; (setenv "ERGOEMACS_KEYBOARD_LAYOUT" "dv")
@@ -173,6 +181,8 @@
 (setq shift-select-mode nil)
 ;; Transparently open compressed files
 (auto-compression-mode t)
+
+(global-visual-line-mode t)
 
 ;; Answering just 'y' or 'n' will do
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -221,6 +231,7 @@
 ;; (setq split-height-threshold nil)
 ;; (set split-horizontally-only)
 
+;; not sure why this didn't work in after hook
 (setq pretty-lambda-auto-modes
       '(emacs-lisp-mode python-mode clojure-mode ))
 (pretty-lambda-for-modes)

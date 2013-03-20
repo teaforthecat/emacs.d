@@ -133,6 +133,7 @@
 
     
 ; function keys
+(global-set-key (kbd "C-<f5>") 'ispell-complete-word)
 (global-set-key (kbd "<f6>") 'whitespace-mode)
 (global-set-key (kbd "<f5>") 'flyspell-mode)
 (global-set-key (kbd "<f9>") 'flymake-mode)

@@ -52,3 +52,6 @@
                              '((emacs-lisp . t) (dot . t)))
 ;; Fontify org-mode code blocks
 (setq org-src-fontify-natively t)
+
+(require 'org-import-icalendar)
+(setq org-import-icalendar-filename "cal.org")
