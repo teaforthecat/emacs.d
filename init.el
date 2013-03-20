@@ -114,8 +114,8 @@
 
 (setq recipes
       '( ace-jump-mode
-        cl-lib clojure-mode color-theme color-theme-ubuntu2
-        dash dictionary dired+ dired-details+ django-mode
+        cl-lib clojure-mode color-theme
+        dash dired+ dired-details+ django-mode
         el-get emacs-w3m eproject
         fullscreen feature-mode
         haml-mode htmlize
