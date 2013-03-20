@@ -126,11 +126,11 @@
         magit markdown-mode
         nrepl
         org org-publish
-        pianobar private puppet-mode python pylookup
+        pianobar pretty-lambdada private puppet-mode python pylookup
         redo+ rinari rhtml-mode rspec-mode ruby-end
                                         ;ruby-electric conficts with pair
         rvm
-        smooth-scrolling
+        sass-mode smooth-scrolling
         wanderlust
         yaml-mode
         zencoding-mode))
@@ -269,7 +269,10 @@
 ; GO!
 (server-mode t)
 (color-theme-subtle-hacker)
-(ns-toggle-fullscreen)
+
+(if (string-match "apple-darwin" system-configuration)
+    (ns-toggle-fullscreen)
+  (fullscreen))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
