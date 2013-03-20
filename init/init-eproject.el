@@ -3,13 +3,13 @@
 
 (define-project-type emacs.d (generic)
   (look-for "init.el")
-  :irrelevant-files ("el-get/.*" "Gemfile.lock"))
+  :irrelevant-files ("el-get/.*"))
 
 (define-project-type ruby-on-rails (generic)
   (and (look-for "Gemfile") (look-for "config/application.rb"))
 
-  :irrelevant-files ("app/assets/images/.*" "tmp/.*" "log/.*" "public/.*" 
-                     "vendor/.*" ".*\\.sqlite?")
+  :irrelevant-files ("app/assets/images/.*"   "tmp/.*"   "log/.*"   "public/.*" 
+                     "vendor/.*"   ".*\\.sqlite?"    "Gemfile.lock")
   :tasks (("server" :shell (if (file-exists-p ".zeus.sock") 
                                "zeus s" 
                              "rails s") )
