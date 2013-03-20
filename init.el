@@ -146,6 +146,14 @@
   ;;doesn't compile on mac
   (add-to-list 'recipes 'emacs-jabber))
 
+;;#needs to be set before packages initialize
+(if (string-match "apple-darwin" system-configuration)
+    (progn ()
+           (setq pianobar-program-command "/usr/local/bin/pianobar")
+           ;; not sure why this path doesn't find pianobar
+           (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))))
+
+
 (el-get 'sync recipes)
 
 ;; (setenv "ERGOEMACS_KEYBOARD_LAYOUT" "dv")
