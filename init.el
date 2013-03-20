@@ -174,6 +174,8 @@
 ;; Transparently open compressed files
 (auto-compression-mode t)
 
+(global-visual-line-mode t)
+
 ;; Answering just 'y' or 'n' will do
 (defalias 'yes-or-no-p 'y-or-n-p)
 ;; UTF-8 please
@@ -221,6 +223,7 @@
 ;; (setq split-height-threshold nil)
 ;; (set split-horizontally-only)
 
+;; not sure why this didn't work in after hook
 (setq pretty-lambda-auto-modes
       '(emacs-lisp-mode python-mode clojure-mode ))
 (pretty-lambda-for-modes)
