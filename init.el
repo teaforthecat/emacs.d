@@ -1,3 +1,4 @@
+
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (add-to-list 'load-path "~/.emacs.d/contrib")
 ;; (add-to-list 'load-path "~/.emacs.d/ergoemacs-keybindings-5.3.4")
@@ -126,7 +127,7 @@
         magit markdown-mode
         nrepl
         org org-publish
-        pianobar pretty-lambdada private puppet-mode python pylookup
+        pianobar  private puppet-mode python pylookup
         redo+ rinari rhtml-mode rspec-mode ruby-end
                                         ;ruby-electric conficts with pair
         rvm
@@ -232,9 +233,9 @@
 ;; (set split-horizontally-only)
 
 ;; not sure why this didn't work in after hook
-(setq pretty-lambda-auto-modes
-      '(emacs-lisp-mode python-mode clojure-mode ))
-(pretty-lambda-for-modes)
+;(setq pretty-lambda-auto-modes
+;      '(emacs-lisp-mode python-mode clojure-mode ))
+;(pretty-lambda-for-modes)
 
 ;; UTF-8 please
 (setq locale-coding-system 'utf-8) ; pretty
@@ -268,7 +269,12 @@
 
 ; GO!
 (server-mode t)
-(color-theme-subtle-hacker)
+;(color-theme-subtle-hacker)
+;; (load-theme 'from-tango-dark t)
+
+(add-hook 'after-init-hook
+          (lambda ()
+            (load-theme 'misterioso t)))
 
 (if (string-match "apple-darwin" system-configuration)
     (ns-toggle-fullscreen)
