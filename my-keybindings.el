@@ -182,8 +182,6 @@
 ;(ergoemacs-global-set-key (kbd "M-<f7>") 'pianobar)
 ;(ergoemacs-global-set-key (kbd "<f9>") 'flymake-mode)
 
-
-
 (defvar movement-minor-mode-map
   (let ((map (make-sparse-keymap)))
      (define-key map (kbd "C-t") `previous-multiframe-window)
@@ -206,6 +204,15 @@
   t
   " >"
   movement-minor-mode-map)
+
+(defvar movement-hindering-modes
+  (if (boundp 'movement-hindering-modes)
+      movement-hindering-modes
+    (list 'org-mode-hook))
+  "Major Modes which are not friendly to keybindings")
+
+(dolist (hook movement-hindering-modes) (add-hook hook 'movement-minor-mode))
+
 
 
 
