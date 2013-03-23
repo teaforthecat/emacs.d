@@ -182,21 +182,31 @@
 ;(ergoemacs-global-set-key (kbd "M-<f7>") 'pianobar)
 ;(ergoemacs-global-set-key (kbd "<f9>") 'flymake-mode)
 
-(defvar movement-mode)
-(add-to-list 'minor-mode-alist '(movement-mode movement-mode) t)
 
-(defvar movement-mode-map
+
+(defvar movement-minor-mode-map
   (let ((map (make-sparse-keymap)))
      (define-key map (kbd "C-t") `previous-multiframe-window)
      (define-key map (kbd "C-h") `other-window)
      (define-key map (kbd "M-n") `forward-char)
      (define-key map (kbd "M-o") `eproject-find-file)
+     (define-key map (kbd "M-a") `execute-extended-command)
      (define-key map (kbd "M-g" ) `keyboard-quit)
      (define-key map (kbd "M-z" ) `undo-tree-undo)
      (define-key map (kbd "M-Z" ) `undo-tree-redo)
      map))
 
-(add-to-list 'minor-mode-map-alist `(movement-mode . ,movement-mode-map) t)
+; ??
+;(add-to-list 'minor-mode-map-alist `(movement-mode . ,movement-mode-map) t)
+;(add-to-list 'minor-mode-alist '(movement-mode movement-mode) t)
+
+
+(define-minor-mode movement-mode
+  "Enable movement key bindings (and turn it on with t)"
+  t
+  " >"
+  movement-minor-mode-map)
+
 
 
 (eval-after-load 'dired
