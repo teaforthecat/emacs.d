@@ -6,6 +6,10 @@
 ;; wl-summary-yank-saved-message
 ;; wl-summary-save-current-message
 
+;might be neccessary, not sure
+;(add-to-list 'minor-mode-map-alist `(movement-mode . ,movement-mode-map) t)
+;(add-to-list 'minor-mode-alist '(movement-mode movement-mode) t)
+
 
 
 
@@ -27,23 +31,27 @@
 (.emacs-eproject-key "b" eproject-ibuffer)
 (.emacs-eproject-key "o" eproject-open-all-project-files)
 
+
+(defun G (key command)
+  (global-set-key key command))
  
 (defmacro C (key command &optional shift-command)
   `(progn
-     (global-set-key (kbd ,(format "C-%s" key)) ,command)
+     (G (kbd ,(format "C-%s" key)) ,command)
      (if ,shift-command
-         (global-set-key (kbd ,(format "C-%s" (upcase (format "%s" key)))) ,shift-command ))))
+         (G (kbd ,(format "C-%s" (upcase (format "%s" key)))) ,shift-command ))))
 
 
 (defmacro M (key command &optional shift-command)
  `(progn
-    (global-set-key (kbd ,(format "M-%s" key)) ,command)
+    (G (kbd ,(format "M-%s" key)) ,command)
     (if ,shift-command
-        (global-set-key (kbd ,(format "M-%s" (upcase (format "%s" key)))) ,shift-command ))))
+        (G (kbd ,(format "M-%s" (upcase (format "%s" key)))) ,shift-command ))))
 
-(defun G (key command)
-  (global-set-key key command))
+(defmacro M> (key command &optional shift-command)
+  `(M ,key ,command ,shift-command))
 
+(M> - 'ace-jump-mode)
 
 (define-key global-map (kbd "C-s") 'save-buffer)
 
@@ -189,21 +197,17 @@
      (define-key map (kbd "M-n") `forward-char)
      (define-key map (kbd "M-o") `eproject-find-file)
      (define-key map (kbd "M-a") `execute-extended-command)
-     (define-key map (kbd "M-g" ) `keyboard-quit)
      (define-key map (kbd "M-z" ) `undo-tree-undo)
      (define-key map (kbd "M-Z" ) `undo-tree-redo)
      map))
-
-; ??
-;(add-to-list 'minor-mode-map-alist `(movement-mode . ,movement-mode-map) t)
-;(add-to-list 'minor-mode-alist '(movement-mode movement-mode) t)
 
 
 (define-minor-mode movement-mode
   "Enable movement key bindings (and turn it on with t)"
   t
   " >"
-  movement-minor-mode-map)
+  movement-minor-mode-map
+  :global t)
 
 (defvar movement-hindering-modes
   (if (boundp 'movement-hindering-modes)
