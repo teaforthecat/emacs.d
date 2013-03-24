@@ -83,6 +83,7 @@
 (M <f5> 'flyspell-correct-word-before-point)
 (M <f6> 'whitespace-cleanup)
 (M <f7> 'pianobar)
+(M <f9> 'flymake-display-err-menu-for-current-line)
 
 
 ;--------------

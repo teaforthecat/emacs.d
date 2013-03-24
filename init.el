@@ -118,7 +118,7 @@
         cl-lib clojure-mode color-theme
         dash dired+ dired-details+ django-mode
         el-get emacs-w3m eproject
-        fullscreen feature-mode
+        flymake-python-pyflakes feature-mode fullscreen 
         haml-mode htmlize
         ioccur
         js2-mode js-comint json-mode
@@ -143,12 +143,15 @@
        (loop for src in el-get-sources
 	     collect (el-get-source-name src))))
 
-(unless (string-match "apple-darwin" system-configuration)
+(if (string-match "apple-darwin" system-configuration)
+  (setq apple t))
+
+(unless apple
   ;;doesn't compile on mac
   (add-to-list 'recipes 'emacs-jabber))
 
 ;;#needs to be set before packages initialize
-(if (string-match "apple-darwin" system-configuration)
+(if apple
     (progn ()
            (setq pianobar-program-command "/usr/local/bin/pianobar")
            ;; not sure why this path doesn't find pianobar
