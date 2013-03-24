@@ -22,7 +22,7 @@
      map))
 
 
-(define-minor-mode movement-mode
+(define-minor-mode movement-minor-mode
   "Enable movement key bindings (and turn it on with t)"
   t
   " >"
@@ -30,9 +30,7 @@
   :global t)
 
 (defvar movement-hindering-modes
-  (if (boundp 'movement-hindering-modes)
-      movement-hindering-modes
-    (list 'org-mode-hook))
+  '(org-mode-hook)
   "Major Modes which are not friendly to keybindings")
 
 (dolist (hook movement-hindering-modes) (add-hook hook 'movement-minor-mode))
@@ -66,7 +64,7 @@
 ;; M Right Hand (movement)
 ;dhtns-
 (M t 'next-line 'scroll-up)
-(M h 'backward-char 'beginning-of-line)
+(M> h 'backward-char 'beginning-of-line)
 (M n 'forward-char 'end-of-line)
 (M s 'ace-jump-mode 'isearch-forward)                    ;new
 (M - 'comment-dwim)                     ;timid
