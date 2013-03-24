@@ -13,20 +13,20 @@
 
 
 (defun G (key command)
-  (global-set-key key command))
+  (global-set-key (kbd key) command))
  
 (defmacro C (key command &optional shift-command)
   `(progn
-     (G (kbd ,(format "C-%s" key)) ,command)
+     (G ,(format "C-%s" key) ,command)
      (if ,shift-command
-         (G (kbd ,(format "C-%s" (upcase (format "%s" key)))) ,shift-command ))))
+         (G ,(format "C-%s" (upcase (format "%s" key))) ,shift-command ))))
 
 
 (defmacro M (key command &optional shift-command)
  `(progn
-    (G (kbd ,(format "M-%s" key)) ,command)
+    (G ,(format "M-%s" key) ,command)
     (if ,shift-command
-        (G (kbd ,(format "M-%s" (upcase (format "%s" key)))) ,shift-command ))))
+        (G ,(format "M-%s" (upcase (format "%s" key))) ,shift-command ))))
 
 (defmacro M> (key command &optional shift-command)
   `(M ,key ,command ,shift-command))
