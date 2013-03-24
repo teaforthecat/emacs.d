@@ -1,10 +1,7 @@
-;; needs placement:
-;; extend-selection
-;; org-set-tags-to
-;; find-lisp-find-dired
-;; find-lisp-find-dired-subdirectories
-;; wl-summary-yank-saved-message
-;; wl-summary-save-current-message
+; sets movement-minor-mode globally
+; M -> Meta, C -> Control, G -> global (and movement mode map)
+; second symbol passed to M or C is the shift-command
+; M> sets bindings on global and movement-mode maps
 
 (defvar movement-minor-mode-map (make-sparse-keymap))
 
@@ -98,7 +95,7 @@
 (C t 'previous-multiframe-window)
 (C n 'forward-page)
 (C s 'save-buffer)
-;;(C b 'browse-kill-ring 'browse-kill-ring-insert-and-quit)
+(C b 'browse-kill-ring)
 
 (C w 'close-current-buffer)
 (C r 'comment-or-uncomment-region)
@@ -223,3 +220,12 @@
 ;; (apropos-variable "-mode-map$" (quote (4)))
 ;; mode-hooks
 ;; (apropos-variable "-mode-hook$" (quote (4)))
+
+;; needs placement:
+;; extend-selection
+;; org-set-tags-to
+;; find-lisp-find-dired
+;; find-lisp-find-dired-subdirectories
+;; wl-summary-yank-saved-message
+;; wl-summary-save-current-message
+
