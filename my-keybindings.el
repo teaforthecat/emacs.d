@@ -38,26 +38,28 @@
 (dolist (hook movement-hindering-modes) (add-hook hook 'movement-minor-mode))
 
 
-(defun G (key command)
-  (global-set-key (kbd key) command))
+(defun G (key command &optional movement)
+  (progn ()
+    (if movement
+        (define-key movement-minor-mode-map key command))
+    (global-set-key key command)))
  
 (defmacro C (key command &optional shift-command)
   `(progn
-     (G ,(format "C-%s" key) ,command)
+     (G (kbd ,(format "C-%s" key)) ,command)
      (if ,shift-command
-         (G ,(format "C-%s" (upcase (format "%s" key))) ,shift-command ))))
+         (G (kbd ,(format "C-%s" (upcase (format "%s" key)))) ,shift-command ))))
 
 
-(defmacro M (key command &optional shift-command)
+(defmacro M (key command &optional shift-command movement)
  `(progn
-    (G ,(format "M-%s" key) ,command)
+    (G (kbd ,(format "M-%s" key)) ,command ,movement)
     (if ,shift-command
-        (G ,(format "M-%s" (upcase (format "%s" key))) ,shift-command ))))
+        (G (kbd ,(format "M-%s" (upcase (format "%s" key)))) ,shift-command ,movement))))
 
 (defmacro M> (key command &optional shift-command)
-  `(M ,key ,command ,shift-command))
+  `(M ,key ,command ,shift-command 'movement))
 
-(M> - 'ace-jump-mode)
 
 (define-key global-map (kbd "C-s") 'save-buffer)
 
