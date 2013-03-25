@@ -143,7 +143,7 @@
        (loop for src in el-get-sources
 	     collect (el-get-source-name src))))
 
-(if (string-match "apple-darwin" system-configuration)
+(if (eq system-type 'darwin)
   (setq apple t))
 
 (unless apple
@@ -160,36 +160,33 @@
 
 (el-get 'sync recipes)
 
-;; (setenv "ERGOEMACS_KEYBOARD_LAYOUT" "dv")
-;; (require 'ergoemacs-mode)
-;; (ergoemacs-mode 1)
-
-
 (require 'contrib-functions)
 (require 'my-functions)
 (require 'my-keybindings)
 
+; TEMPORARY:  to figure out vagrant compatibility across users
+(setenv "VAGRANTUP" "true")
 
-(setenv "VAGRANTUP" "true") ; temp to figure out vagrant compatibility across users
-
+; move to custom settings
 (add-hook 'write-contents-functions 'delete-trailing-whitespace)
+(display-time)
+(global-visual-line-mode t)
 
-;; and...
-(add-hook 'after-init-hook '(lambda () (org-agenda-list)
-                              (switch-to-buffer-other-window
-                               (or (get-buffer "timelog.org")
-                                   (get-buffer "*scratch*") ))))
-
-; GO!
+;; ready
 (server-mode t)
-;(color-theme-subtle-hacker)
-;; (load-theme 'from-tango-dark t)
+;; set
+;; (add-hook 'after-init-hook '(lambda () (org-agenda-list)
+;;                               (switch-to-buffer-other-window
+;;                                (or (get-buffer "timelog.org")
+;;                                    (get-buffer "*scratch*") ))))
 
 (add-hook 'after-init-hook
           (lambda ()
-            (load-theme 'misterioso t)))
-
-(if (string-match "apple-darwin" system-configuration)
+            (load-theme 'misterioso t)
+            (switch-to-buffer-other-window (get-buffer "*scratch*"))
+            (spawn-shell "*local*")))
+;; GO!
+(if (eq system-type 'darwin)
     (ns-toggle-fullscreen)
   (fullscreen))
 

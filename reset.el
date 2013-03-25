@@ -1,6 +1,9 @@
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message nil)
 
+(setq inhibit-startup-echo-area-message t)
+(setq inhibit-startup-message t)
+
 (setq compilation-ask-about-save nil)
 (setq compilation-save-buffers-predicate '(lambda () nil))
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -27,8 +30,6 @@
 (setq shift-select-mode nil)
 ;; Transparently open compressed files
 (auto-compression-mode t)
-
-(global-visual-line-mode t)
 
 ;; UTF-8 please
 (setq locale-coding-system 'utf-8) ; pretty
@@ -84,5 +85,6 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (put 'erase-buffer 'disabled nil)
+
 
 (provide 'reset)
