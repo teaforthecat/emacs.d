@@ -1,73 +1,58 @@
-;; needs placement:
-;; extend-selection
-;; org-set-tags-to
-;; find-lisp-find-dired
-;; find-lisp-find-dired-subdirectories
-;; wl-summary-yank-saved-message
-;; wl-summary-save-current-message
+; sets movement-minor-mode globally
+; M -> Meta, C -> Control, G -> global (and movement mode map)
+; second symbol passed to M or C is the shift-command
+; M> sets bindings on global and movement-mode maps
 
+(defvar movement-minor-mode-map (make-sparse-keymap))
 
+(define-minor-mode movement-minor-mode
+  "turn-on,   modeline,   keymap,  globally "
+  t " >" movement-minor-mode-map :global t)
 
+(defun G (key command &optional movement)
+  (progn ()
+    (if movement
+        (define-key movement-minor-mode-map key command))
+    (global-set-key key command)))
 
-
-(defmacro .emacs-curry (function &rest args)
-  `(lambda () (interactive)
-     (,function ,@args)))
-
-(defmacro .emacs-eproject-key (key command)
-  (cons 'progn
-        (loop for (k . p) in (list (cons key 4) (cons (upcase key) 1))
-              collect
-              `(global-set-key
-                (kbd ,(format "C-x p %s" k))
-                (.emacs-curry ,command ,p)))))
-
-(.emacs-eproject-key "k" eproject-kill-project-buffers)
-(.emacs-eproject-key "v" eproject-revisit-project)
-(.emacs-eproject-key "b" eproject-ibuffer)
-(.emacs-eproject-key "o" eproject-open-all-project-files)
-
- 
 (defmacro C (key command &optional shift-command)
   `(progn
-     (global-set-key (kbd ,(format "C-%s" key)) ,command)
+     (G (kbd ,(format "C-%s" key)) ,command)
      (if ,shift-command
-         (global-set-key (kbd ,(format "C-%s" (upcase (format "%s" key)))) ,shift-command ))))
+         (G (kbd ,(format "C-%s" (upcase (format "%s" key)))) ,shift-command ))))
 
 
-(defmacro M (key command &optional shift-command)
+(defmacro M (key command &optional shift-command movement)
  `(progn
-    (global-set-key (kbd ,(format "M-%s" key)) ,command)
+    (G (kbd ,(format "M-%s" key)) ,command ,movement)
     (if ,shift-command
-        (global-set-key (kbd ,(format "M-%s" (upcase (format "%s" key)))) ,shift-command ))))
+        (G (kbd ,(format "M-%s" (upcase (format "%s" key)))) ,shift-command ,movement))))
 
-(defun G (key command)
-  (global-set-key key command))
+(defmacro M> (key command &optional shift-command)
+  `(M ,key ,command ,shift-command 'movement))
 
-
-(define-key global-map (kbd "C-s") 'save-buffer)
 
 ;; M Right Hand (movement)
 ;dhtns-
-(M t 'next-line 'scroll-up)
-(M h 'backward-char 'beginning-of-line)
-(M n 'forward-char 'end-of-line)
-(M s 'ace-jump-mode 'isearch-forward)                    ;new
-(M - 'comment-dwim)                     ;timid
+(M> t 'next-line 'scroll-up)
+(M> h 'backward-char 'beginning-of-line)
+(M> n 'forward-char 'end-of-line)
+(M> s 'ace-jump-mode 'isearch-forward)                    ;new
+(M> - 'comment-dwim)                     ;timid
 ;bmwvz
-(M b 'keyboard-quit)
-(M m 'previous-buffer)
-(M w 'next-buffer)
-(M v 'eproject-ibuffer 'ibuffer)                 ;new
+(M> b 'keyboard-quit)
+(M> m 'previous-buffer)
+(M> w 'next-buffer)
+(M> v 'eproject-ibuffer 'ibuffer)                 ;new
 
-;fgcrl/=\ 
-(M r 'subword-forward 'end-of-line)
-(M g 'subword-backward 'beginning-of-line)
-(M l 'recenter-top-bottom)              ;timid
-(M c 'previous-line 'scroll-down)
-(M = 'count-words-region)
+;fgcrl/=\
+(M> r 'subword-forward 'end-of-line)
+(M> g 'subword-backward 'beginning-of-line)
+(M> l 'recenter-top-bottom)              ;timid
+(M> c 'previous-line 'scroll-down)
+(M> = 'count-words-region)
 ;67890[]
-(M 0 'delete-window)
+(M> 0 'delete-window)
 
 
 ; M Left Hand (editing)
@@ -98,6 +83,7 @@
 (M <f5> 'flyspell-correct-word-before-point)
 (M <f6> 'whitespace-cleanup)
 (M <f7> 'pianobar)
+(M <f9> 'flymake-display-err-menu-for-current-line)
 
 
 ;--------------
@@ -110,7 +96,7 @@
 (C t 'previous-multiframe-window)
 (C n 'forward-page)
 (C s 'save-buffer)
-;;(C b 'browse-kill-ring 'browse-kill-ring-insert-and-quit)
+(C b 'browse-kill-ring)
 
 (C w 'close-current-buffer)
 (C r 'comment-or-uncomment-region)
@@ -131,7 +117,7 @@
 
 (C k 'kill-whole-line)
 
-    
+
 ; function keys
 (global-set-key (kbd "C-<f5>") 'ispell-complete-word)
 (global-set-key (kbd "<f6>") 'whitespace-mode)
@@ -147,71 +133,18 @@
 (G (kbd "C-x -") 'goto-line)
 (G (kbd "C-M-s") 'ioccur)
 (G (kbd "C-x k") 'kill-this-buffer)
+(G (kbd "C-c li") 'org-clock-in)
+(G (kbd "C-c lo") 'org-clock-out)
+(G (kbd "C-c lu") 'org-clock-update-time-maybe)
+(G (kbd "C-c C-x C-j") 'org-clock-goto)
+(G (kbd "C-c r") 'org-capture)
 
-
-
-;; TODO set these
-;; (ergoemacs-global-set-key (kbd "M-O") 'isearch-occur)
-;; (ergoemacs-global-set-key (kbd "M-C-S") 'isearch-other-window)
-;; (ergoemacs-global-set-key "\M-\\" 'yas/expand)
-;; (ergoemacs-global-set-key "\C-k" 'kill-whole-line)
-;; (ergoemacs-global-set-key (kbd "C-M-,") 'kmacro-call-macro)
-;; (ergoemacs-global-set-key (kbd "C-x 9") 'dired-omit-mode)
-;; (ergoemacs-global-set-key (kbd "C-c li") 'org-clock-in)
-;; (ergoemacs-global-set-key (kbd "C-c lo") 'org-clock-out)
-;; (ergoemacs-global-set-key (kbd "C-c lu") 'org-clock-update-time-maybe)
-;; (ergoemacs-global-set-key (kbd "<M-kp-right>") 'org-table-insert-column)
-;; (ergoemacs-global-set-key (kbd "<M-kp-down>") 'org-table-insert-row)
-;; (ergoemacs-global-set-key (kbd "C-x rv") 'list-registers)
-;; (ergoemacs-global-set-key "\M-X" 'dired)
-;; (ergoemacs-global-set-key (kbd "C-c e b") 'eval-buffer)
-;; (ergoemacs-global-set-key (kbd "C-x k") 'close-current-buffer)
-;; (ergoemacs-global-set-key (kbd "C-c C-r") 'rename-file-and-buffer)
-;; (ergoemacs-global-set-key (kbd "C-c r") 'org-capture)
-;; (ergoemacs-global-set-key (kbd "C-c a") 'org-agenda)
-;; (global-set-key (kbd "C-c C-x C-j") 'org-clock-goto)
-;; (ergoemacs-global-set-key (kbd "<C-tab>") 'magit-show-only-files)
-
-
-;; edit
-
-;; (ergoemacs-global-set-key (kbd "M-<f5>") 'flyspell-correct-word-before-point)
-;(ergoemacs-global-set-key (kbd "<f6>") 'whitespace-mode)
-;(ergoemacs-global-set-key (kbd "M-<f6>") 'whitespace-cleanup)
-;(ergoemacs-global-set-key (kbd "<f5>") 'flyspell-mode)
-;(ergoemacs-global-set-key (kbd "M-<f7>") 'pianobar)
-;(ergoemacs-global-set-key (kbd "<f9>") 'flymake-mode)
-
-(defvar movement-mode-map
-  (let ((map (make-sparse-keymap)))
-     (define-key map (kbd "C-t") `previous-multiframe-window)
-     (define-key map (kbd "C-h") `other-window)
-     (define-key map (kbd "M-n") `forward-char)
-     (define-key map (kbd "M-o") `eproject-find-file)
-     map))
-
-(define-minor-mode movement-minor-mode
-  " set movement keys like ergoemacs "
-  nil
-  " >"
-  movement-mode-map)
-
-(defvar movement-hindering-modes
-  (if (boundp 'movement-hindering-modes)
-      movement-hindering-modes
-    (list 'org-mode-hook))
-  "Major Modes which are not friendly to keybindings")
-
-(dolist (hook movement-hindering-modes) (add-hook hook 'movement-minor-mode))
-
-
-;; not sure what this does
-;;(add-to-list 'minor-mode-alist '(movement-minor-mode movement-minor-mode) t)
-;; (add-to-list 'minor-mode-map-alist `(movement-minor-mode . ,movement-mode-map) t)
-
+;; contrib-functions
+(G (kbd "C-c C-r") 'rename-file-and-buffer)
 
 (eval-after-load 'dired
   ;; Brash Bindings C-h C-k C-o C-t C-S-b C-n C-p M-everything
+  ;; M-o dired-omit-mode
   '(progn
      (define-key dired-mode-map (kbd "C-t") `previous-multiframe-window)
      (define-key dired-mode-map (kbd "C-h") `other-window)
@@ -249,7 +182,7 @@
 
 
 (eval-after-load 'shell
-  ;; Brash Bindings: C-d, C-e, C-s, C-., M-RET, M-?, C-M-l, M-n, M-p, M-r  
+  ;; Brash Bindings: C-d, C-e, C-s, C-., M-RET, M-?, C-M-l, M-n, M-p, M-r
   '(progn
      (define-key shell-mode-map (kbd "M-r") 'subword-forward)
      (define-key shell-mode-map (kbd "M-n") 'forward-char)
@@ -289,4 +222,11 @@
 ;; mode-hooks
 ;; (apropos-variable "-mode-hook$" (quote (4)))
 
+;; needs placement:
+;; extend-selection
+;; org-set-tags-to
+;; find-lisp-find-dired
+;; find-lisp-find-dired-subdirectories
+;; wl-summary-yank-saved-message
+;; wl-summary-save-current-message
 
