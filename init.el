@@ -59,10 +59,10 @@
           :type builtin
           :after (progn ()
                         (flyspell-mode 1)
-                        (setq ispell-program-name "")
-                        (if (string-match "apple-darwin" system-configuration)
-                            "/usr/local/bin/ispell"
-                          "/usr/bin/ispell")))
+                        (setq ispell-program-name
+                              (if (string-match "apple-darwin" system-configuration)
+                                  "/usr/local/bin/ispell"
+                                "/usr/bin/ispell"))))
    (:name ruby
           :type builtin
           :after (progn ()
