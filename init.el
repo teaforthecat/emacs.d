@@ -59,12 +59,16 @@
           :type builtin
           :after (progn ()
                         (flyspell-mode 1)
-                        (setq ispell-program-name "/usr/local/bin/ispell")))
+                        (setq ispell-program-name "")
+                        (if (string-match "apple-darwin" system-configuration)
+                            "/usr/local/bin/ispell"
+                          "/usr/bin/ispell")))
    (:name ruby
           :type builtin
           :after (progn ()
                    (add-to-list 'auto-mode-alist '("\\.rake" . ruby-mode))
                    (add-to-list 'auto-mode-alist '("GemFile" . ruby-mode))
+                   (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
                    (add-hook 'ruby-mode-hook
                              (lambda ()
                                (rvm-activate-corresponding-ruby)
