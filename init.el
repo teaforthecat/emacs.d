@@ -4,7 +4,7 @@
 ;; (add-to-list 'load-path "~/.emacs.d/ergoemacs-keybindings-5.3.4")
 (add-to-list 'load-path "~/.emacs.d")
 (require 'reset)
-
+(setq apple (eq system-type 'darwin))
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
