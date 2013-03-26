@@ -11,5 +11,5 @@
 
 ;;(setq org-mobile-files )
 
-(add-to-list 'kill-emacs-hook 'org-mobile-push)
-(add-hook 'after-init-hook 'org-mobile-pull)
+;(add-to-list 'kill-emacs-hook 'org-mobile-push)
+;(add-hook 'after-init-hook 'org-mobile-pull)
