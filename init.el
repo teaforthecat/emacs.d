@@ -58,7 +58,6 @@
    (:name flyspell
           :type builtin
           :after (progn ()
-                        (flyspell-mode 1)
                         (setq ispell-program-name
                               (if (string-match "apple-darwin" system-configuration)
                                   "/usr/local/bin/ispell"
@@ -72,7 +71,8 @@
                    (add-hook 'ruby-mode-hook
                              (lambda ()
                                (rvm-activate-corresponding-ruby)
-                               (flyspell-prog-mode)))))
+                               (flyspell-prog-mode)
+                               (flyspell-mode 0)))))
 
    ;; non-builtin
    (:name autopair
@@ -147,8 +147,8 @@
        (loop for src in el-get-sources
 	     collect (el-get-source-name src))))
 
-(if (eq system-type 'darwin)
-  (setq apple t))
+;(if (eq system-type 'darwin)
+;  (setq apple t))
 
 (unless apple
   ;;doesn't compile on mac
@@ -175,6 +175,7 @@
 (add-hook 'write-contents-functions 'delete-trailing-whitespace)
 (display-time)
 (global-visual-line-mode t)
+(flyspell-mode 0)
 
 ;; ready
 (server-mode t)
