@@ -121,8 +121,8 @@
       '( ace-jump-mode
         cl-lib clojure-mode color-theme
         dash dired+ dired-details+ django-mode
-        el-get emacs-w3m eproject
-        flymake-python-pyflakes feature-mode fullscreen 
+        el-get emacs-w3m eproject expand-region
+        flymake-python-pyflakes feature-mode flymake-ruby;; fullscreen
         haml-mode htmlize
         ioccur
         js2-mode js-comint json-mode
