@@ -176,6 +176,8 @@
 (display-time)
 (global-visual-line-mode t)
 (flyspell-mode 0)
+(set-cursor-color "#ffff00")
+
 
 ;; ready
 (server-mode t)
