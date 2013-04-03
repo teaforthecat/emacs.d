@@ -16,6 +16,10 @@
 (fset 'comma-space
    "\363,\C-m ")
 
+;; embed previous word in ruby string as this => "#{this}"
+(fset 'embed-in-ruby-string
+   [?\C-  ?\M-g ?\" ?\M-h ?\C-  ?\M-g ?\{ ?\M-h ?# ?\C-u ?\C-  ?\M-n])
+
 
 ;; (fset 'start-server
 ;;    (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([134217825 115 104 101 tab return 118 105 114 116 101 110 118 return 99 100 return 99 100 32 119 tab 97 tab return 46 47 109 97 110 tab 117 110 backspace backspace 114 117 110 115 101 114 118 101 114 return] 0 "%d")) arg)))
