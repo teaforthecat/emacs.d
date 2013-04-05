@@ -176,7 +176,7 @@
 (display-time)
 (global-visual-line-mode t)
 (flyspell-mode 0)
-(set-cursor-color "#ffff00")
+
 
 
 ;; ready
@@ -191,6 +191,7 @@
           (lambda ()
             (load-theme 'misterioso t)
             (switch-to-buffer-other-window (get-buffer "*scratch*"))
+            (set-cursor-color "#ffff00")
             (spawn-shell "*local*")))
 ;; GO!
 (if (eq system-type 'darwin)
