@@ -131,7 +131,7 @@
         magit markdown-mode
         nrepl
         org org-publish
-        pianobar  private puppet-mode python pylookup
+        pairedit pianobar  private puppet-mode python pylookup
         redo+ rinari rhtml-mode rspec-mode ruby-end
                                         ;ruby-electric conficts with pair
         rvm
