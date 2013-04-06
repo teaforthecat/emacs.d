@@ -10,10 +10,12 @@
 (add-hook 'comint-output-filter-functions 'comint-truncate-buffer)
 
 (defun stewart-shell ()
+  (interactive)
   (let ((default-directory "/ssh:stewart:"))
     (shell "*stewart*")))
 
 (defun colbert-shell ()
+  (interactive)
   (let ((default-directory "/ssh:colbert:"))
     (shell "*colbert*")))
 
