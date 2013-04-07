@@ -5,6 +5,10 @@
   (look-for "init.el")
   :irrelevant-files ("el-get/.*"))
 
+(define-project-type clojure (generic)
+  (look-for "project.clj")
+  :irrelevant-files ("logs/.*" "target/*"))
+
 (define-project-type ruby-on-rails (generic)
   (and (look-for "Gemfile") (look-for "config/application.rb"))
 
