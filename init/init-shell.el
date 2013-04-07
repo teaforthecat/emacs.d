@@ -24,3 +24,16 @@
 ;;           (lambda ()
 ;;             (set (make-local-variable 'comint-file-name-prefix)
 ;;                  (or (file-remote-p default-directory) ""))))
+
+
+;; made for the zeus start command
+(defun ansi-pre-command-truncate-buffer (&optional _string)
+  "honor the ansi command to clear text"
+  (if (string-match "\\[19A" _string)
+      (progn
+        (delete-region (point-min) (point-max))
+        (substring _string 5))
+    _string))
+
+
+(add-hook 'comint-preoutput-filter-functions 'ansi-pre-command-truncate-buffer)
