@@ -71,7 +71,7 @@
 ;yp.,'
 (M ";" 'undo-tree-undo)
 (M ":" 'undo-tree-redo)
-(M y   'browse-kill-ring)        ;timid
+;; (M y   'yank-pop)        ;default 
 (M p   'subword-kill)
 (M "." 'subword-backward-kill)
 (M "'" 'ido-switch-buffer-other-window) ;timid
@@ -116,7 +116,7 @@
 (C a 'mark-whole-buffer)
 
 (C k 'kill-whole-line)
-
+;; (C y 'yank) ;;default
 
 ; function keys
 (global-set-key (kbd "C-<f5>") 'ispell-complete-word)
