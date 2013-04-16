@@ -74,7 +74,8 @@
 ;; (M y   'yank-pop)        ;default 
 (M p   'subword-kill)
 (M "." 'subword-backward-kill)
-(M "'" 'ido-switch-buffer-other-window) ;timid
+;; (M "'" 'ido-switch-buffer-other-window) ;timid
+(M "'" 'speedbar)
 ;54321`
 (M 5 'query-replace)
 (M 4 'split-window-horizontally)
@@ -231,3 +232,4 @@
 ;; wl-summary-yank-saved-message
 ;; wl-summary-save-current-message
 
+;; speedbar-toggle-show-all-files

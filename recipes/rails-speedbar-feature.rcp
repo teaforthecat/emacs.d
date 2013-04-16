@@ -1,0 +1,5 @@
+(:name rails-speedbar-feature
+       :type http
+       :url "https://github.com/remvee/emacs-rails/raw/master/rails-speedbar-feature.el"
+       :depends (rails-project)
+       :features rails-speedbar-feature)
