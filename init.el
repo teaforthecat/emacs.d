@@ -84,7 +84,9 @@
    (:name  coffee-mode
            :after (progn
                     (add-to-list 'auto-mode-alist '("\\.coffee" . coffee-mode))
-                    (add-to-list 'auto-mode-alist '("\\.coffee\\.erb" . coffee-mode))))
+                    (add-to-list 'auto-mode-alist '("\\.coffee\\.erb" . coffee-mode))
+                    (add-hook 'coffee-mode-hook
+                              '(lambda() (set (make-local-variable 'tab-width) 2)))))
    (:name emacs-w3m
           :after (progn ()
                         (setq browse-url-browser-function 'w3m-browse-url)))
