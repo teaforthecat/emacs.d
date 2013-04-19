@@ -124,7 +124,7 @@
         cl-lib clojure-mode color-theme
         dash dired+ dired-details+ django-mode
         el-get emacs-w3m eproject expand-region
-        flymake-python-pyflakes feature-mode flymake-ruby;; fullscreen
+        flymake-python-pyflakes feature-mode flymake-ruby
         haml-mode htmlize
         ioccur
         js2-mode js-comint json-mode
@@ -155,6 +155,9 @@
 (unless apple
   ;;doesn't compile on mac
   (add-to-list 'recipes 'emacs-jabber))
+(unless apple
+  ;; uses ns-fullscreen
+  (add-to-list 'recipes 'fullscreen))
 
 ;;#needs to be set before packages initialize
 (if apple
