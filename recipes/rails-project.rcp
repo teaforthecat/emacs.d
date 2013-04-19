@@ -1,0 +1,4 @@
+(:name rails-project
+       :type http
+       :url "https://github.com/remvee/emacs-rails/raw/master/rails-project.el"
+       :features rails-project)

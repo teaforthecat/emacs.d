@@ -71,10 +71,11 @@
 ;yp.,'
 (M ";" 'undo-tree-undo)
 (M ":" 'undo-tree-redo)
-(M y   'browse-kill-ring)        ;timid
+;; (M y   'yank-pop)        ;default 
 (M p   'subword-kill)
 (M "." 'subword-backward-kill)
-(M "'" 'ido-switch-buffer-other-window) ;timid
+;; (M "'" 'ido-switch-buffer-other-window) ;timid
+(M "'" 'speedbar)
 ;54321`
 (M 5 'query-replace)
 (M 4 'split-window-horizontally)
@@ -116,7 +117,7 @@
 (C a 'mark-whole-buffer)
 
 (C k 'kill-whole-line)
-
+;; (C y 'yank) ;;default
 
 ; function keys
 (global-set-key (kbd "C-<f5>") 'ispell-complete-word)
@@ -231,3 +232,4 @@
 ;; wl-summary-yank-saved-message
 ;; wl-summary-save-current-message
 
+;; speedbar-toggle-show-all-files

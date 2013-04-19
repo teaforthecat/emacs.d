@@ -117,14 +117,13 @@
 
    ))
 
-;; future recipe: http://gitorious.org/emacs-rails/emacs-rails/blobs/master/rails-speedbar-feature.el
-
 (setq recipes
       '( ace-jump-mode
         cl-lib clojure-mode color-theme
         dash dired+ dired-details+ django-mode
         el-get emacs-w3m eproject expand-region
         flymake-python-pyflakes feature-mode flymake-ruby
+        goto-last-change
         haml-mode htmlize
         ioccur
         js2-mode js-comint json-mode
@@ -133,10 +132,10 @@
         magit markdown-mode
         nrepl
         org org-publish
-        pairedit pianobar  private puppet-mode python pylookup
-        redo+ rinari rhtml-mode rspec-mode ruby-end
+        paredit pianobar  private puppet-mode python pylookup
+        rainbow-delimiters redo+ rinari rhtml-mode rspec-mode ruby-end
                                         ;ruby-electric conficts with pair
-        rvm
+        rails-speedbar-feature rvm
         sass-mode smooth-scrolling
         wanderlust
         yaml-mode
@@ -182,6 +181,20 @@
 (global-visual-line-mode t)
 (flyspell-mode 0)
 
+(setq speedbar-show-unknown-files t)
+(setq speedbar-frame-parameters '((minibuffer)
+                                 (width . 60)
+                                 (border-width . 0)
+                                 (menu-bar-lines . 0)
+                                 (tool-bar-lines . 0)
+                                 (unsplittable . t)
+                                 (left-fringe . 0)))
+
+;;(setq w3m-key-binding 'info)
+
+;; PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+;; PATH=~/bin:/usr/local/bin:$PATH
 
 
 ;; ready
