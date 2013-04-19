@@ -19,6 +19,18 @@
   (let ((default-directory "/ssh:colbert:"))
     (shell "*colbert*")))
 
+(defun citra-shell ()
+  (interactive)
+  (let ((default-directory "/ssh:citra:"))
+    (shell "*citra*")))
+
+(defun zeus-start ()
+  (interactive)
+  (shell "*zeus-start*")
+  (insert "zeus start")
+  (comint-send-input)
+  (buffer-disable-undo))
+
 ;; needs testing:
 ;; (add-hook 'comint-mode-hook
 ;;           (lambda ()
