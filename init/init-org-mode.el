@@ -7,7 +7,7 @@
 (setq org-tags-alist '(pd collections emacs))
 
 (setq org-todo-keywords
-       '((sequence "TODO(t)" "WAIT(w@)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELED(c@)")))
+       '((sequence "TODO(t)" "REFILE(r)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELED(c@)")))
 
 (setq org-capture-templates '(("t" "Todo" entry
                                (file+headline "~/Dropbox/org/refile.org" "Tasks")
@@ -22,8 +22,9 @@
                                (file+headline "reference.org" "Reference")
                                "* TODO %^{Brief Description}\n%a\n%?Added: %U\n" :prepend t)
                               ("j" "Journal" entry
-                               (file+headline "~/Dropbox/org/journal.org" "")
-                               "\n %^{topic} %T \n%i%?\n" :prepend t)))
+                               (file+headline "~/Dropbox/org/journal.org" "Quick Thoughts")
+                               "* REFILE %^{Brief Description}\n%a\n%?Added: %U\n" :prepend t)
+                              ))
 
 (setq org-agenda-diary-file "~/Dropbox/org/.diary")
 
@@ -53,5 +54,5 @@
 ;; Fontify org-mode code blocks
 (setq org-src-fontify-natively t)
 
-(require 'org-import-icalendar)
-(setq org-import-icalendar-filename "cal.org")
+;; (require 'org-import-icalendar)
+;; (setq org-import-icalendar-filename "cal.org")
