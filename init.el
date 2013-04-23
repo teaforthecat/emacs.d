@@ -39,7 +39,10 @@
 
    (:name ibuffer
           :type builtin)
-   (:name org-mobile :type builtin)
+   (:name org-mobile
+          :type builtin)
+   (:name org-mode
+          :type builtin)
    (:name ido
           :type builtin)
    (:name tramp
@@ -120,7 +123,7 @@
 (setq recipes
       '( ace-jump-mode
         cl-lib clojure-mode color-theme
-        dash dired+ dired-details+ django-mode
+        dash dictionary dired+ dired-details+ django-mode
         el-get emacs-w3m eproject expand-region
         flymake-python-pyflakes feature-mode flymake-ruby
         goto-last-change
@@ -210,7 +213,9 @@
             (load-theme 'misterioso t)
             (switch-to-buffer-other-window (get-buffer "*scratch*"))
             (set-cursor-color "#ffff00")
-            (spawn-shell "*local*")))
+            (org-agenda-list)
+            (spawn-shell "*local*")
+            (delete-other-windows)))
 ;; GO!
 (if (eq system-type 'darwin)
     (ns-toggle-fullscreen)
