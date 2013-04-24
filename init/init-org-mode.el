@@ -12,6 +12,11 @@
 (setq org-capture-templates '(("t" "Todo" entry
                                (file+headline "~/Dropbox/org/refile.org" "Tasks")
                                "* TODO %^{Brief Description} %^g\n%?\nAdded: %U" :prepend t)
+
+                              ("s" "ScoutTracker" entry
+                               (file+headline "~/ruby/scout-tracker/project.org" "Cards")
+                               "* TODO %^{Brief Description} %^g\n%?\nAdded: %U" :prepend t)
+
                               ("w" "WorkAgenda" entry
                                (file+headline "~/Dropbox/org/agendas/walker.org" "Walker")
                                "* TODO %^{Brief Description}\n%a\n%?Added: %U\n" :prepend t)

@@ -9,6 +9,11 @@
 
 (add-hook 'comint-output-filter-functions 'comint-truncate-buffer)
 
+(defun recon-shell ()
+  (interactive)
+  (let ((default-directory "/ssh:recon:"))
+    (shell "*recon*")))
+
 (defun stewart-shell ()
   (interactive)
   (let ((default-directory "/ssh:stewart:"))
