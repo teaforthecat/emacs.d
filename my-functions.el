@@ -1,21 +1,32 @@
+(defmacro interact-with (name compilation)
+  `(list ,compilation
+         (switch-to-buffer-other-window "*compilation*")
+         (shell-mode)
+         (toggle-read-only -1)
+         (end-of-buffer)
+         (unwind-protect
+             (rename-buffer ,name)
+           (rename-uniquely))))
+
+
 (defun spawn-shell (name &optional cmds)
   "Invoke shell in buffer NAME with optional list of COMMANDS"
   (interactive "MName of shell buffer to create: ")
 
   (if (get-buffer name)
-      (progn 
-        (setq ss-buffer (get-buffer name)))    
-    (progn (setq ss-buffer (get-buffer-create 
-                            (generate-new-buffer-name name)))
-           (shell ss-buffer)))
+      (progn
+        (setq ss-buffer (get-buffer name)))
+    (progn
+      (setq ss-buffer (get-buffer-create
+                       (generate-new-buffer-name name)))
+      (shell ss-buffer)))
 
   (pop-to-buffer (get-buffer-create ss-buffer))
   (if cmds
       (progn
-        (loop for cmd in cmds do         
-              (process-send-string nil cmd ))
-        (comint-send-input))))
-
+        (loop for cmd in cmds do
+              (process-send-string nil cmd )
+              (comint-send-input)))))
 
 (defun shell-clear ()
   (interactive)
@@ -39,77 +50,21 @@
   (interact-with "*PRODUCTION CONSOLE*"
    (compile "ssh deployer@citra cd collections \\&\\& ./bin/rails c")))
 
-(defmacro interact-with (name compilation)
-  `(list ,compilation
-         (switch-to-buffer-other-window "*compilation*")
-         (shell-mode)
-         (toggle-read-only -1)
-         (end-of-buffer)
-         (unwind-protect
-             (rename-buffer ,name)
-           (rename-uniquely))))
-
 (defun zeus-console ()
   (interactive)
-  (interact-with "console"
+  (interact-with "*console*"
    (compile "./bin/zeus c")))
 
-(defun lookup-word-def() 
-  (interactive)
-  (let (myword myurl) 
-    (setq myword (if (and transient-mark-mode mark-active) 
-                     (buffer-substring-no-properties (region-beginning)(region-end))
-                   (thing-at-point 'symbol)))
-    
-    (let ((dict-buffer (get-buffer-create "*Dictionary buffer*")))
-      (save-excursion 
-        (buffer-disable-undo (set-buffer dict-buffer))
-        (setq buffer-read-only nil)
-        (setq disable-point-adjustment t)
-        (erase-buffer)
-        (display-buffer dict-buffer)
-        
-        (dictionary-new-search (cons myword "wn"))      
-        (setq buffer-read-only t)
-        (goto-char (point-min))
-        ))))
 
 ;; pdbtrack
-(defun run-selenium () 
+(defun run-selenium ()
   (interactive)
   (setq buffer-name "selenium-webdriver")
-  (switch-to-buffer-other-window 
+  (switch-to-buffer-other-window
    (apply 'make-comint buffer-name "/usr/bin/java" nil '( "-jar" "/home/cthompson/src/selenium-2.1.0/selenium-server-standalone-2.1.0.jar"))))
 
 
 
-
-
-
-;; (defun django-runfeature (feature-buffer)
-;;   (interactive "b")
-;;   (let 
-;;       ;;problem with let
-;;       (new-buffer-name (concat (buffer-name feature-buffer) "-run")
-;;       project-dir "/home/cthompson/wactemp/"
-;;       manage (concat project-dir  "manage.py")))
-;;   (message new-buffer-name)
-;;   (cd project-dir)
-;;   (if (not (equal (buffer-name) new-buffer-name))
-;;       (switch-to-buffer-other-window
-;;        (apply 'make-comint new-buffer-name manage nil '("harvest" feature "--settings=test_settings")))
-;;     (progn 
-;;       (comint-quit-subjob)
-;;       (apply 'make-comint buffer-name manage nil '("harvest" feature "--settings=test_settings")))))
-
-
-  ;; (make-local-variable 'comint-prompt-regexp)
-
-  ;; (setq comint-prompt-regexp (concat py-shell-input-prompt-1-regexp "\\|"
-  ;;                                    py-shell-input-prompt-2-regexp "\\|"
-  ;;                                    "^([Pp]db) "))
-  ;; (add-hook 'comint-output-filter-functions
-  ;;           'py-comint-output-filter-function))))
 
 
 
