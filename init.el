@@ -39,7 +39,10 @@
 
    (:name ibuffer
           :type builtin)
-   (:name org-mobile :type builtin)
+   (:name org-mobile
+          :type builtin)
+   (:name org-mode
+          :type builtin)
    (:name ido
           :type builtin)
    (:name tramp
@@ -84,7 +87,9 @@
    (:name  coffee-mode
            :after (progn
                     (add-to-list 'auto-mode-alist '("\\.coffee" . coffee-mode))
-                    (add-to-list 'auto-mode-alist '("\\.coffee\\.erb" . coffee-mode))))
+                    (add-to-list 'auto-mode-alist '("\\.coffee\\.erb" . coffee-mode))
+                    (add-hook 'coffee-mode-hook
+                              '(lambda() (set (make-local-variable 'tab-width) 2)))))
    (:name emacs-w3m
           :after (progn ()
                         (setq browse-url-browser-function 'w3m-browse-url)))
@@ -118,9 +123,9 @@
 (setq recipes
       '( ace-jump-mode
         cl-lib clojure-mode color-theme
-        dash dired+ dired-details+ django-mode
+        dash dictionary dired+ dired-details+ django-mode
         el-get emacs-w3m eproject expand-region
-        flymake-python-pyflakes feature-mode flymake-ruby;; fullscreen
+        flymake-python-pyflakes feature-mode flymake-ruby
         goto-last-change
         haml-mode htmlize
         ioccur
@@ -152,6 +157,9 @@
 (unless apple
   ;;doesn't compile on mac
   (add-to-list 'recipes 'emacs-jabber))
+(unless apple
+  ;; uses ns-fullscreen
+  (add-to-list 'recipes 'fullscreen))
 
 ;;#needs to be set before packages initialize
 (if apple
@@ -205,7 +213,9 @@
             (load-theme 'misterioso t)
             (switch-to-buffer-other-window (get-buffer "*scratch*"))
             (set-cursor-color "#ffff00")
-            (spawn-shell "*local*")))
+            (org-agenda-list)
+            (spawn-shell "*local*")
+            (delete-other-windows)))
 ;; GO!
 (if (eq system-type 'darwin)
     (ns-toggle-fullscreen)
