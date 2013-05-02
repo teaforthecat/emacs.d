@@ -1,4 +1,3 @@
-
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (add-to-list 'load-path "~/.emacs.d/contrib")
 ;; (add-to-list 'load-path "~/.emacs.d/ergoemacs-keybindings-5.3.4")
@@ -138,7 +137,7 @@
         paredit pianobar  private puppet-mode python pylookup
         rainbow-delimiters redo+ rinari rhtml-mode rspec-mode ruby-end
                                         ;ruby-electric conficts with pair
-        rails-speedbar-feature rvm
+        robe rails-speedbar-feature rvm
         sass-mode smooth-scrolling
         wanderlust
         yaml-mode
@@ -149,7 +148,7 @@
       (append
        recipes
        (loop for src in el-get-sources
-	     collect (el-get-source-name src))))
+             collect (el-get-source-name src))))
 
 ;(if (eq system-type 'darwin)
 ;  (setq apple t))
@@ -157,7 +156,9 @@
 (unless apple
   ;;doesn't compile on mac
   (add-to-list 'recipes 'emacs-jabber))
-(unless apple
+
+;; fullscreen is a wiki package so it may not be available at startup
+(unless (and apple (file-exists-p (el-get-recipe-filename 'fullscreen)))
   ;; uses ns-fullscreen
   (add-to-list 'recipes 'fullscreen))
 
@@ -208,6 +209,8 @@
 ;;                                (or (get-buffer "timelog.org")
 ;;                                    (get-buffer "*scratch*") ))))
 
+(add-hook 'before-save-hook 'whitespace-cleanup)
+
 (add-hook 'after-init-hook
           (lambda ()
             (load-theme 'misterioso t)
@@ -216,10 +219,12 @@
             (org-agenda-list)
             (spawn-shell "*local*")
             (delete-other-windows)))
-;; GO!
-(if (eq system-type 'darwin)
-    (ns-toggle-fullscreen)
-  (fullscreen))
+
+(add-hook 'after-init-hook
+          ;; GO!
+          (lambda () (if (eq system-type 'darwin)
+                      (ns-toggle-fullscreen)
+                    (fullscreen))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
