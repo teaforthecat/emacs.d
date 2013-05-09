@@ -194,6 +194,11 @@
                                  (unsplittable . t)
                                  (left-fringe . 0)))
 
+
+;;(setq window-min-width  80)    ;; 4 windows
+(setq window-min-width  90)      ;; 2 windows
+(setq window-min-height 90)      ;; no vertical splits
+
 ;;(setq w3m-key-binding 'info)
 
 ;; PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
