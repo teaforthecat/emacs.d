@@ -1,3 +1,25 @@
+(defun query-camel-to-dash ()
+  (interactive)
+  ;; sidenote
+  ;; "\\,(func whatever)" only works in interactive mode of q-r-r
+  (query-replace-regexp "\\([a-z]\\)\\([A-Z]\\)" 
+                        '(replace-eval-replacement 
+                          concat "\\1-" (replace-quote (downcase (match-string 2))))
+                        nil 
+                        (if (and transient-mark-mode mark-active) (region-beginning))
+                        (if (and transient-mark-mode mark-active) (region-end))))
+
+
+(setq find-for-el-etags
+      "find .  \(  -path ./el-get \) -prune -o -name \"*.el\"  -print | etags -" )
+
+(setq find-for-rails-etags
+      "ctags -e -a --Ruby-kinds=-fFcm -o TAGS -R .")
+
+(defun set-tab-width-two ()
+  (interactive)
+  (set (make-local-variable 'tab-width) 2))
+
 (defmacro interact-with (name compilation)
   `(list ,compilation
          (switch-to-buffer-other-window "*compilation*")
