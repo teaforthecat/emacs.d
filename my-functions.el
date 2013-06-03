@@ -9,6 +9,17 @@
                         (if (and transient-mark-mode mark-active) (region-beginning))
                         (if (and transient-mark-mode mark-active) (region-end))))
 
+(defun query-fix-hash-rockets ()
+  (interactive)
+  ;; needs Non-space regex matcher instead of letters
+  ;; also maybe check for more than one space.
+  (query-replace-regexp "\\([a-z]\\)=>\\([a-z]\\)"
+                        '(replace-eval-replacement 
+                          concat (match-string 1) " => " (match-string 2))
+                        nil 
+                        (if (and transient-mark-mode mark-active) (region-beginning))
+                        (if (and transient-mark-mode mark-active) (region-end))))
+
 
 (setq find-for-el-etags
       "find .  \(  -path ./el-get \) -prune -o -name \"*.el\"  -print | etags -" )
