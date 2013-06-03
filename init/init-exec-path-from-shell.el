@@ -1,0 +1,7 @@
+(add-hook 'after-init-hook '(lambda ()
+                                  (exec-path-from-shell-initialize)
+                                  (exec-path-from-shell-copy-env "ORACLE_HOME")
+                                  (exec-path-from-shell-copy-env "NLS_LANG")
+                                  (exec-path-from-shell-copy-env "LD_LIBRARY_PATH")
+                                  (exec-path-from-shell-copy-env "TNS_ADMIN")
+                                  ))

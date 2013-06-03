@@ -1,3 +1,4 @@
+(require 'dired-x) ;;dired-omit-mode exists here in a built-in
 
 (setq dired-omit-files "^\\..*|.*~$")
 
@@ -6,4 +7,3 @@
             (dired-omit-mode 1)))
 
 (put 'dired-find-alternate-file 'disabled nil)
-

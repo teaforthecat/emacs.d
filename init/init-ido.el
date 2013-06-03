@@ -5,17 +5,34 @@
 (setq ido-use-virtual-buffers t) ;remember previously opened files
 (ido-mode t)
 (ido-everywhere t) ;ido.el both files and buffers
-;; (add-hook 'ido-setup-hook 'ido-my-keys)
+(add-hook 'ido-setup-hook 'ido-my-keys)
 ;; change keybindings here
+(defun ido-my-keys ()
+  "Add my keybindings for ido."
+  (define-key ido-completion-map " " 'ido-next-match)
+  )
 
-(defun ido-find-file-in-tag-files ()
+
+(defun my-ido-find-tag ()
+  "Find a tag using ido"
   (interactive)
-  (save-excursion 
+  (tags-completion-table)
+  (let (tag-names)
+    (mapatoms (lambda (x)
+                (push (prin1-to-string x t) tag-names))
+              tags-completion-table)
+    (find-tag (ido-completing-read "Tag: " tag-names))))
+
+(defun my-ido-find-file-in-tag-files ()
+  (interactive)
+  (save-excursion
     (let ((enable-recursive-minibuffers t))
       (visit-tags-table-buffer))
-    (ido-completing-read "Project File: "
-                         (tags-table-files)
-                         nil t)))
+    (find-file
+     (expand-file-name
+      (ido-completing-read
+       "Project file: " (tags-table-files) nil t)))))
+
 
 ;; http://emacswiki.org/emacs/InteractivelyDoThings
 ;; this function is more helpfull than the one below
@@ -39,8 +56,8 @@
 
 
 ;; http://emacswiki.org/emacs/InteractivelyDoThings
- (defun rgr/ido-erc-buffer()
-   "nice example of programattically using ido"
+(defun rgr/ido-erc-buffer()
+  "nice example of programattically using ido"
   (interactive)
   (switch-to-buffer
    (ido-completing-read "Channel:" 

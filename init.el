@@ -1,3 +1,5 @@
+;;(require 'package)
+
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (add-to-list 'load-path "~/.emacs.d/contrib")
 ;; (add-to-list 'load-path "~/.emacs.d/ergoemacs-keybindings-5.3.4")
@@ -7,7 +9,7 @@
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+                         ("melpa" . "http://melpa.milkbox.net/packages/") ))
 
 
 (unless (require 'el-get nil 'noerror)
@@ -64,7 +66,7 @@
                               (if (string-match "apple-darwin" system-configuration)
                                   "/usr/local/bin/ispell"
                                 "/usr/bin/ispell"))))
-   (:name ruby
+   (:name ruby-mode
           :type builtin
           :after (progn ()
                    (add-to-list 'auto-mode-alist '("\\.rake" . ruby-mode))
@@ -73,6 +75,7 @@
                    (add-hook 'ruby-mode-hook
                              (lambda ()
                                (rvm-activate-corresponding-ruby)
+                               (ruby-end-mode)
                                (flyspell-prog-mode)
                                (flyspell-mode 0)))))
 
@@ -87,8 +90,7 @@
            :after (progn
                     (add-to-list 'auto-mode-alist '("\\.coffee" . coffee-mode))
                     (add-to-list 'auto-mode-alist '("\\.coffee\\.erb" . coffee-mode))
-                    (add-hook 'coffee-mode-hook
-                              '(lambda() (set (make-local-variable 'tab-width) 2)))))
+                    (add-hook 'coffee-mode-hook 'set-tab-width-two)))
    (:name emacs-w3m
           :after (progn ()
                         (setq browse-url-browser-function 'w3m-browse-url)))
@@ -123,22 +125,24 @@
       '( ace-jump-mode
         cl-lib clojure-mode color-theme
         dash dictionary dired+ dired-details+ django-mode
-        el-get emacs-w3m eproject expand-region
-        flymake-python-pyflakes feature-mode flymake-ruby
+        el-get emacs-w3m eproject expand-region exec-path-from-shell
+        feature-mode find-things-fast find-file-in-repository
+        flymake-python-pyflakes flymake-ruby 
+        fullscreen
         goto-last-change
-        haml-mode htmlize
+        haml-mode helm htmlize
         ioccur
-        js2-mode js-comint json-mode
+        jabber js2-mode js-comint json-mode
         key-chord
         list-register
-        magit markdown-mode
+        magit markdown-mode multiple-cursors
         nrepl
         org org-publish
-        paredit pianobar  private puppet-mode python pylookup
+        paredit pianobar  puppet-mode python pylookup
         rainbow-delimiters redo+ rinari rhtml-mode rspec-mode ruby-end
                                         ;ruby-electric conficts with pair
         robe rails-speedbar-feature rvm
-        sass-mode smooth-scrolling
+        sass-mode smooth-scrolling ;; shell-command
         wanderlust
         yaml-mode
         zencoding-mode))
@@ -150,17 +154,13 @@
        (loop for src in el-get-sources
              collect (el-get-source-name src))))
 
-;(if (eq system-type 'darwin)
-;  (setq apple t))
 
-(unless apple
-  ;;doesn't compile on mac
-  (add-to-list 'recipes 'emacs-jabber))
-
-;; fullscreen is a wiki package so it may not be available at startup
-(unless (and apple (file-exists-p (el-get-recipe-filename 'fullscreen)))
+;; fullscreen is a wiki package so it may not be available at initial startup
+(unless (file-exists-p (el-get-recipe-filename 'fullscreen))
   ;; uses ns-fullscreen
-  (add-to-list 'recipes 'fullscreen))
+  (progn ()
+         (setq fullscreen-ready t)
+         (add-to-list 'recipes 'fullscreen)))
 
 ;;#needs to be set before packages initialize
 (if apple
@@ -179,12 +179,13 @@
 ; TEMPORARY:  to figure out vagrant compatibility across users
 (setenv "VAGRANTUP" "true")
 
+
 ; move to custom settings
 (add-hook 'write-contents-functions 'delete-trailing-whitespace)
 (display-time)
 (global-visual-line-mode t)
 (flyspell-mode 0)
-
+(setq visible-bell t)
 (setq speedbar-show-unknown-files t)
 (setq speedbar-frame-parameters '((minibuffer)
                                  (width . 60)
@@ -196,15 +197,16 @@
 
 
 ;;(setq window-min-width  80)    ;; 4 windows
-(setq window-min-width  90)      ;; 2 windows
-(setq window-min-height 90)      ;; no vertical splits
+(setq window-min-width  100)      ;; 2 windows
+;;(setq window-min-height 10)
 
 ;;(setq w3m-key-binding 'info)
 
 ;; PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 ;; PATH=~/bin:/usr/local/bin:$PATH
-
+(setq emacs-tags-table-list
+           '("~/.emacs.d" ".emacs.d/el-get"))
 
 ;; ready
 (server-mode t)
@@ -214,7 +216,17 @@
 ;;                                (or (get-buffer "timelog.org")
 ;;                                    (get-buffer "*scratch*") ))))
 
-(add-hook 'before-save-hook 'whitespace-cleanup)
+;; not at govdelivery, yet...
+;; (add-hook 'before-save-hook 'whitespace-cleanup)
+; (remove-hook 'before-save-hook 'whitespace-cleanup)
+
+
+;;
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/rails-minor-mode"))
+(require 'rails)
+(setq rails-tags-command "ctags -e --Ruby-kinds=cfmF -o %s -R %s") ;;all kinds, don't append
+(setq rails-tags-dirs '(".")) ;;all
+
 
 (add-hook 'after-init-hook
           (lambda ()
@@ -227,26 +239,26 @@
 
 (add-hook 'after-init-hook
           ;; GO!
-          (lambda () (if (eq system-type 'darwin)
-                      (ns-toggle-fullscreen)
-                    (fullscreen))))
+          (lambda ()
+            (fullscreen)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(diredp-compressed-file-suffix ((t (:foreground "dark Blue"))))
+ '(diredp-compressed-file-suffix ((t (:foreground "dark Blue"))) t)
+ '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))))
  '(magit-diff-add ((t (:foreground "chartreuse"))))
  '(magit-diff-del ((t (:foreground "red1"))))
  '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))))
  '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))))
- '(magit-item-highlight ((t nil)))
- '(diredp-compressed-file-suffix ((t (:foreground "dark Blue")))))
+ '(magit-item-highlight ((t nil))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(safe-local-variable-values (quote ((eval ignore-errors "Write-contents-functions is a buffer-local alternative to before-save-hook" (add-hook (quote write-contents-functions) (lambda nil (delete-trailing-whitespace) nil)) (require (quote whitespace)) "Sometimes the mode needs to be toggled off and on." (whitespace-mode 0) (whitespace-mode 1)) (whitespace-line-column . 80) (whitespace-style face trailing lines-tail) (require-final-newline . t) (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby"))))
  '(tab-always-indent (quote complete)))

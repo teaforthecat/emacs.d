@@ -54,3 +54,5 @@
 
 
 (add-hook 'comint-preoutput-filter-functions 'ansi-pre-command-truncate-buffer)
+
+(setq rinari-tags-file-name "TAGS")

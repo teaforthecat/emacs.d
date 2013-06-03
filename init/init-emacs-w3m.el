@@ -3,6 +3,8 @@
 
 ;;(require 'w3m-search)
 
+;;(require 'w3m-cookie) ;; helm, w3m-session requires this without declaring a dependency
+
 (setq w3m-use-cookies t)
 
 ;;(add-to-list 'w3m-search-engine-alist
