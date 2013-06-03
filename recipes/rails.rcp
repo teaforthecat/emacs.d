@@ -1,0 +1,5 @@
+(:name rails
+       :type github
+       :username "teaforthecat"
+       :pkg-name "remvee/emacs-rails"
+       :features rails)

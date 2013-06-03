@@ -141,7 +141,7 @@
         paredit pianobar  puppet-mode python pylookup
         rainbow-delimiters redo+ rinari rhtml-mode rspec-mode ruby-end
                                         ;ruby-electric conficts with pair
-        robe rails-speedbar-feature rvm
+        rails rails-speedbar-feature robe rvm
         sass-mode smooth-scrolling ;; shell-command
         wanderlust
         yaml-mode
@@ -222,8 +222,10 @@
 
 
 ;;
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/rails-minor-mode"))
-(require 'rails)
+;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/rails-minor-mode"))
+;; (require 'rails)
+
+
 (setq rails-tags-command "ctags -e --Ruby-kinds=cfmF -o %s -R %s") ;;all kinds, don't append
 (setq rails-tags-dirs '(".")) ;;all
 
