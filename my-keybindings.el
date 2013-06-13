@@ -165,7 +165,7 @@
      (define-key dired-mode-map (kbd "M-g" ) `keyboard-quit)
      (define-key dired-mode-map "e" `dired-up-directory)
      (define-key dired-mode-map "o" `dired-display-file)
-     (define-key dired-mode-map (kbd "M-o") `find-file)
+     (define-key dired-mode-map (kbd "M-o") `ido-switch-buffer-other-window)
      (define-key dired-mode-map "k" `dired-kill-subdir)))
 
 

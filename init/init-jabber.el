@@ -38,6 +38,8 @@
       '("--insecure" "--no-ca-verification")
 )
 
+(setq jabber-auto-reconnect t)
+
 ;; may want toggles
 (setq jabber-roster-line-format " %c %-25n %u %-8s  %S") 
 (setq jabber-roster-show-bindings t)

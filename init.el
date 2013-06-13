@@ -139,7 +139,7 @@
         nrepl
         org org-publish
         paredit pianobar  puppet-mode python pylookup
-        rainbow-delimiters redo+ rinari rhtml-mode rspec-mode ruby-end
+        rainbow-delimiters redo+ revive rinari rhtml-mode rspec-mode ruby-end
                                         ;ruby-electric conficts with pair
         rails rails-speedbar-feature robe rvm
         sass-mode smooth-scrolling ;; shell-command
@@ -180,6 +180,7 @@
 (setenv "VAGRANTUP" "true")
 
 
+
 ; move to custom settings
 (add-hook 'write-contents-functions 'delete-trailing-whitespace)
 (display-time)
@@ -196,8 +197,12 @@
                                  (left-fringe . 0)))
 
 
-;;(setq window-min-width  80)    ;; 4 windows
-(setq window-min-width  100)      ;; 2 windows
+(setq password-cache t)
+(setq password-cache-expiry (* 60 60 48)) #two days
+(setq use-dialog-box nil)
+
+;; (setq window-min-height  nil)    ;; 2 windows but breaks things
+(setq window-min-width  100)      ;; 4 windows
 ;;(setq window-min-height 10)
 
 ;;(setq w3m-key-binding 'info)
@@ -241,8 +246,10 @@
 
 (add-hook 'after-init-hook
           ;; GO!
-          (lambda ()
-            (fullscreen)))
+          (lambda ()            
+            (fullscreen)
+            (if (yes-or-no-p "connect jabber?") 
+                (jabber-connect-all))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

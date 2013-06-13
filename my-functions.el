@@ -1,5 +1,6 @@
 (defun query-camel-to-dash ()
   (interactive)
+  ;; tT -> t-t
   ;; sidenote
   ;; "\\,(func whatever)" only works in interactive mode of q-r-r
   (query-replace-regexp "\\([a-z]\\)\\([A-Z]\\)" 
@@ -11,6 +12,7 @@
 
 (defun query-fix-hash-rockets ()
   (interactive)
+  ;; t=>t -> t => t
   ;; needs Non-space regex matcher instead of letters
   ;; also maybe check for more than one space.
   (query-replace-regexp "\\([a-z]\\)=>\\([a-z]\\)"
