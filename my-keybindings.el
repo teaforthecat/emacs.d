@@ -110,12 +110,12 @@
 
 (C f 'sudo-find-file)
 
-; left hand - finders
+; the hotness
 (C 7 'my-ido-find-tag)
 (C 6 'my-ido-find-file-in-tag-files)
 (C 5 'find-lisp-find-dired)
 (C 4 'find-grep)
-(C 3 'find-file-at-point)
+(C 3 'find-file-at-point-with-line)
 (C 2 'find-file-in-repository)
 (C 1 'rails-grep-project)
 
