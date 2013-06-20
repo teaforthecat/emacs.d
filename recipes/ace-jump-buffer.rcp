@@ -1,0 +1,5 @@
+(:name ace-jump-buffer
+       :type git
+       :url "https://github.com/waymondo/ace-jump-buffer.git"
+       :features ace-jump-buffer
+       :post-init (progn () (ace-jump-buffer-mode t)))
