@@ -174,6 +174,7 @@
 
 (require 'contrib-functions)
 (require 'my-functions)
+(require 'my-macros)
 (require 'my-keybindings)
 
 ; TEMPORARY:  to figure out vagrant compatibility across users
