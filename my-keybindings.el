@@ -15,12 +15,11 @@
         (define-key movement-minor-mode-map key command))
     (global-set-key key command)))
 
-(defmacro C (key command &optional shift-command)
+(defmacro C (key command &optional shift-command movement)
   `(progn
-     (G (kbd ,(format "C-%s" key)) ,command)
+     (G (kbd ,(format "C-%s" key)) ,command ,movement)
      (if ,shift-command
-         (G (kbd ,(format "C-%s" (upcase (format "%s" key)))) ,shift-command ))))
-
+         (G (kbd ,(format "C-%s" (upcase (format "%s" key)))) ,shift-command ,movement))))
 
 (defmacro M (key command &optional shift-command movement)
  `(progn
@@ -30,6 +29,9 @@
 
 (defmacro M> (key command &optional shift-command)
   `(M ,key ,command ,shift-command 'movement))
+
+(defmacro C> (key command &optional shift-command)
+  `(C ,key ,command ,shift-command 'movement))
 
 
 ;; M Right Hand (movement)
@@ -61,7 +63,7 @@
 (M i   'kill-line)                      ;timid
 (M u   'delete-forward-char)
 (M e   'delete-backward-char 'subword-backward-kill)
-(M o   'ido-switch-buffer)              ;muscle conflicts with M-a
+(M> o   'ido-switch-buffer)              ;muscle conflicts with M-a
 (M a   'execute-extended-command)       ;dup of M-x
 ;xkjq;
 (M x 'execute-extended-command)         ;timid
@@ -96,8 +98,10 @@
 
 ; right hand
 (C d 'duplicate-line-or-region)
-(C h 'other-window)
-(C t 'previous-multiframe-window)
+(C> h '(lambda () (interactive)(other-window -1)))
+(C> t '(lambda () (interactive)(other-window  1)))
+;; (C> h 'previous-multiframe-window)
+;; (C> t 'next-multiframe-window)
 (C n 'forward-page)
 (C s 'save-buffer)
 (C b 'browse-kill-ring)
@@ -107,14 +111,14 @@
 (C f 'sudo-find-file)
 
 ; left hand - finders
-(C 6 'my-ido-find-file-in-tag-files)    ;important
-(C 5 'find-lisp-find-dired)             ;important
-(C 4 'find-grep)                        ;important
-(C 3 'find-file-at-point)               ;important
-;;(C 2 'my-ido-find-tag)                  ;broken
+(C 7 'my-ido-find-tag)
+(C 6 'my-ido-find-file-in-tag-files)
+(C 5 'find-lisp-find-dired)
+(C 4 'find-grep)
+(C 3 'find-file-at-point)
 (C 2 'find-file-in-repository)
-(C 1 'ioccur)                           ;important
-(C 7 'rinari-rgrep)
+(C 1 'rails-grep-project)
+
 
 (C p 'backward-page)
 (C i 'indent-for-tab-command)

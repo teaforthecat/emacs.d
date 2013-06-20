@@ -198,7 +198,7 @@
 
 
 (setq password-cache t)
-(setq password-cache-expiry (* 60 60 48)) #two days
+(setq password-cache-expiry nil) ;;duration of process
 (setq use-dialog-box nil)
 
 ;; (setq window-min-height  nil)    ;; 2 windows but breaks things
