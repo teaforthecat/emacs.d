@@ -13,7 +13,7 @@
   (kill-buffer)
   (jump-to-register :magit-fullscreen))
 
-;(define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
+(define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
 
 
 ;; whitespace toggle
@@ -33,11 +33,11 @@
   (setq magit-diff-options (remove "-w" magit-diff-options))
   (magit-refresh))
 
-;;(define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
+(define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
 
 
-;(magit-key-mode-insert-action
-; 'logging "p" "Paths" 'ofv-magit-log-for-paths)
+(magit-key-mode-insert-action
+ 'logging "p" "Paths" 'ofv-magit-log-for-paths)
 
 (defun ofv-magit-log-for-paths ()
   (interactive)
