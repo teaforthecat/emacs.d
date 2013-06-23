@@ -124,7 +124,7 @@
 (setq recipes
       '( ace-jump-mode
         cl-lib clojure-mode color-theme
-        dash dictionary dired+ dired-details+ django-mode
+        dash dictionary dired-details+ django-mode
         el-get emacs-w3m eproject expand-region exec-path-from-shell
         feature-mode find-things-fast find-file-in-repository
         flymake-python-pyflakes flymake-ruby 
@@ -139,10 +139,10 @@
         nrepl
         org org-publish
         paredit pianobar  puppet-mode python pylookup
-        rainbow-delimiters redo+ revive rinari rhtml-mode rspec-mode ruby-end
+        rainbow-delimiters redo+ rinari rhtml-mode rspec-mode ruby-end
                                         ;ruby-electric conficts with pair
         rails rails-speedbar-feature robe rvm
-        sass-mode smooth-scrolling ;; shell-command
+        sass-mode smooth-scrolling smex ;; shell-command
         wanderlust
         yaml-mode
         zencoding-mode))
@@ -243,13 +243,9 @@
             (set-cursor-color "#ffff00")
             (org-agenda-list)
             (spawn-shell "*local*")
-            (delete-other-windows)))
-
-(add-hook 'after-init-hook
-          ;; GO!
-          (lambda ()            
+            (delete-other-windows)
             (fullscreen)
-            (if (yes-or-no-p "connect jabber?") 
+            (if (yes-or-no-p "connect jabber?")
                 (jabber-connect-all))))
 
 (custom-set-faces

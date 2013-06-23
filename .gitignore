@@ -28,3 +28,8 @@ recipes/private.rcp
 /recipes/private.el
 /recipes/.config
 
+/.mc-lists.el
+/TAGS
+/image-dired/.image-dired_db
+/image-dired/.image-dired_temp
+/image-dired/*.thumb.*

@@ -3,8 +3,13 @@
 (setq ido-use-url-at-point t)
 ;;(setq ido-unc- stuff ) ; samba servers
 (setq ido-use-virtual-buffers t) ;remember previously opened files
+(setq ido-max-window-height 20)
+(setq ido-max-prospects 18)
+
 (ido-mode t)
 (ido-everywhere t) ;ido.el both files and buffers
+
+
 (add-hook 'ido-setup-hook 'ido-my-keys)
 ;; change keybindings here
 (defun ido-my-keys ()
@@ -54,6 +59,10 @@
   (interactive)
   (ido-for-mode "Shell:" 'shell-mode))
 
+(defun ido-ruby-buffer()
+  (interactive)
+  (ido-for-mode "Ruby file:" 'ruby-mode))
+
 
 ;; http://emacswiki.org/emacs/InteractivelyDoThings
 (defun rgr/ido-erc-buffer()
@@ -70,3 +79,8 @@
                                          (and (eq major-mode 'erc-mode)
                                               (buffer-name buf)))))
                                    (buffer-list)))))))
+
+;; vertical ido
+(setq ido-decorations (quote ("\n=> " "" "\n   " "\n   ..."
+                              "[" "]" " [No match]" " [Matched]"
+                              " [Not readable]" " [Too big]" " [Confirm]")))

@@ -160,6 +160,12 @@
 ;; contrib-functions
 (G (kbd "C-c C-r") 'rename-file-and-buffer)
 
+
+(G (kbd "H-s") 'ido-shell-buffer)
+(G (kbd "H-r") 'ido-ruby-buffer)
+
+
+
 (eval-after-load 'dired
   ;; Brash Bindings C-h C-k C-o C-t C-S-b C-n C-p M-everything
   ;; M-o dired-omit-mode
@@ -170,6 +176,7 @@
      (define-key dired-mode-map "e" `dired-up-directory)
      (define-key dired-mode-map "o" `dired-display-file)
      (define-key dired-mode-map (kbd "M-o") `ido-switch-buffer-other-window)
+     (define-key dired-mode-map (kbd "C-o") nil)
      (define-key dired-mode-map "k" `dired-kill-subdir)))
 
 
@@ -227,8 +234,9 @@
 
 ;timid
 (define-key minibuffer-local-completion-map (kbd "SPC") 'minibuffer-complete-and-exit)
-(define-key minibuffer-local-map (kbd "C-.") 'backward-kill-word)
+(define-key minibuffer-local-map (kbd "M-.")  'subword-backward-kill)
 
+(setq mac-option-modifier 'hyper) ;; greenfield!
 
 ;; apparently fullscreen.el provides for both systems
 ;; (if (string-match "apple-darwin" system-configuration)
