@@ -34,6 +34,7 @@
   (magit-refresh))
 
 (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
+(define-key magit-status-mode-map (kbd "M-3") 'delete-other-windows)
 
 
 (magit-key-mode-insert-action
