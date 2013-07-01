@@ -250,7 +250,7 @@
             (delete-other-windows)
             ;; (fullscreen) sucks on lion
             (if (yes-or-no-p "connect?")
-                (progn 
+                (progn
                   (wl)
                   (jabber-connect-all)))))
 
