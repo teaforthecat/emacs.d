@@ -13,9 +13,6 @@
   (kill-buffer)
   (jump-to-register :magit-fullscreen))
 
-(define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
-
-
 ;; whitespace toggle
 (defun magit-toggle-whitespace ()
   (interactive)
@@ -33,12 +30,17 @@
   (setq magit-diff-options (remove "-w" magit-diff-options))
   (magit-refresh))
 
-(define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
-(define-key magit-status-mode-map (kbd "M-3") 'delete-other-windows)
+(eval-after-load 'magit-mode
+  ;; magit-status-mode-map is not defined until magit runs
+  '(progn
+     (define-key magit-status-mode-map (kbd "M-3") 'delete-other-windows)
+     (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
+     (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)))
 
 
-(magit-key-mode-insert-action
- 'logging "p" "Paths" 'ofv-magit-log-for-paths)
+; need to run these after magit loads I guess
+;(magit-key-mode-insert-action
+; 'logging "p" "Paths" 'ofv-magit-log-for-paths)
 
 (defun ofv-magit-log-for-paths ()
   (interactive)

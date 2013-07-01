@@ -81,6 +81,6 @@
                                    (buffer-list)))))))
 
 ;; vertical ido
-(setq ido-decorations (quote ("\n=> " "" "\n   " "\n   ..."
+(setq ido-decorations (quote ("\n=> " " " "\n   " "\n   ..."
                               "[" "]" " [No match]" " [Matched]"
                               " [Not readable]" " [Too big]" " [Confirm]")))

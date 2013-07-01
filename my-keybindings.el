@@ -84,6 +84,7 @@
 ;54321`
 (M 5 'query-replace)
 (M 4 'split-window-horizontally)
+(M $ 'split-window-vertically)
 (M 3 'delete-other-windows)
 (M "`" 'speedbar-get-focus) ;; new
 (M <f5> 'flyspell-correct-word-before-point)
@@ -164,6 +165,7 @@
 (G (kbd "H-s") 'ido-shell-buffer)
 (G (kbd "H-r") 'ido-ruby-buffer)
 
+(G (kbd "H-f") '(lambda()(interactive) (compile "env LC_ALL=C fetchmail -v  --nodetach --nosyslog")))
 
 
 (eval-after-load 'dired

@@ -10,6 +10,8 @@
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/") ))
+(set-face-attribute 'default nil
+                :family "Inconsolata" :height 165 :weight 'normal)
 
 
 (unless (require 'el-get nil 'noerror)
@@ -209,6 +211,8 @@
 ;;(setq w3m-key-binding 'info)
 
 ;; PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+(setq bookmark-file "~/.emacs.d/private/bookmarks")
+
 
 ;; PATH=~/bin:/usr/local/bin:$PATH
 (setq emacs-tags-table-list
@@ -244,9 +248,11 @@
             (org-agenda-list)
             (spawn-shell "*local*")
             (delete-other-windows)
-            (fullscreen)
-            (if (yes-or-no-p "connect jabber?")
-                (jabber-connect-all))))
+            ;; (fullscreen) sucks on lion
+            (if (yes-or-no-p "connect?")
+                (progn 
+                  (wl)
+                  (jabber-connect-all)))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

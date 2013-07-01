@@ -1,3 +1,15 @@
+;; https://github.com/waymondo/hemacs/blob/master/hemacs-ruby.el
+(defun ruby-toggle-hash-syntax (beg end)
+  "Toggle syntax of selected ruby hash literal between ruby 1.8 and 1.9 styles."
+  (interactive "r")
+  (save-excursion
+    (goto-char beg)
+    (cond
+     ((save-excursion (search-forward "=>" end t))
+      (replace-regexp ":\\([a-zA-Z0-9_]+\\) +=> +" "\\1: " nil beg end))
+     ((save-excursion (re-search-forward "\\w+:" end t))
+      (replace-regexp "\\([a-zA-Z0-9_]+\\):\\( *\\(?:\"\\(?:\\\"\\|[^\"]\\)*\"\\|'\\(?:\\'\\|[^']\\)*'\\|[a-zA-Z0-9_]+([^)]*)\\|[^,]+\\)\\)" ":\\1 =>\\2" nil beg end)))))
+
 ;; http://stackoverflow.com/a/12101330
 (defun find-file-at-point-with-line ()
   "if file has an attached line num goto that line, ie boom.rb:12"
