@@ -199,7 +199,7 @@
                                  (unsplittable . t)
                                  (left-fringe . 0)))
 
-
+(setq ace-jump-mode-scope 'window)
 (setq password-cache t)
 (setq password-cache-expiry nil) ;;duration of process
 (setq use-dialog-box nil)

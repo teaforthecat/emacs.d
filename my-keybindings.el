@@ -47,12 +47,12 @@
 (M> m 'previous-buffer)
 (M> w 'next-buffer)
 (M> v 'eproject-ibuffer 'ibuffer)       ;new
-
+(M> z 'isearch-backward)
 ;fgcrl/=\
-(M> r 'subword-forward 'end-of-line)
 (M> g 'subword-backward 'beginning-of-line)
-(M> l 'recenter-top-bottom)             ;timid
 (M> c 'previous-line 'scroll-down)
+(M> r 'subword-forward 'end-of-line)
+(M> l 'recenter-top-bottom)             ;timid
 (M> = 'count-words-region)
 ;67890[]
 (M> 0 'delete-window)
