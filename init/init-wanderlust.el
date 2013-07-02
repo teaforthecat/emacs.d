@@ -1,6 +1,8 @@
 (require 'w3m)
 (require 'mime-w3m)
 
+(load-file "~/.emacs.d/contrib/dmj-html-message.el")
+
 (setq elmo-imap4-debug t)
 ;; (setq send-mail-function 'smtpmail-send-it)
 
