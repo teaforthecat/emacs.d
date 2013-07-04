@@ -110,10 +110,6 @@
                                                     (rspec-verify-single))))
                    ))
 
-   (:name  undo-tree
-           :after (progn
-                    (setq undo-tree-mode-lighter "")
-                    (global-undo-tree-mode)))
    (:name yasnippet
           :before (progn
                     (setq yas/snippet-dirs "~/.emacs.d/snippets"))
@@ -235,6 +231,22 @@
 ;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/rails-minor-mode"))
 ;; (require 'rails)
 
+;; Enabled minor modes: Auto-Composition Auto-Compression Auto-Encryption
+;; Autopair Autopair-Global Blink-Cursor Column-Number Delete-Selection
+;; Diff-Auto-Refine Display-Time Eproject File-Name-Shadow Font-Lock
+;; Global-Auto-Revert Global-Font-Lock Global-Subword Global-Undo-Tree
+;; Global-Visual-Line Ido-Everywhere Line-Number Mouse-Wheel Movement
+;; Recentf Server Shell-Dirtrack Show-Paren Subword Tooltip
+;; Transient-Mark Undo-Tree Visual-Line Winner Yas Yas-Global
+(diminish 'yas-minor-mode "y")
+(diminish 'global-visual-line-mode "|")
+(diminish 'robe-mode "~")
+(diminish 'rinari-minor-mode "`")
+(diminish 'ruby-end-mode)
+(diminish 'rails-minor-mode)
+(diminish 'eldoc-mode)
+
+(rename-modeline "ruby-mode" ruby-mode "R")
 
 (setq rails-tags-command "ctags -e --Ruby-kinds=cfmF -o %s -R %s") ;;all kinds, don't append
 (setq rails-tags-dirs '(".")) ;;all

@@ -1,3 +1,10 @@
+;; http://whattheemacsd.com/appearance.el-01.html
+;; does major modes
+(defmacro rename-modeline (package-name mode new-name)
+  `(eval-after-load ,package-name
+     '(defadvice ,mode (after rename-modeline activate)
+        (setq mode-name ,new-name))))
+
 ;; https://github.com/waymondo/hemacs/blob/master/hemacs-ruby.el
 (defun ruby-toggle-hash-syntax (beg end)
   "Toggle syntax of selected ruby hash literal between ruby 1.8 and 1.9 styles."
