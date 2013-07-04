@@ -30,17 +30,15 @@
   (setq magit-diff-options (remove "-w" magit-diff-options))
   (magit-refresh))
 
+
 (eval-after-load 'magit-mode
-  ;; magit-status-mode-map is not defined until magit runs
   '(progn
-     (define-key magit-status-mode-map (kbd "M-3") 'delete-other-windows)
-     (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
-     (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)))
+  (define-key magit-mode-map (kbd "M-3") 'delete-other-windows)
+  (define-key magit-mode-map (kbd "q") 'magit-quit-session)
+  (define-key magit-mode-map (kbd "W") 'magit-toggle-whitespace)
 
-
-; need to run these after magit loads I guess
-;(magit-key-mode-insert-action
-; 'logging "p" "Paths" 'ofv-magit-log-for-paths)
+  (magit-key-mode-insert-action
+    'logging "p" "Paths" 'ofv-magit-log-for-paths)))
 
 (defun ofv-magit-log-for-paths ()
   (interactive)

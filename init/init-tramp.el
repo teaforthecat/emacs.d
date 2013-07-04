@@ -1,4 +1,24 @@
-;;http://www.emacswiki.org/cgi-bin/wiki/TrampMode#Chris Allen
+;; this allows sudo on remote ALL remote hosts
+;; nil evals as all, (host user proxy)
+;;(setq tramp-default-proxies-alist '((nil "\\`root\\'" "/ssh:%h:")))
+;; this is from the docs:
+;
+;; (add-to-list 'tramp-default-proxies-alist
+;;                        '(nil "\\`root\\'" "/ssh:%h:"))
+;; (add-to-list 'tramp-default-proxies-alist
+;;              '((regexp-quote (system-name)) nil nil))
+;; don't leave ~ files around on remote hosts
+(add-to-list 'backup-directory-alist
+             (cons "." "~/.emacs.d/backups/"))
+(setq tramp-backup-directory-alist backup-directory-alist)
+
+;; add a colon to accommodate ep root prompt set by PS1
+;; example  "some prompt:" instead of the usual "some prompt$" or "some prompt#"
+(setq tramp-shell-prompt-pattern
+      "\\(?:^\\|
+\\)[^]#$%>\n]*#?[]#:$%>] *\\(\\[[0-9;]*[a-zA-Z] *\\)*")
+
+;; ;;http://www.emacswiki.org/cgi-bin/wiki/TrampMode#Chris Allen
 (set-default 'tramp-default-proxies-alist (quote ((".*" "\\`root\\'" "/ssh:%h:"))))
 (eval-after-load "tramp"
   '(progn
@@ -39,7 +59,4 @@
            (setq buffer-file-name sudo-name)
            (rename-buffer sudo-name)
            (setq buffer-read-only nil)
-           (message (concat "File name set to " sudo-name)))))
-
-     ;;(global-set-key (kbd "C-c o") 'sudo-find-file)
-     (global-set-key (kbd "C-c s u ") 'sudo-reopen-file)))
+           (message (concat "File name set to " sudo-name)))))))

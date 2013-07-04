@@ -248,6 +248,8 @@
 
 (rename-modeline "ruby-mode" ruby-mode "R")
 
+(flyspell-prog-mode)
+
 (setq rails-tags-command "ctags -e --Ruby-kinds=cfmF -o %s -R %s") ;;all kinds, don't append
 (setq rails-tags-dirs '(".")) ;;all
 
