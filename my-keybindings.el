@@ -82,9 +82,8 @@
 (M "'" 'speedbar)
 
 ;54321`
-(M 5 'query-replace)
-(M 4 'split-window-horizontally)
-(M $ 'split-window-vertically)
+(M 5 'query-replace) (M % 'query-replace-regexp)
+(M 4 'split-window-horizontally)(M $ 'split-window-vertically)
 (M 3 'delete-other-windows)
 (M "`" 'speedbar-get-focus) ;; new
 (M <f5> 'flyspell-correct-word-before-point)
@@ -106,7 +105,7 @@
 (C n 'forward-page)
 (C s 'save-buffer)
 (C b 'browse-kill-ring)
-(C w 'kill-buffer)
+(C w 'kill-this-buffer)
 (C r 'comment-or-uncomment-region)
 
 (C f 'sudo-find-file)
@@ -167,6 +166,9 @@
 
 (G (kbd "H-f") '(lambda()(interactive) (compile "env LC_ALL=C fetchmail -v  --nodetach --nosyslog")))
 
+
+
+;; key-chord
 
 (eval-after-load 'dired
   ;; Brash Bindings C-h C-k C-o C-t C-S-b C-n C-p M-everything
