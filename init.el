@@ -140,7 +140,8 @@
         rainbow-delimiters redo+ rinari rhtml-mode rspec-mode ruby-end
                                         ;ruby-electric conficts with pair
         rails rails-speedbar-feature robe rvm
-        sass-mode smooth-scrolling smex ;; shell-command
+        s sass-mode smooth-scrolling smex sr-speedbar;; shell-command
+        undo-tree
         wanderlust
         yaml-mode
         zencoding-mode))
@@ -238,13 +239,14 @@
 ;; Global-Visual-Line Ido-Everywhere Line-Number Mouse-Wheel Movement
 ;; Recentf Server Shell-Dirtrack Show-Paren Subword Tooltip
 ;; Transient-Mark Undo-Tree Visual-Line Winner Yas Yas-Global
-(diminish 'yas-minor-mode "y")
-(diminish 'global-visual-line-mode "|")
-(diminish 'robe-mode "~")
-(diminish 'rinari-minor-mode "`")
-(diminish 'ruby-end-mode)
-(diminish 'rails-minor-mode)
-(diminish 'eldoc-mode)
+;; TODO: need to do this after load
+;(diminish 'yas-minor-mode "y")
+;(diminish 'global-visual-line-mode "|")
+;(diminish 'robe-mode "~")
+;(diminish 'rinari-minor-mode "`")
+;(diminish 'ruby-end-mode)
+;(diminish 'rails-minor-mode)
+;(diminish 'eldoc-mode)
 
 (rename-modeline "ruby-mode" ruby-mode "R")
 
@@ -263,10 +265,15 @@
             (spawn-shell "*local*")
             (delete-other-windows)
             ;; (fullscreen) sucks on lion
+            ))
+
+(add-hook 'emacs-startup-hook
+          (lambda()
             (if (yes-or-no-p "connect?")
                 (progn
                   (wl)
                   (jabber-connect-all)))))
+
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

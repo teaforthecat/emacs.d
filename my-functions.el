@@ -1,3 +1,28 @@
+(require 's)
+(require 'dash)
+
+(defun goto-init-for ()
+  "find the 'user init file' for a package managed my el-get"
+  (interactive)
+  (let* ((init-full-dir (expand-file-name el-get-user-package-directory))
+         (init-dir (s-chop-prefix default-directory init-full-dir))
+         (init-files (git-ls-full "~/.emacs.d" init-dir))
+               ;; not sure why there is bad data in init-files here:
+         (init-files (-filter '(lambda (f) (s-contains? (concat init-full-dir "/init-" ) f)) init-files))
+         (package-names (-map '(lambda (f)
+                                 (string-match "init-\\(.*\\).el" f)
+                                 (match-string 1 f))
+                              init-files))
+         (tbl (-zip package-names init-files)))
+         (find-file (cdr (assoc (ido-completing-read "init:" (-map 'car tbl)) tbl )))))
+
+
+(defun git-ls-full (path subpath)
+  (with-temp-buffer ;; get the full file paths
+    (cd (expand-file-name path))
+    (shell-command (format "git ls-files %s" subpath) t)
+    (-map 'expand-file-name (split-string (buffer-string) "\n"))))
+
 (defun query-camel-to-dash ()
   (interactive)
   ;; tT -> t-t
@@ -83,12 +108,12 @@
 (defun production-console ()
   (interactive)
   (interact-with "*PRODUCTION CONSOLE*"
-   (compile "ssh deployer@citra cd collections \\&\\& ./bin/rails c")))
+                 (compile "ssh deployer@citra cd collections \\&\\& ./bin/rails c")))
 
 (defun zeus-console ()
   (interactive)
   (interact-with "*console*"
-   (compile "./bin/zeus c")))
+                 (compile "./bin/zeus c")))
 
 
 ;; pdbtrack

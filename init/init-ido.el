@@ -84,3 +84,15 @@
 (setq ido-decorations (quote ("\n=> " " " "\n   " "\n   ..."
                               "[" "]" " [No match]" " [Matched]"
                               " [Not readable]" " [Too big]" " [Confirm]")))
+
+;; http://whattheemacsd.com/setup-ido.el-02.html
+(add-hook 'ido-setup-hook
+ (lambda ()
+   ;; Go straight home
+   (define-key ido-file-completion-map
+     (kbd "~")
+     (lambda ()
+       (interactive)
+       (if (looking-back "/")
+           (insert "~/")
+         (call-interactively 'self-insert-command))))))

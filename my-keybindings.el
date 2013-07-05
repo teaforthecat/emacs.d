@@ -78,8 +78,7 @@
 (M p   'subword-kill)
 (M "." 'subword-backward-kill)
 ;; (M "'" 'ido-switch-buffer-other-window) ;timid
-(M "'" 'speedbar)
-(M "'" 'speedbar)
+(M "'" 'sr-speedbar-toggle)
 
 ;54321`
 (M 5 'query-replace) (M % 'query-replace-regexp)
@@ -166,9 +165,11 @@
 
 (G (kbd "H-f") '(lambda()(interactive) (compile "env LC_ALL=C fetchmail -v  --nodetach --nosyslog")))
 
-
-
 ;; key-chord
+
+;; alias
+(defalias 'vis 'visual-line-mode)
+(defalias 'init 'goto-init-for)
 
 (eval-after-load 'dired
   ;; Brash Bindings C-h C-k C-o C-t C-S-b C-n C-p M-everything
