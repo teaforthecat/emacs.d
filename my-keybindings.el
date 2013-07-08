@@ -6,26 +6,29 @@
 (defvar movement-minor-mode-map (make-sparse-keymap))
 
 (define-minor-mode movement-minor-mode
-  "turn-on,   modeline,   keymap,  globally "
+  "set of keys for basic navigation which should not be stomped on"
   t " >" movement-minor-mode-map :global t)
 
 (defun G (key command &optional movement)
+  "global-set-key and maybe movement too"
   (progn ()
     (if movement
         (define-key movement-minor-mode-map key command))
     (global-set-key key command)))
 
 (defmacro C (key command &optional shift-command movement)
+  "set Meta-KEY lower to COMMAND then upper to SHIFT_COMMAND. maybe send both to movement-mode-map"
   `(progn
      (G (kbd ,(format "C-%s" key)) ,command ,movement)
      (if ,shift-command
          (G (kbd ,(format "C-%s" (upcase (format "%s" key)))) ,shift-command ,movement))))
 
 (defmacro M (key command &optional shift-command movement)
- `(progn
-    (G (kbd ,(format "M-%s" key)) ,command ,movement)
-    (if ,shift-command
-        (G (kbd ,(format "M-%s" (upcase (format "%s" key)))) ,shift-command ,movement))))
+  "set Meta-KEY lower to COMMAND then upper to SHIFT_COMMAND. maybe send both to movement-mode-map"
+  `(progn
+     (G (kbd ,(format "M-%s" key)) ,command ,movement)
+     (if ,shift-command
+         (G (kbd ,(format "M-%s" (upcase (format "%s" key)))) ,shift-command ,movement))))
 
 (defmacro M> (key command &optional shift-command)
   `(M ,key ,command ,shift-command 'movement))
@@ -110,6 +113,7 @@
 (C f 'sudo-find-file)
 
 ; the hotness
+(C 8 'ioccur)
 (C 7 'my-ido-find-tag)
 (C 6 'my-ido-find-file-in-tag-files)
 (C 5 'find-lisp-find-dired)

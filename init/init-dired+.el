@@ -2,7 +2,7 @@
 
 ;; use default (setq dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$")
 
-(setq dired-omit-extensions (append '(".DS_Store") dired-omit-extensions))
+(setq dired-omit-extensions (append '("DS_Store") dired-omit-extensions))
 
 (add-hook 'dired-mode-hook
           (lambda ()

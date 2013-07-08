@@ -1,3 +1,4 @@
+
 ;;(require 'package)
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -184,7 +185,8 @@
 ; move to custom settings
 (add-hook 'write-contents-functions 'delete-trailing-whitespace)
 (display-time)
-(global-visual-line-mode t)
+;; not sure about this
+;;(global-visual-line-mode t)
 (flyspell-mode 0)
 (setq visible-bell t)
 (setq speedbar-show-unknown-files t)
@@ -240,21 +242,32 @@
 ;; Recentf Server Shell-Dirtrack Show-Paren Subword Tooltip
 ;; Transient-Mark Undo-Tree Visual-Line Winner Yas Yas-Global
 ;; TODO: need to do this after load
-;(diminish 'yas-minor-mode "y")
-;(diminish 'global-visual-line-mode "|")
-;(diminish 'robe-mode "~")
-;(diminish 'rinari-minor-mode "`")
-;(diminish 'ruby-end-mode)
-;(diminish 'rails-minor-mode)
-;(diminish 'eldoc-mode)
+(diminish 'yas-minor-mode "y")
+(diminish 'eproject-mode "P")
+(diminish 'autopair-mode)
+(diminish 'global-visual-line-mode)
+;; not sure why robe-mode is not loaded yet.
+(add-hook 'robe-mode-hook '(lambda ()(diminish 'robe-mode "\u03BB")))
+
+(diminish 'rinari-minor-mode "`")
+(diminish 'ruby-end-mode)
+(diminish 'rails-minor-mode)
+(diminish 'eldoc-mode)
+
 
 (rename-modeline "ruby-mode" ruby-mode "R")
+(rename-modeline "lisp-mode" emacs-lisp-mode "()")
+(rename-modeline "shell" shell-mode "$")
+(add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 
 (flyspell-prog-mode)
 
 (setq rails-tags-command "ctags -e --Ruby-kinds=cfmF -o %s -R %s") ;;all kinds, don't append
 (setq rails-tags-dirs '(".")) ;;all
 
+;; for jabber:
+(setq starttls-extra-arguments 
+      '("--insecure" "--no-ca-verification"))
 
 (add-hook 'after-init-hook
           (lambda ()
@@ -281,12 +294,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(diredp-compressed-file-suffix ((t (:foreground "dark Blue"))) t)
- '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))))
- '(magit-diff-add ((t (:foreground "chartreuse"))))
- '(magit-diff-del ((t (:foreground "red1"))))
- '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))))
- '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))))
- '(magit-item-highlight ((t nil))))
+ '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))) t)
+ '(magit-diff-add ((t (:foreground "chartreuse"))) t)
+ '(magit-diff-del ((t (:foreground "red1"))) t)
+ '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))) t)
+ '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))) t)
+ '(magit-item-highlight ((t nil)) t))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -294,4 +307,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(safe-local-variable-values (quote ((eval ignore-errors "Write-contents-functions is a buffer-local alternative to before-save-hook" (add-hook (quote write-contents-functions) (lambda nil (delete-trailing-whitespace) nil)) (require (quote whitespace)) "Sometimes the mode needs to be toggled off and on." (whitespace-mode 0) (whitespace-mode 1)) (whitespace-line-column . 80) (whitespace-style face trailing lines-tail) (require-final-newline . t) (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby"))))
- '(tab-always-indent (quote complete)))
+ '(send-mail-function (quote smtpmail-send-it))
+ '(smtpmail-smtp-server "smtp.gmail.com")
+ '(smtpmail-stream-type (quote ssl))
+ '(tab-always-indent (quote complete))
+ '(wl-smtp-connection-type (quote starttls))
+ '(wl-smtp-posting-server "mail1.office.gdi"))

@@ -3,5 +3,6 @@
                                   (exec-path-from-shell-copy-env "ORACLE_HOME")
                                   (exec-path-from-shell-copy-env "NLS_LANG")
                                   (exec-path-from-shell-copy-env "LD_LIBRARY_PATH")
+                                  (exec-path-from-shell-copy-env "DYLD_LIBRARY_PATH")
                                   (exec-path-from-shell-copy-env "TNS_ADMIN")
                                   ))

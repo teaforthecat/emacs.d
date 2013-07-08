@@ -1,4 +1,3 @@
-(setq org-agenda-include-diary t)
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
 (setq org-time-clocksum-format
@@ -31,6 +30,7 @@
                                "* REFILE %^{Brief Description}\n%a\n%?Added: %U\n" :prepend t)
                               ))
 
+(setq org-agenda-include-diary t)
 (setq org-agenda-diary-file "~/Dropbox/org/.diary")
 
 (setq org-directory "~/Dropbox/org/")
