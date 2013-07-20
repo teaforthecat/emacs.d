@@ -75,6 +75,8 @@
                    (add-to-list 'auto-mode-alist '("\\.rake" . ruby-mode))
                    (add-to-list 'auto-mode-alist '("GemFile" . ruby-mode))
                    (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
+                   (add-to-list 'auto-mode-alist '("gemspec" . ruby-mode))
+                   (add-to-list 'auto-mode-alist '("json_builder" . ruby-mode))
                    (add-hook 'ruby-mode-hook
                              (lambda ()
                                (rvm-activate-corresponding-ruby)
@@ -106,9 +108,11 @@
                    (setq rspec-use-bundler-when-possible nil)
                    (setq rspec-use-rake-flag nil)
                    (add-hook 'rinari-minor-mode-hook 'rspec-verifiable-mode)
-                   (add-hook 'after-save-hook (lambda ()
-                                                (if (rspec-buffer-is-spec-p)
-                                                    (rspec-verify-single))))
+                   (add-hook 'rspec-mode-hook 'rinari-minor-mode)
+                   (add-hook 'rspec-mode-hook 'ruby-end-mode)
+                   ;; (add-hook 'after-save-hook (lambda ()
+                   ;;                              (if (rspec-buffer-is-spec-p)
+                   ;;                                  (rspec-verify-single))))
                    ))
 
    (:name yasnippet
@@ -131,7 +135,7 @@
         goto-last-change
         haml-mode helm htmlize
         ioccur
-        jabber js2-mode js-comint json-mode
+        jabber js2-mode js-comint json-mode jump-char
         key-chord
         list-register
         magit markdown-mode multiple-cursors
@@ -248,6 +252,8 @@
 (diminish 'global-visual-line-mode)
 ;; not sure why robe-mode is not loaded yet.
 (add-hook 'robe-mode-hook '(lambda ()(diminish 'robe-mode "\u03BB")))
+(add-hook 'flymake-mode-hook '(lambda ()(diminish 'flymake-mode "\u2713")))
+
 
 (diminish 'rinari-minor-mode "`")
 (diminish 'ruby-end-mode)
@@ -313,3 +319,4 @@
  '(tab-always-indent (quote complete))
  '(wl-smtp-connection-type (quote starttls))
  '(wl-smtp-posting-server "mail1.office.gdi"))
+(put 'set-goal-column 'disabled nil)

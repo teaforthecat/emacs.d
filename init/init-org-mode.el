@@ -6,29 +6,20 @@
 (setq org-tags-alist '(pd collections emacs))
 
 (setq org-todo-keywords
-       '((sequence "TODO(t)" "REFILE(r)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELED(c@)")))
+       '((sequence "TODO(t)" "REFILE(r)" "SOMEDAY(s)" "|"
+                   "DONE(d)" "CANCELED(c@)")))
 
-(setq org-capture-templates '(("t" "Todo" entry
-                               (file+headline "~/Dropbox/org/refile.org" "Tasks")
-                               "* TODO %^{Brief Description} %^g\n%?\nAdded: %U" :prepend t)
-
-                              ("s" "ScoutTracker" entry
-                               (file+headline "~/ruby/scout-tracker/project.org" "Cards")
-                               "* TODO %^{Brief Description} %^g\n%?\nAdded: %U" :prepend t)
-
-                              ("w" "WorkAgenda" entry
-                               (file+headline "~/Dropbox/org/agendas/walker.org" "Walker")
-                               "* TODO %^{Brief Description}\n%a\n%?Added: %U\n" :prepend t)
-                              ("e" "Emacs" entry
-                               (file+headline "~/Dropbox/org/projects/emacs.org" "Tickler")
-                               "* SOMEDAY %^{Brief Description}\n%a\n%?Added: %U\n" :prepend t)
-                              ("r" "Reference" entry
-                               (file+headline "reference.org" "Reference")
-                               "* TODO %^{Brief Description}\n%a\n%?Added: %U\n" :prepend t)
-                              ("j" "Journal" entry
-                               (file+headline "~/Dropbox/org/journal.org" "Quick Thoughts")
-                               "* REFILE %^{Brief Description}\n%a\n%?Added: %U\n" :prepend t)
-                              ))
+(setq org-capture-templates
+      '(("t" "Todo" entry
+         (file+headline "~/Dropbox/org/todo.org" "Tasks")
+         "* TODO %^{Brief Description}\n%?\n%a\nAdded: %U")
+        ("l" "Todo with link" entry
+         (file+headline "~/Dropbox/org/todo.org" "Tasks")
+         "* TODO %^{Brief Description}\n%?\n%a\nAdded: %U")
+        ("r" "Reference" entry
+         (file+headline "~/Dropbox/org/reference.org" "Reference")
+         "* TODO %^{Brief Description}\n%a\n%?Added: %U\n")
+        ))
 
 (setq org-agenda-include-diary t)
 (setq org-agenda-diary-file "~/Dropbox/org/.diary")

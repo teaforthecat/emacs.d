@@ -1,6 +1,8 @@
 (require 's)
 (require 'dash)
 
+;;TODO tail-apache-logs select host, compile "tail -f /etc/httpd/logs/*"
+
 (defun goto-init-for ()
   "find the 'user init file' for a package managed my el-get"
   (interactive)

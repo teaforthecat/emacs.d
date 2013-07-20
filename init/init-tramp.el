@@ -1,3 +1,11 @@
+;;backups
+(add-to-list 'backup-directory-alist
+             (cons "." "~/.emacs.d/backups/"))
+(setq tramp-backup-directory-alist backup-directory-alist)
+
+
+(set-default 'tramp-default-proxies-alist (quote ((".*" "\\`root\\'" "/ssh:%h:"))))
+
 ;; this allows sudo on remote ALL remote hosts
 ;; nil evals as all, (host user proxy)
 ;;(setq tramp-default-proxies-alist '((nil "\\`root\\'" "/ssh:%h:")))
@@ -8,9 +16,7 @@
 ;; (add-to-list 'tramp-default-proxies-alist
 ;;              '((regexp-quote (system-name)) nil nil))
 ;; don't leave ~ files around on remote hosts
-(add-to-list 'backup-directory-alist
-             (cons "." "~/.emacs.d/backups/"))
-(setq tramp-backup-directory-alist backup-directory-alist)
+
 
 ;; add a colon to accommodate ep root prompt set by PS1
 ;; example  "some prompt:" instead of the usual "some prompt$" or "some prompt#"
@@ -18,8 +24,10 @@
       "\\(?:^\\|
 \\)[^]#$%>\n]*#?[]#:$%>] *\\(\\[[0-9;]*[a-zA-Z] *\\)*")
 
+;; (setq tramp-shell-prompt-pattern
+;;        "\\(?:^\\|
+;;  \\)[^]#$%>\n]*#?[]#$%>] *\\(\\[[0-9;]*[a-zA-Z] *\\)*")
 ;; ;;http://www.emacswiki.org/cgi-bin/wiki/TrampMode#Chris Allen
-(set-default 'tramp-default-proxies-alist (quote ((".*" "\\`root\\'" "/ssh:%h:"))))
 (eval-after-load "tramp"
   '(progn
      (defvar sudo-tramp-prefix 

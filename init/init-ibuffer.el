@@ -6,8 +6,6 @@
 
 (setq ibuffer-saved-filter-groups
       (quote (("default"
-	       ("colbert" (filename . ".*colbert\\.walkerart.*"))
-	       ("python" (mode . python-mode))
 	       ("Ruby" (mode . ruby-mode))
 	       ("dired" (mode . dired-mode))
 	       ("shell" (or

@@ -1,3 +1,4 @@
+; look into compilation-environment variable
 
 (add-hook 'shell-mode-hook 'dirtrack-mode)
 
@@ -46,7 +47,7 @@
 ;; made for the zeus start command
 (defun ansi-pre-command-truncate-buffer (&optional _string)
   "honor the ansi command to clear text"
-  (if (string-match "\\[19A" _string)
+  (if (or (string-match "\\[19A" _string) (string-match "\\[20A" _string))
       (progn
         (delete-region (point-min) (point-max))
         (substring _string 5))
@@ -56,3 +57,5 @@
 (add-hook 'comint-preoutput-filter-functions 'ansi-pre-command-truncate-buffer)
 
 (setq rinari-tags-file-name "TAGS")
+
+;; TODO: set compilation-buffer-name-function for unique names

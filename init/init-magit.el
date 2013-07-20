@@ -31,7 +31,7 @@
   (magit-refresh))
 
 
-(eval-after-load 'magit-mode
+(eval-after-load 'magit
   '(progn
   (define-key magit-mode-map (kbd "M-3") 'delete-other-windows)
   (define-key magit-mode-map (kbd "q") 'magit-quit-session)
