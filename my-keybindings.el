@@ -119,7 +119,7 @@
 (C 5 'find-lisp-find-dired)
 (C 4 'find-grep)
 (C 3 'find-file-at-point-with-line)
-(C 2 'find-file-in-repository)
+(C 2 'find-tag)
 (C 1 'rails-grep-project)
 
 
@@ -145,7 +145,6 @@
 (G (kbd "C-x g") 'magit-status)
 (G (kbd "C-x f") 'recentf-open-files)
 (G (kbd "C-x -") 'goto-line)
-(G (kbd "C-M-s") 'ioccur)
 (G (kbd "C-x k") 'kill-this-buffer)
 (G (kbd "C-c li") 'org-clock-in)
 (G (kbd "C-c lo") 'org-clock-out)
@@ -174,6 +173,7 @@
 ;; alias
 (defalias 'vis 'visual-line-mode)
 (defalias 'init 'goto-init-for)
+(defalias 'tl 'toggle-truncate-lines)
 
 (eval-after-load 'dired
   ;; Brash Bindings C-h C-k C-o C-t C-S-b C-n C-p M-everything

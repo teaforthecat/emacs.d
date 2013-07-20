@@ -11,3 +11,10 @@
 (put 'dired-find-alternate-file 'disabled nil)
 
 (setq dired-listing-switches "-hal")
+
+
+(defadvice dired-kill-subdir (after kill-dired-buffer-as-well
+                                    last (&optional REMEMBER-MARKS) activate protect)
+  (if (= (point-min) (point))
+      (kill-buffer)))
+
