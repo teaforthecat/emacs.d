@@ -10,6 +10,12 @@
 
 (add-hook 'comint-output-filter-functions 'comint-truncate-buffer)
 
+;; not sure I want this extra modeline cruft
+;; (defun add-mode-line-dirtrack ()
+;;   (add-to-list 'mode-line-buffer-identification 
+;;                '(:propertize (" " default-directory " ") face dired-directory)))
+;; (add-hook 'shell-mode-hook 'add-mode-line-dirtrack)
+
 (defun recon-shell ()
   (interactive)
   (let ((default-directory "/ssh:recon:"))

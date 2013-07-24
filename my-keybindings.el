@@ -188,6 +188,11 @@
      (define-key dired-mode-map (kbd "C-o") nil)
      (define-key dired-mode-map "k" `dired-kill-subdir)))
 
+(eval-after-load 'org
+  '(progn
+     (define-key org-mode-map (kbd "M-e") `delete-backward-char)
+     (define-key org-mode-map (kbd "M-a") `execute-extended-command)
+     ))
 
 (eval-after-load 'ioccur
   '(progn

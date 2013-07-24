@@ -4,3 +4,5 @@
 (add-hook 'diary-hook 'appt-make-list) ;diary-lib ;appt
 (appt-activate 1) ;appt
 
+;; Calendar
+(add-hook 'calendar-mode-hook 'diary-mark-entries)
