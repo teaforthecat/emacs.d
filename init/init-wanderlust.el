@@ -10,13 +10,37 @@
 ;;look into
 ;;wl-summary-auto-sync-marks
 
+(defun import-mime-text-calendar (entity &optional situation)
+  "import entity to diary"
+  ;; a little more work than neccessary here since 
+  ;; icalendar-import-buffer uses current-buffer,
+  ;; which is a different buffer than the with-temp-buffer one
+  (save-excursion 
+    (let ((temp-file-name (make-temp-file "/tmp/")))
+      (mime-write-entity-content entity temp-file-name)
+      (icalendar-import-file temp-file-name diary-file)
+      (kill-buffer (find-buffer-visiting temp-file-name))
+      (delete-file temp-file-name))))
+
+
+;;mime-view
+
+(add-hook 'wl-init-hook
+  '(lambda ()
+    (ctree-set-calist-strictly
+     'mime-acting-condition
+     '((mode . "play")
+       (type . text)(subtype . calendar)
+       (method . import-mime-text-calendar)))))
+
+
 (setq wl-draft-folder   ".drafts"
       wl-trash-folder   ".trash"
       wl-fcc            ".sent")
 
 (setq wl-fcc-force-as-read t)
 
-(setq wl-biff-mail-image '(image :type xpm :file "/usr/local/Cellar/emacs/24.3/share/emacs/24.3/etc/images/newsticker/mark-immortal.xpm" :ascent center))
+;;(setq wl-biff-mail-image '(image :type xpm :file "/usr/local/Cellar/emacs/24.3/share/emacs/24.3/etc/images/newsticker/mark-immortal.xpm" :ascent center))
 
 ;; biff updates
 ;; default (setq wl-biff-check-interval 40)
