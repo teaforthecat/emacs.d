@@ -320,3 +320,4 @@
  '(wl-smtp-connection-type (quote starttls))
  '(wl-smtp-posting-server "mail1.office.gdi"))
 (put 'set-goal-column 'disabled nil)
+(put 'scroll-left 'disabled nil)

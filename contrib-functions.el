@@ -79,10 +79,10 @@ With negative N, comment out original line and use the absolute value."
 ;; http://www.emacswiki.org/emacs/AlignCommands
 ;; use with [[:space:]]+
 (defun align-repeat (start end regexp)
-  "Repeat alignment with respect to 
+  "Repeat alignment with respect to
      the given regular expression."
   (interactive "r\nsAlign regexp: ")
-  (align-regexp start end 
+  (align-regexp start end
                 (concat "\\(\\s-*\\)" regexp) 1 1 t))
 
 
@@ -113,7 +113,7 @@ With negative N, comment out original line and use the absolute value."
 (defun django-server (&optional argprompt)
   (interactive "P")
   ;; Set the default shell if not already set
-  (labels ((read-django-project-dir 
+  (labels ((read-django-project-dir
             (prompt dir)
             (let* ((dir (read-directory-name prompt dir))
                    (manage (expand-file-name (concat dir "manage.py"))))
@@ -123,11 +123,11 @@ With negative N, comment out original line and use the absolute value."
                   (message "%s is not a Django project directory" manage)
                   (sleep-for .5)
                   (read-django-project-dir prompt dir))))))
-    (let* ((dir (read-django-project-dir 
-                 "project directory: " 
+    (let* ((dir (read-django-project-dir
+                 "project directory: "
                  default-directory))
-           (project-name (first 
-                          (remove-if (lambda (s) (or (string= "src" s) (string= "" s))) 
+           (project-name (first
+                          (remove-if (lambda (s) (or (string= "src" s) (string= "" s)))
                                      (reverse (split-string dir "/")))))
            (buffer-name (format "%s-server" project-name))
            (manage (concat dir "manage.py")))
@@ -146,7 +146,7 @@ With negative N, comment out original line and use the absolute value."
 (defun django-testserver (&optional argprompt)
   (interactive "P")
   ;; Set the default shell if not already set
-  (labels ((read-django-project-dir 
+  (labels ((read-django-project-dir
             (prompt dir)
             (let* ((dir (read-directory-name prompt dir))
                    (manage (expand-file-name (concat dir "manage.py"))))
@@ -156,11 +156,11 @@ With negative N, comment out original line and use the absolute value."
                   (message "%s is not a Django project directory" manage)
                   (sleep-for .5)
                   (read-django-project-dir prompt dir))))))
-    (let* ((dir (read-django-project-dir 
-                 "project directory: " 
+    (let* ((dir (read-django-project-dir
+                 "project directory: "
                  default-directory))
-           (project-name (first 
-                          (remove-if (lambda (s) (or (string= "src" s) (string= "" s))) 
+           (project-name (first
+                          (remove-if (lambda (s) (or (string= "src" s) (string= "" s)))
                                      (reverse (split-string dir "/")))))
            (buffer-name (format "%s-testserver" project-name))
            (manage (concat dir "manage.py")))
@@ -180,7 +180,7 @@ With negative N, comment out original line and use the absolute value."
 (defun django-shell (&optional argprompt)
   (interactive "P")
   ;; Set the default shell if not already set
-  (labels ((read-django-project-dir 
+  (labels ((read-django-project-dir
             (prompt dir)
             (let* ((dir (read-directory-name prompt dir))
                    (manage (expand-file-name (concat dir "manage.py"))))
@@ -190,11 +190,11 @@ With negative N, comment out original line and use the absolute value."
                   (message "%s is not a Django project directory" manage)
                   (sleep-for .5)
                   (read-django-project-dir prompt dir))))))
-    (let* ((dir (read-django-project-dir 
-                 "project directory: " 
+    (let* ((dir (read-django-project-dir
+                 "project directory: "
                  default-directory))
-           (project-name (first 
-                          (remove-if (lambda (s) (or (string= "src" s) (string= "" s))) 
+           (project-name (first
+                          (remove-if (lambda (s) (or (string= "src" s) (string= "" s)))
                                      (reverse (split-string dir "/")))))
            (buffer-name (format "%s-shell" project-name))
            (manage (concat dir "manage.py")))
@@ -219,10 +219,6 @@ With negative N, comment out original line and use the absolute value."
                   (get-char-property (point) 'face))))
     (if face (message "Face: %s" face) (message "No face at %d" pos))))
 
-(defun add-mode-line-dirtrack ()
-  (add-to-list 'mode-line-buffer-identification 
-               '(:propertize (" " default-directory " ") face dired-directory)))
-(add-hook 'shell-mode-hook 'add-mode-line-dirtrack)
 
 ;; programothesis
 (defmacro cmd (name &rest body)
@@ -246,16 +242,16 @@ With negative N, comment out original line and use the absolute value."
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
   (let ((name (buffer-name))
-    (filename (buffer-file-name)))
+        (filename (buffer-file-name)))
     (if (not filename)
-    (message "Buffer '%s' is not visiting a file!" name)
+        (message "Buffer '%s' is not visiting a file!" name)
       (if (get-buffer new-name)
-      (message "A buffer named '%s' already exists!" new-name)
-    (progn
-      (rename-file name new-name 1)
-      (rename-buffer new-name)
-      (set-visited-file-name new-name)
-      (set-buffer-modified-p nil))))))
+          (message "A buffer named '%s' already exists!" new-name)
+        (progn
+          (rename-file name new-name 1)
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)
+          (set-buffer-modified-p nil))))))
 
 
 (provide 'contrib-functions)
