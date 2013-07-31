@@ -36,6 +36,9 @@
 (defmacro C> (key command &optional shift-command)
   `(C ,key ,command ,shift-command 'movement))
 
+(defmacro lambdo (body)
+  `'(lambda () (interactive) ,body))
+
 
 ;; M Right Hand (movement)
 ;dhtns-
@@ -99,7 +102,7 @@
 ;control
 
 ; right hand
-(C d 'duplicate-line-or-region)
+(C> d 'duplicate-line-or-region)
 (C> h '(lambda () (interactive)(other-window -1)))
 (C> t '(lambda () (interactive)(other-window  1)))
 ;; (C> h 'previous-multiframe-window)
@@ -113,7 +116,7 @@
 (C f 'sudo-find-file)
 
 ; the hotness
-(C 8 'ioccur)
+(C 8 (lambdo (ioccur (thing-at-point 'symbol))))
 (C 7 'my-ido-find-tag)
 (C 6 'my-ido-find-file-in-tag-files)
 (C 5 'find-lisp-find-dired)
@@ -185,6 +188,7 @@
      (define-key dired-mode-map "e" `dired-up-directory)
      (define-key dired-mode-map "o" `dired-display-file)
      (define-key dired-mode-map (kbd "M-o") `ido-switch-buffer-other-window)
+     (define-key dired-mode-map (kbd "M-$") `split-window-vertically)
      (define-key dired-mode-map (kbd "C-o") nil)
      (define-key dired-mode-map "k" `dired-kill-subdir)))
 
