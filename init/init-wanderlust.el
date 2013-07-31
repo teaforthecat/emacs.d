@@ -73,7 +73,6 @@
 (setq wl-summary-auto-refile-skip-marks nil)
 (setq wl-refile-rule-alist
       '(("From"         
-         ("nagios" . ".trash")
          ("jenkins" . ".jenkins")
          ("Chatter" . ".chatter")
          ("Restart.Script" . ".ops"))))

@@ -33,12 +33,12 @@
 
 (eval-after-load 'magit
   '(progn
-     (define-key magit-mode-map (kbd "M-3") 'delete-other-windows)
-     (define-key magit-mode-map (kbd "q") 'magit-quit-session)
-     (define-key magit-mode-map (kbd "W") 'magit-toggle-whitespace)
-     (ignore-errors ;;may already be loaded
-       (magit-key-mode-insert-action
-        'logging "p" "Paths" 'ofv-magit-log-for-paths)) ))
+  (define-key magit-mode-map (kbd "M-3") 'delete-other-windows)
+  (define-key magit-mode-map (kbd "q") 'magit-quit-session)
+  (define-key magit-mode-map (kbd "W") 'magit-toggle-whitespace)
+
+  (magit-key-mode-insert-action
+    'logging "p" "Paths" 'ofv-magit-log-for-paths)))
 
 (defun ofv-magit-log-for-paths ()
   (interactive)
