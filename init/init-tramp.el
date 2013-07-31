@@ -1,22 +1,11 @@
-;;backups
+;;backups (don't leave ~ files around on remote hosts)
 (add-to-list 'backup-directory-alist
              (cons "." "~/.emacs.d/backups/"))
 (setq tramp-backup-directory-alist backup-directory-alist)
 
-
-(set-default 'tramp-default-proxies-alist (quote ((".*" "\\`root\\'" "/ssh:%h:"))))
-
-;; this allows sudo on remote ALL remote hosts
+;; this allows sudo on ALL remote hosts
 ;; nil evals as all, (host user proxy)
-;;(setq tramp-default-proxies-alist '((nil "\\`root\\'" "/ssh:%h:")))
-;; this is from the docs:
-;
-;; (add-to-list 'tramp-default-proxies-alist
-;;                        '(nil "\\`root\\'" "/ssh:%h:"))
-;; (add-to-list 'tramp-default-proxies-alist
-;;              '((regexp-quote (system-name)) nil nil))
-;; don't leave ~ files around on remote hosts
-
+(setq tramp-default-proxies-alist '((nil "\\`root\\'" "/ssh:%h:")))
 
 ;; add a colon to accommodate ep root prompt set by PS1
 ;; example  "some prompt:" instead of the usual "some prompt$" or "some prompt#"
@@ -24,47 +13,44 @@
       "\\(?:^\\|
 \\)[^]#$%>\n]*#?[]#:$%>] *\\(\\[[0-9;]*[a-zA-Z] *\\)*")
 
-;; (setq tramp-shell-prompt-pattern
-;;        "\\(?:^\\|
-;;  \\)[^]#$%>\n]*#?[]#$%>] *\\(\\[[0-9;]*[a-zA-Z] *\\)*")
-;; ;;http://www.emacswiki.org/cgi-bin/wiki/TrampMode#Chris Allen
-(eval-after-load "tramp"
-  '(progn
-     (defvar sudo-tramp-prefix 
-       "/sudo:" 
-       (concat "Prefix to be used by sudo commands when building tramp path "))
-     (defun sudo-file-name (filename)
-       (set 'splitname (split-string filename ":"))
-       (if (> (length splitname) 1)
-           (progn (set 'final-split (cdr splitname))
-                  (set 'sudo-tramp-prefix "/sudo:")
-                  )
-         (progn (set 'final-split splitname)
-                (set 'sudo-tramp-prefix (concat sudo-tramp-prefix "root@localhost:")))
-         )
-       (set 'final-fn (concat sudo-tramp-prefix (mapconcat (lambda (e) e) final-split ":")))
-       (message "splitname is %s" splitname)
-       (message "sudo-tramp-prefix is %s" sudo-tramp-prefix)
-       (message "final-split is %s" final-split)
-       (message "final-fn is %s" final-fn)
-       (message "%s" final-fn)
-       )
 
-     (defun sudo-find-file (filename &optional wildcards)
-       "Calls find-file with filename with sudo-tramp-prefix prepended"
-       (interactive "fFind file with sudo ")      
-       (let ((sudo-name (sudo-file-name filename)))
-         (apply 'find-file 
-                (cons sudo-name (if (boundp 'wildcards) '(wildcards))))))
+(defun sudo-tramp-file-name (filename)
+  (with-parsed-tramp-file-name filename nil
+    (tramp-make-tramp-file-name "sudo" user host localname ))
 
-     (defun sudo-reopen-file ()
-       "Reopen file as root by prefixing its name with sudo-tramp-prefix and by clearing buffer-read-only"
-       (interactive)
-       (let* 
-           ((file-name (expand-file-name buffer-file-name))
-            (sudo-name (sudo-file-name file-name)))
-         (progn           
-           (setq buffer-file-name sudo-name)
-           (rename-buffer sudo-name)
-           (setq buffer-read-only nil)
-           (message (concat "File name set to " sudo-name)))))))
+(defun sudo-find-file (filename &optional wildcards)
+  "Calls find-file with filename with sudo-tramp-prefix prepended"
+  (interactive "fFind file with sudo ")
+  (let ((sudo-name (sudo-tramp-file-name filename)))
+    (apply 'find-file
+           (cons sudo-name (if (boundp 'wildcards) '(wildcards))))))
+
+(defun sudo-reopen-file ()
+  "Reopen file as root by prefixing its name with sudo-tramp-prefix and by clearing buffer-read-only"
+  (interactive)
+  (let*
+      ((file-name (expand-file-name buffer-file-name))
+       (sudo-name (sudo-tramp-file-name file-name)))
+    (progn
+      (setq buffer-file-name sudo-name)
+      (rename-buffer sudo-name)
+      (setq buffer-read-only nil)
+      (message (concat "File name set to " sudo-name)))))
+
+;; can't use this on a mac unless root is enabled
+;; use terminal instead `sudo emacs /filename`
+;; http://support.apple.com/kb/ht1528
+;; http://www.emacswiki.org/emacs/TrampMode#toc28
+;; (defun sudo-edit-current-file ()
+;;   (interactive)
+;;   (let ((position (point)))
+;;     (find-alternate-file
+;;      (if (file-remote-p (buffer-file-name))
+;;          (let ((vec (tramp-dissect-file-name (buffer-file-name))))
+;;            (tramp-make-tramp-file-name
+;;             "sudo"
+;;             (tramp-file-name-user vec)
+;;             (tramp-file-name-host vec)
+;;             (tramp-file-name-localname vec)))
+;;        (concat "/sudo:root@localhost:" (buffer-file-name))))
+;;     (goto-char position)))
