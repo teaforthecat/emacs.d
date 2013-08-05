@@ -16,7 +16,7 @@
 
 (defun sudo-tramp-file-name (filename)
   (with-parsed-tramp-file-name filename nil
-    (tramp-make-tramp-file-name "sudo" user host localname ))
+    (tramp-make-tramp-file-name "sudo" user host localname )))
 
 (defun sudo-find-file (filename &optional wildcards)
   "Calls find-file with filename with sudo-tramp-prefix prepended"

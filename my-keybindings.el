@@ -102,11 +102,9 @@
 ;control
 
 ; right hand
-(C> d 'duplicate-line-or-region)
+(C d 'duplicate-line-or-region) ;; don't want this in minibuffer
 (C> h '(lambda () (interactive)(other-window -1)))
 (C> t '(lambda () (interactive)(other-window  1)))
-;; (C> h 'previous-multiframe-window)
-;; (C> t 'next-multiframe-window)
 (C n 'forward-page)
 (C s 'save-buffer)
 (C b 'browse-kill-ring)
@@ -178,10 +176,22 @@
 (defalias 'init 'goto-init-for)
 (defalias 'tl 'toggle-truncate-lines)
 
+;; (defun toggle-subdir-and-stay ()
+;;   (interactive)
+;;   (save-excursion
+;;     (dired-hide-subdir)))
+
+(defadvice dired-hide-subdir (around stay activate)
+  "don't move the point"
+  (let ((temp-mark (point)))
+    ad-do-it
+    (goto-char temp-mark)))
+
 (eval-after-load 'dired
   ;; Brash Bindings C-h C-k C-o C-t C-S-b C-n C-p M-everything
   ;; M-o dired-omit-mode
   '(progn
+     (define-key dired-mode-map (kbd "TAB") `dired-hide-subdir)
      (define-key dired-mode-map (kbd "C-t") `previous-multiframe-window)
      (define-key dired-mode-map (kbd "C-h") `other-window)
      (define-key dired-mode-map (kbd "M-g" ) `keyboard-quit)

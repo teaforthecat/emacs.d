@@ -6,10 +6,12 @@
 ;; (setq elmo-imap4-debug t)
 ;; (setq send-mail-function 'smtpmail-send-it)
 
-(add-hook 'wl-draft-mode-hook 'auto-fill-mode 'flyspell-mode )
+(add-hook 'wl-draft-mode-hook 'flyspell-mode-on 'toggle-truncate-lines )
+
 ;;look into
 ;;wl-summary-auto-sync-marks
 
+;;text/calendar
 (defun import-mime-text-calendar (entity &optional situation)
   "import entity to diary"
   ;; a little more work than neccessary here since 

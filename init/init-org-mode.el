@@ -1,3 +1,13 @@
+(require 'org-wl) ;;need to look around
+(require 'org-confluence) ;;need to look around
+(require 'org-deck) ;;need to look around
+(require 'ox-latex) ;; requires mactex full
+
+(require 'ox-latex)
+
+;; (add-to-list 'org-latex-packages-alist '("" "listings"))
+;; (add-to-list 'org-latex-packages-alist '("" "color"))
+
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
 (setq org-time-clocksum-format

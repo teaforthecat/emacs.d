@@ -98,6 +98,7 @@
 
 (setq recipes
       '( ace-jump-mode
+         bookmark+
         cl-lib clojure-mode color-theme
         dash dictionary dired-details+ django-mode
         el-get emacs-w3m eproject expand-region exec-path-from-shell
