@@ -6,7 +6,8 @@
 (setq jabber-alert-info-message-function 'no-info-message )
 
 
-(setq jabber-auto-reconnect t)
+;; I'm kind of getting a weird feeling from this
+;; (setq jabber-auto-reconnect t)
 
 ;; may want toggles
 (setq jabber-roster-line-format " %c %-25n %u %-8s  %S") 

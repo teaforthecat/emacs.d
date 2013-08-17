@@ -79,6 +79,8 @@
 
 (setq desktop-files-not-to-save "^$") ;; do save tramp buffers
 (setq desktop-restore-eager 10)       ;; load them lazily
+
+(desktop-save-mode 1)
 (savehist-mode 1)
 
 ;;(setq desktop-path (add-to-list 'desktop-path "~/.emacs.d/.desktops"))
@@ -141,7 +143,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(diredp-compressed-file-suffix ((t (:foreground "dark Blue"))) t)
- '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))))
+ '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))) t)
  '(magit-diff-add ((t (:foreground "chartreuse"))) t)
  '(magit-diff-del ((t (:foreground "red1"))) t)
  '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))) t)
@@ -156,6 +158,7 @@
  '(bmkp-last-as-first-bookmark-file "~/.emacs.d/private/bookmarks")
  '(org-latex-pdf-process (quote ("pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f")))
  '(safe-local-variable-values (quote ((eval ignore-errors "Write-contents-functions is a buffer-local alternative to before-save-hook" (add-hook (quote write-contents-functions) (lambda nil (delete-trailing-whitespace) nil)) (require (quote whitespace)) "Sometimes the mode needs to be toggled off and on." (whitespace-mode 0) (whitespace-mode 1)) (whitespace-line-column . 80) (whitespace-style face trailing lines-tail) (require-final-newline . t) (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby"))))
+ '(send-mail-function (quote smtpmail-send-it))
  '(tab-always-indent (quote complete))
  '(wl-smtp-connection-type (quote starttls))
  '(wl-smtp-posting-server "mail1.office.gdi"))

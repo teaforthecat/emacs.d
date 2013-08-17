@@ -1,6 +1,6 @@
 (require 'org-wl) ;;need to look around
-(require 'org-confluence) ;;need to look around
-(require 'org-deck) ;;need to look around
+;(require 'org-confluence) ;;need to look around
+;(require 'org-deck) ;;need to look around
 (require 'ox-latex) ;; requires mactex full
 
 (require 'ox-latex)

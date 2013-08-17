@@ -6,7 +6,9 @@
 ;; (setq elmo-imap4-debug t)
 ;; (setq send-mail-function 'smtpmail-send-it)
 
-(add-hook 'wl-draft-mode-hook 'flyspell-mode-on 'toggle-truncate-lines )
+(add-hook 'wl-draft-mode-hook 'flyspell-mode-on)
+(add-hook 'wl-draft-mode-hook 'toggle-truncate-lines)
+(add-hook 'wl-message-mode-hook 'toggle-truncate-lines)
 
 ;;look into
 ;;wl-summary-auto-sync-marks
@@ -46,6 +48,8 @@
 
 ;; biff updates
 ;; default (setq wl-biff-check-interval 40)
+(setq wl-biff-check-folder-list '(".GD/INBOX"))
+
 (add-hook 'wl-biff-notify-hook '(lambda ()(message "NEW MAIL")))
 
 ;; Set mail-icon to be shown universally in the modeline.
@@ -75,9 +79,10 @@
 (setq wl-summary-auto-refile-skip-marks nil)
 (setq wl-refile-rule-alist
       '(("From"         
-         ("jenkins" . ".jenkins")
-         ("Chatter" . ".chatter")
-         ("Restart.Script" . ".ops"))))
+         ("jenkins"         . ".GD/jenkins")
+         ("Chatter"         . ".GD/chatter")
+         ("nagios"          . ".GD/nagios")
+         ("Restart.Script"  . ".GD/ops"))))
 
 
 ;;also consider:
