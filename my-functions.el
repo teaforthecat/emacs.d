@@ -6,12 +6,12 @@
 (defun where-am-i ()
   "copies present location into kill-ring and clipboard"
   (interactive)
-  (kill-new (concat buffer-file-name ":" (int-to-string (line-number-at-pos)))))
+  (kill-new (message (concat buffer-file-name ":" (int-to-string (line-number-at-pos))))))
 
 (defun visit-vagrant ()
   (interactive)
   "start a shell on a vagrant machine
-   - must be in a vagrant project 
+   - must be in a vagrant project
    - must have only one machine
    - must set IdentityFile in ssh config for Host: vagrant"
   (let* ((port (find-vagrant-port))
@@ -55,10 +55,10 @@
   ;; tT -> t-t
   ;; sidenote
   ;; "\\,(func whatever)" only works in interactive mode of q-r-r
-  (query-replace-regexp "\\([a-z]\\)\\([A-Z]\\)" 
-                        '(replace-eval-replacement 
+  (query-replace-regexp "\\([a-z]\\)\\([A-Z]\\)"
+                        '(replace-eval-replacement
                           concat "\\1-" (replace-quote (downcase (match-string 2))))
-                        nil 
+                        nil
                         (if (and transient-mark-mode mark-active) (region-beginning))
                         (if (and transient-mark-mode mark-active) (region-end))))
 
@@ -68,9 +68,9 @@
   ;; needs Non-space regex matcher instead of letters
   ;; also maybe check for more than one space.
   (query-replace-regexp "\\([a-z]\\)=>\\([a-z]\\)"
-                        '(replace-eval-replacement 
+                        '(replace-eval-replacement
                           concat (match-string 1) " => " (match-string 2))
-                        nil 
+                        nil
                         (if (and transient-mark-mode mark-active) (region-beginning))
                         (if (and transient-mark-mode mark-active) (region-end))))
 
