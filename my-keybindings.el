@@ -114,7 +114,7 @@
 (C f 'sudo-find-file)
 
 ; the hotness
-(C 8 (lambdo (ioccur (thing-at-point 'symbol))))
+(C 8 (lambdo (ioccur (unless current-prefix-arg (thing-at-point 'symbol)))))
 (C 7 'my-ido-find-tag)
 (C 6 'my-ido-find-file-in-tag-files)
 (C 5 'find-lisp-find-dired)
@@ -170,11 +170,14 @@
 (G (kbd "H-f") '(lambda()(interactive) (compile "env LC_ALL=C fetchmail -v  --nodetach --nosyslog")))
 
 ;; key-chord
+(key-chord-define shell-mode-map "qn" 'rename-uniquely)
 
 ;; alias
 (defalias 'vis 'visual-line-mode)
 (defalias 'init 'goto-init-for)
 (defalias 'tl 'toggle-truncate-lines)
+(defalias 'un 'rename-uniquely)
+
 
 ;; (defun toggle-subdir-and-stay ()
 ;;   (interactive)

@@ -3,6 +3,31 @@
 
 ;;TODO tail-apache-logs select host, compile "tail -f /etc/httpd/logs/*"
 
+(defun where-am-i ()
+  "copies present location into kill-ring and clipboard"
+  (interactive)
+  (kill-new (concat buffer-file-name ":" (int-to-string (line-number-at-pos)))))
+
+(defun visit-vagrant ()
+  (interactive)
+  "start a shell on a vagrant machine
+   - must be in a vagrant project 
+   - must have only one machine
+   - must set IdentityFile in ssh config for Host: vagrant"
+  (let* ((port (find-vagrant-port))
+         (user "vagrant")
+         (default-directory (concat "/ssh:" user "@vagrant#" port ":/vagrant")))
+    (spawn-shell "*vagrant*")))
+
+(defun find-vagrant-port ()
+  (with-temp-buffer
+    (call-process  "vagrant" nil t nil "ssh-config")
+    (goto-char (point-min))
+    (unless (search-forward "Port")
+      (message "ERROR:" (buffer-string)))
+    (end-of-line)
+    (thing-at-point 'word)))
+
 (defun goto-init-for ()
   "find the 'user init file' for a package managed my el-get"
   (interactive)
@@ -70,11 +95,13 @@
              (rename-buffer ,name)
            (rename-uniquely))))
 
+(defun this-dir-name ()
+  (car (last (delete "" (split-string default-directory "/")))))
+
 
 (defun spawn-shell (name &optional cmds)
   "Invoke shell in buffer NAME with optional list of COMMANDS"
-  (interactive "MName of shell buffer to create: ")
-
+  (interactive (list (read-input "Name: " (concat "*" (this-dir-name) "*" ))))
   (if (get-buffer name)
       (progn
         (setq ss-buffer (get-buffer name)))
