@@ -9,6 +9,9 @@
 (add-hook 'wl-draft-mode-hook 'flyspell-mode-on)
 (add-hook 'wl-draft-mode-hook 'toggle-truncate-lines)
 (add-hook 'wl-message-mode-hook 'toggle-truncate-lines)
+;; weird that it isn't defined
+(defvar mime-view-mode-hook ())
+(add-hook 'mime-view-mode-hook  'toggle-truncate-lines)
 
 ;;look into
 ;;wl-summary-auto-sync-marks
