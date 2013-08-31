@@ -1,9 +1,19 @@
+(require 'jabber-util)
+(require 'auth-source)
+(require 'password-cache)
+(require 'jabber-bookmarks)
+
 ;; tell jabber to hush
 (defun no-presence-message (who oldstatus newstatus statustext)  nil  )
 (defun no-info-message (infotype buffer)  nil  )
 (setq jabber-roster-show-bindings nil)
 (setq jabber-alert-presence-message-function 'no-presence-message )
 (setq jabber-alert-info-message-function 'no-info-message )
+(setq jabber-roster-show-bindings nil)
+;; (setq jabber-alert-info-message-hooks nil)
+;; need to know about message in mode line
+;; (setq jabber-alert-message-hooks '(jabber-message-scroll))
+(setq jabber-alert-muc-hooks '(jabber-muc-scroll))
 
 
 ;; I'm kind of getting a weird feeling from this
@@ -11,8 +21,19 @@
 
 ;; may want toggles
 (setq jabber-roster-line-format " %c %-25n %u %-8s  %S") 
-(setq jabber-roster-show-bindings t)
-(setq jabber-muc-autojoin '("devlab@conference.im.office.gdi") )
+(setq jabber-muc-autojoin '(GD-devlab
+                            ;; "techops@conference.im.office.gdi"
+                            ) )
 
 (setq jabber-account-list
-      '(("cthompson@govdelivery.com")))
+      (list (list GD-jid)))
+
+;; pre-cache password using auth-source and password-cache
+(password-cache-add (jabber-password-key GD-jid) 
+                    (funcall (plist-get (car 
+                                         (auth-source-search :host GD-host))
+                                        :secret)) )
+
+;; inline customization added:
+;; /Users/cthompson/.emacs.d/el-get/jabber/jabber-sasl.el:46
+;; +                   nil                  ;HACK: stop prompt, never use anonymous auth
