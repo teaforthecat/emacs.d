@@ -322,3 +322,4 @@
 ;; wl-summary-save-current-message
 
 ;; speedbar-toggle-show-all-files
+;; compile-next-error

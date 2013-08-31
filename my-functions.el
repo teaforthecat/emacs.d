@@ -48,7 +48,7 @@
     (call-process  "vagrant" nil t nil "ssh-config")
     (goto-char (point-min))
     (unless (search-forward "Port")
-      (message "ERROR:" (buffer-string)))
+      (message "ERROR:%s" (buffer-string)))
     (end-of-line)
     (thing-at-point 'word)))
 
@@ -113,8 +113,8 @@
   `(list ,compilation
          (switch-to-buffer-other-window "*compilation*")
          (shell-mode)
-         (toggle-read-only -1)
-         (end-of-buffer)
+         (read-only-mode -1)
+         (goto-char (point-max))
          (unwind-protect
              (rename-buffer ,name)
            (rename-uniquely))))
@@ -124,22 +124,17 @@
 
 
 (defun spawn-shell (name &optional cmds)
-  "Invoke shell in buffer NAME with optional list of COMMANDS"
-  (interactive (list (read-input "Name: " (concat "*" (this-dir-name) "*" ))))
-  (if (get-buffer name)
-      (progn
-        (setq ss-buffer (get-buffer name)))
-    (progn
-      (setq ss-buffer (get-buffer-create
-                       (generate-new-buffer-name name)))
-      (shell ss-buffer)))
+  "Invoke shell in buffer NAME with optional list of COMMANDS
+   example (spawn-shell \"*.emacs.d*\" '(\"ls\" \"file init.el\"))"
+  (interactive (list (read-string "Name: " (concat "*" (this-dir-name) "*" ))))  
+  (let ((ss-buffer (or (get-buffer name)
+                       (get-buffer-create (generate-new-buffer-name name)))))
+    (pop-to-buffer ss-buffer)
+    (shell ss-buffer)
+    (dolist (c cmds)
+      (process-send-string nil c )
+      (comint-send-input))))
 
-  (pop-to-buffer (get-buffer-create ss-buffer))
-  (if cmds
-      (progn
-        (loop for cmd in cmds do
-              (process-send-string nil cmd )
-              (comint-send-input)))))
 
 (defun shell-clear ()
   (interactive)
@@ -172,10 +167,9 @@
 ;; pdbtrack
 (defun run-selenium ()
   (interactive)
-  (setq buffer-name "selenium-webdriver")
-  (switch-to-buffer-other-window
-   (apply 'make-comint buffer-name "/usr/bin/java" nil '( "-jar" "/home/cthompson/src/selenium-2.1.0/selenium-server-standalone-2.1.0.jar"))))
-
+  (let ((buf-name "selenium-webdriver"))
+    (switch-to-buffer-other-window
+     (apply 'make-comint buf-name "/usr/bin/java" nil '( "-jar" "/home/cthompson/src/selenium-2.1.0/selenium-server-standalone-2.1.0.jar")))))
 
 
 
