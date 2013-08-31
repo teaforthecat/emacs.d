@@ -30,9 +30,11 @@
          (setq fullscreen-ready t)
          (add-to-list 'recipes 'fullscreen)))
 
+;; load private variables
+(dolist (f (directory-files "private" t ".el$"))
+  (load-file f))
 
-
-;;#needs to be set before packages initialize
+;; needs to be set before packages initialize
 (if (eq system-type 'darwin)
     (progn ()
            (setq pianobar-program-command "/usr/local/bin/pianobar")
@@ -42,6 +44,8 @@
 (require 'recipes)
 (el-get 'sync recipes) ;;load everything
 
+
+;; mabye byte compile these
 (require 'contrib-functions)
 (require 'my-functions)
 (require 'my-macros)
@@ -72,7 +76,6 @@
 (setq password-cache-expiry nil) ;;duration of process
 (setq use-dialog-box nil)
 
-(setq bookmark-file "~/.emacs.d/private/bookmarks")
 
 (setq emacs-tags-table-list
            '("~/.emacs.d" ".emacs.d/el-get"))
@@ -155,7 +158,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(bmkp-last-as-first-bookmark-file "~/.emacs.d/private/bookmarks")
+ '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
  '(org-latex-pdf-process (quote ("pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f")))
  '(safe-local-variable-values (quote ((eval ignore-errors "Write-contents-functions is a buffer-local alternative to before-save-hook" (add-hook (quote write-contents-functions) (lambda nil (delete-trailing-whitespace) nil)) (require (quote whitespace)) "Sometimes the mode needs to be toggled off and on." (whitespace-mode 0) (whitespace-mode 1)) (whitespace-line-column . 80) (whitespace-style face trailing lines-tail) (require-final-newline . t) (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby"))))
  '(send-mail-function (quote smtpmail-send-it))
