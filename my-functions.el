@@ -3,6 +3,30 @@
 
 ;;TODO tail-apache-logs select host, compile "tail -f /etc/httpd/logs/*"
 
+(defun run-fetchmail (args)
+  (interactive)
+  (compile (concat "env LC_ALL=C fetchmail " args) ))
+
+(defun run-fetchmail-verbose ()
+  (interactive)
+  (run-fetchmail "-v  --nodetach --nosyslog"))
+
+(defun projects ()
+  "go to projects/ with organizer.org files"
+  (interactive)
+    (find-name-dired "~/projects" "organizer.org"))
+
+;; @wip
+;; (with-temp-buffer
+;;   (shell-command "find ~/projects \\( -name organizer.org \\)" (current-buffer))
+;;   (-map 'dirname (split-string  (buffer-string) "\n")))
+
+(defun dirname (path)
+  "directory of path, must end in filename or /"
+  (nth 1 (nreverse (split-string path "/" ))))
+
+(dirname "this/that/")
+
 (defun where-am-i ()
   "copies present location into kill-ring and clipboard"
   (interactive)

@@ -2,7 +2,8 @@
 
 ;; use default (setq dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$")
 
-(setq dired-omit-extensions (append '("DS_Store") dired-omit-extensions))
+(setq dired-omit-extensions (append '("DS_Store"
+                                      "com.apple.timemachine.supported") dired-omit-extensions))
 
 (add-hook 'dired-mode-hook
           (lambda ()
@@ -17,4 +18,3 @@
                                     last (&optional REMEMBER-MARKS) activate protect)
   (if (= (point-min) (point))
       (kill-buffer)))
-

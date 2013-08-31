@@ -29,6 +29,7 @@
         "--" "[[text/html]]\n"  html "\n\n"
 	"--" "}-<<alternative>>\n")))))
 
+(setq dmj/wl-send-html-message-toggled-p )
 (defun dmj/wl-send-html-message-toggle ()
   "Toggle sending of html message."
   (interactive)

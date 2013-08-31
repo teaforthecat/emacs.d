@@ -30,6 +30,16 @@
      (if ,shift-command
          (G (kbd ,(format "M-%s" (upcase (format "%s" key)))) ,shift-command ,movement))))
 
+(defmacro H (key command &optional shift-command movement)
+  "set Meta-KEY lower to COMMAND then upper to SHIFT_COMMAND. maybe send both to movement-mode-map"
+  `(progn
+     (G (kbd ,(format "H-%s" key)) ,command ,movement)
+     (if ,shift-command
+         (G (kbd ,(format "H-%s" (upcase (format "%s" key)))) ,shift-command ,movement))))
+
+(defmacro H> (key command &optional shift-command)
+  `(H ,key ,command ,shift-command 'movement))
+
 (defmacro M> (key command &optional shift-command)
   `(M ,key ,command ,shift-command 'movement))
 
@@ -163,21 +173,11 @@
 ;; contrib-functions
 (G (kbd "C-c C-r") 'rename-file-and-buffer)
 
-
-(G (kbd "H-s") 'ido-shell-buffer)
-(G (kbd "H-r") 'ido-ruby-buffer)
-
-(G (kbd "H-f") '(lambda()(interactive) (compile "env LC_ALL=C fetchmail -v  --nodetach --nosyslog")))
-
-;; key-chord
-(key-chord-define shell-mode-map "qn" 'rename-uniquely)
-
-;; alias
-(defalias 'vis 'visual-line-mode)
-(defalias 'init 'goto-init-for)
-(defalias 'tl 'toggle-truncate-lines)
-(defalias 'un 'rename-uniquely)
-
+;; HYPER
+(H s 'ido-shell-buffer)
+(H r 'ido-ruby-buffer)
+(H d 'dictionary-lookup-definition 'flyspell-auto-correct-word)
+(H f 'run-fetchmail 'run-fetchmail-verbose)
 
 ;; (defun toggle-subdir-and-stay ()
 ;;   (interactive)
@@ -198,6 +198,7 @@
      (define-key dired-mode-map (kbd "C-t") `previous-multiframe-window)
      (define-key dired-mode-map (kbd "C-h") `other-window)
      (define-key dired-mode-map (kbd "M-g" ) `keyboard-quit)
+     (define-key dired-mode-map (kbd "C-d" ) `shell-here-now)
      (define-key dired-mode-map "e" `dired-up-directory)
      (define-key dired-mode-map "o" `dired-display-file)
      (define-key dired-mode-map (kbd "M-o") `ido-switch-buffer-other-window)
@@ -212,14 +213,23 @@
      ))
 
 (eval-after-load 'ioccur
+  ;; WARNING: characters are hard coded in fn: ioccur-read-search-input
+  ;; this mode conflicts with global movement-minor-mode
+  ;; see (describe-function 'ioccur)
+  ;; C-y is yank via (car kill-ring)
+  ;; C-w is yank stuff at point
+  ;; C-a and C-e bol/eol
+  ;; TAB and shift-TAB for history
   '(progn
      (define-key ioccur-mode-map "d" `ioccur-jump-without-quit)
-     (define-key ioccur-mode-map "k" `ioccur-jump-and-quit)
      (define-key ioccur-mode-map "n" `ioccur-next-line)
      (define-key ioccur-mode-map "p" `ioccur-precedent-line)
      (define-key ioccur-mode-map "N" `ioccur-scroll-down)
      (define-key ioccur-mode-map "P" `ioccur-scroll-up)))
 
+;; NOTE: try to use ioccur-dired on marked files in dired
+(setq ioccur-length-line nil)
+(setq ioccur-buffer-completion-use-ido 'ido-completing-read)
 
 
 (eval-after-load 'isearch
@@ -253,27 +263,39 @@
   '(progn
      (define-key shell-mode-map (kbd "M-r") 'subword-forward)
      (define-key shell-mode-map (kbd "M-n") 'forward-char)
-     (define-key shell-mode-map (kbd "C-s") 'comint-history-isearch-backward)
+     (define-key shell-mode-map (kbd "C-r") 'comint-history-isearch-backward)
+     (define-key shell-mode-map (kbd "C-R") 'comint-history-isearch-backward-regexp)
      (define-key shell-mode-map (kbd "C-.") 'comint-previous-input)
      (define-key shell-mode-map (kbd "C-e") 'comint-next-input)))
+
+
 
 (eval-after-load 'slime
   '(progn
      (define-key slime-mode-map (kbd "M-n") 'forward-char)))
 
+;; wtf
+;;(define-key ctl-x-map (kbd "C-d") 'shell-here-now)
 
-
-;timid
+                                        ;timid
 (define-key minibuffer-local-completion-map (kbd "SPC") 'minibuffer-complete-and-exit)
 (define-key minibuffer-local-map (kbd "M-.")  'subword-backward-kill)
 
 (setq mac-option-modifier 'hyper) ;; greenfield!
 
-;; apparently fullscreen.el provides for both systems
-;; (if (string-match "apple-darwin" system-configuration)
-;;     (global-set-key [f11] 'ns-toggle-fullscreen)
-;;   (global-set-key [f11] 'fullscreen))
+;; key-chord
+(key-chord-define shell-mode-map "qn" 'rename-uniquely)
+
+;; alias
+(defalias 'vis 'visual-line-mode)
+(defalias 'init 'goto-init-for)
+(defalias 'tl 'toggle-truncate-lines)
+(defalias 'un 'rename-uniquely)
+
+
+
 (global-set-key [f11] 'fullscreen)
+(define-key ctl-x-map (kbd "C-d") nil) ;; unset 'list-directory
 
 (provide 'my-keybindings)
 

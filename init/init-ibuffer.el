@@ -9,7 +9,6 @@
 	       ("Ruby" (mode . ruby-mode))
 	       ("dired" (mode . dired-mode))
 	       ("shell" (or
-			 (name . "^\\*shell\\*$")
 			 (mode . shell-mode)))
 	       ("planner" (or
 			   (name . "^\\*Calendar\\*$")
@@ -17,9 +16,8 @@
 			   (mode . org-mode)))
 	       ("emacs" (or
 			 (mode . emacs-lisp)
-			 (name . ".el$")
-			 (name . "^\\*scratch\\*$")
-			 (name . "^\\*Messages\\*$")))))))
+			 (name . ".el$")))
+	       ("proc" (name . "\\*.*\\*"))))))
 
 
 ;; from: http://curiousprogrammer.wordpress.com/2009/04/02/ibuffer/
