@@ -21,9 +21,8 @@
 
 ;; may want toggles
 (setq jabber-roster-line-format " %c %-25n %u %-8s  %S") 
-(setq jabber-muc-autojoin '(GD-devlab
-                            ;; "techops@conference.im.office.gdi"
-                            ) )
+(setq jabber-muc-autojoin 
+      (list GD-devlab))
 
 (setq jabber-account-list
       (list (list GD-jid)))

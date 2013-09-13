@@ -17,6 +17,8 @@
           :type builtin)
    (:name org-mode
           :type builtin)
+   (:name python
+          :type builtin)
    (:name ido
           :type builtin)
    (:name tramp
@@ -114,7 +116,7 @@
         magit markdown-mode multiple-cursors
         nrepl
         org org-publish
-        paredit pianobar  puppet-mode python pylookup
+        paredit pianobar  puppet-mode pylookup
         rainbow-delimiters redo+ rinari rhtml-mode rspec-mode ruby-end
                                         ;ruby-electric conficts with pair
         rails rails-speedbar-feature robe rvm

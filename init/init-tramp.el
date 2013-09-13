@@ -3,6 +3,9 @@
              (cons "." "~/.emacs.d/backups/"))
 (setq tramp-backup-directory-alist backup-directory-alist)
 
+;;autosave (don't leave # files around on remote hosts)
+(setq tramp-auto-save-directory "~/.emacs.d/tramp-autosave/")
+
 ;; this allows sudo on ALL remote hosts
 ;; nil evals as all, (host user proxy)
 (setq tramp-default-proxies-alist '((nil "\\`root\\'" "/ssh:%h:")))
@@ -20,8 +23,9 @@
 
 (defun sudo-find-file (filename &optional wildcards)
   "Calls find-file with filename with sudo-tramp-prefix prepended"
-  (interactive "fFind file with sudo ")
+  (interactive "FFind file with sudo ")
   (let ((sudo-name (sudo-tramp-file-name filename)))
+    (message "sudo-name: %s" sudo-name)
     (apply 'find-file
            (cons sudo-name (if (boundp 'wildcards) '(wildcards))))))
 

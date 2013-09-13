@@ -4,6 +4,9 @@
 
 (setq ibuffer-default-sorting-mode 'filename)
 
+
+(setq ibuffer-show-empty-filter-groups nil)
+
 (setq ibuffer-saved-filter-groups
       (quote (("default"
 	       ("Ruby" (mode . ruby-mode))
@@ -18,6 +21,14 @@
 			 (mode . emacs-lisp)
 			 (name . ".el$")))
 	       ("proc" (name . "\\*.*\\*"))))))
+;;   predicate
+;;   content
+;;   size-lt
+;;   size-gt
+;;   filename
+;;   name
+;;   used-mode
+;;   mode
 
 
 ;; from: http://curiousprogrammer.wordpress.com/2009/04/02/ibuffer/

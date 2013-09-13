@@ -1,3 +1,20 @@
+;; http://www.emacswiki.org/emacs/AddNumbers
+;; (with some adjustments)
+(defun calculator-sum-column (start end)
+  "Adds numbers in rectangle."
+  (interactive "r")
+  (save-excursion
+    (copy-rectangle-as-kill start end)
+    (with-temp-buffer 
+      (progn
+        (yank-rectangle)                    
+        (message (buffer-string))
+        (let ((sum 0))
+          (goto-char (point-min))
+          (while (re-search-forward "[0-9]*\\.?[0-9]+" nil t)
+            (setq sum (+ sum (string-to-number (match-string 0)))))
+          (message "Sum: %f" sum))))))
+
 ;; http://whattheemacsd.com/appearance.el-01.html
 ;; does major modes
 (defmacro rename-modeline (package-name mode new-name)
@@ -25,7 +42,7 @@
   (save-excursion
     (search-forward-regexp "[^ ]:" (point-max) t)
     (if (looking-at "[0-9]+")
-         (setq line-num (string-to-number (buffer-substring (match-beginning 0) (match-end 0))))))
+        (setq line-num (string-to-number (buffer-substring (match-beginning 0) (match-end 0))))))
   (find-file (ffap-guesser))
   (if (not (equal line-num 0))
       (goto-line line-num)))
@@ -87,21 +104,21 @@ With negative N, comment out original line and use the absolute value."
 
 
 ;; http://www.emacswiki.org/emacs/HideShow
- (defun toggle-selective-display (column)
-      (interactive "P")
-      (set-selective-display
-       (or column
-           (unless selective-display
-             (1+ (current-column))))))
+(defun toggle-selective-display (column)
+  (interactive "P")
+  (set-selective-display
+   (or column
+       (unless selective-display
+         (1+ (current-column))))))
 
 (defun toggle-hiding (column)
-      (interactive "P")
-      (if hs-minor-mode
-          (if (condition-case nil
-                  (hs-toggle-hiding)
-                (error t))
-              (hs-show-all))
-        (toggle-selective-display column)))
+  (interactive "P")
+  (if hs-minor-mode
+      (if (condition-case nil
+              (hs-toggle-hiding)
+            (error t))
+          (hs-show-all))
+    (toggle-selective-display column)))
 
 ;;http://www.emacswiki.org/emacs/RaymondZeitler
 (defun shellfn ()
@@ -142,7 +159,7 @@ With negative N, comment out original line and use the absolute value."
                                          "^([Pp]db) "))
       (add-hook 'comint-output-filter-functions
                 'py-comint-output-filter-function))))
-  ;; pdbtrack
+;; pdbtrack
 (defun django-testserver (&optional argprompt)
   (interactive "P")
   ;; Set the default shell if not already set
@@ -209,7 +226,7 @@ With negative N, comment out original line and use the absolute value."
                                          "^([Pp]db) "))
       (add-hook 'comint-output-filter-functions
                 'py-comint-output-filter-function))))
-  ;; pdbtrack
+;; pdbtrack
 
 
 ;;trey jackson

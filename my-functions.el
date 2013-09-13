@@ -3,6 +3,21 @@
 
 ;;TODO tail-apache-logs select host, compile "tail -f /etc/httpd/logs/*"
 
+;; (let ((default-directory "/ssh:prod-puppet2-ep.tops.gdi:/opt/webhook-puppet-deploy/current"))
+;;   (locate-file "config.ru" "/ssh:prod-puppet2-ep.tops.gdi:/opt/webhook-puppet-deploy/current"))
+
+;; neat idea:
+;; (let ((default-directory (locate-dominating-file buffer-file-name "organizer.org")))
+;;   (call-interactively 'compile))
+
+(defun my-locate (search)
+  (interactive (list (read-string "regex: "  )))
+  (let ((dir default-directory)
+        (buf (get-buffer-create (format "*locate %s*" search)))) 
+    (shell-command (format "locate -b %s --regex %s | xargs ls -al" dir search) 
+                   buf)
+    (switch-to-buffer-other-window buf)))
+
 (defun run-fetchmail (args)
   (interactive)
   (compile (concat "env LC_ALL=C fetchmail " args) ))
@@ -14,7 +29,9 @@
 (defun projects ()
   "go to projects/ with organizer.org files"
   (interactive)
-    (find-name-dired "~/projects" "organizer.org"))
+  (let ((find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld")))
+    (find-name-dired "~/projects" "organizer.org")))
+
 
 ;; @wip
 ;; (with-temp-buffer
@@ -24,8 +41,6 @@
 (defun dirname (path)
   "directory of path, must end in filename or /"
   (nth 1 (nreverse (split-string path "/" ))))
-
-(dirname "this/that/")
 
 (defun where-am-i ()
   "copies present location into kill-ring and clipboard"

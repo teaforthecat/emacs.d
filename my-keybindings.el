@@ -59,7 +59,7 @@
 (M> - 'comment-dwim)                                      ;timid
 (M  d 'nil )                                              ;unsure
 ;bmwvz
-(M> b 'ido-switch-buffer)
+(M> b  'bookmark-ido-quick-jump)
 (M> m 'previous-buffer)
 (M> w 'next-buffer)
 (M> v 'eproject-ibuffer 'ibuffer)       ;new
@@ -94,7 +94,9 @@
 (M p   'subword-kill)
 (M "." 'subword-backward-kill)
 ;; (M "'" 'ido-switch-buffer-other-window) ;timid
-(M "'" 'sr-speedbar-toggle)
+;; (M "'" 'sr-speedbar-toggle)
+(M \' 'er/mark-outside-quotes)
+(M \" 'er/mark-inside-quotes)
 
 ;54321`
 (M 5 'query-replace) (M % 'query-replace-regexp)
@@ -120,7 +122,10 @@
 (C b 'browse-kill-ring)
 (C w 'kill-this-buffer)
 (C r 'comment-or-uncomment-region)
-
+;; l
+;; / =
+(C = 'er/expand-region)
+;; \                                       
 (C f 'sudo-find-file)
 
 ; the hotness
@@ -172,6 +177,7 @@
 
 ;; contrib-functions
 (G (kbd "C-c C-r") 'rename-file-and-buffer)
+
 
 ;; HYPER
 (H s 'ido-shell-buffer)
@@ -323,3 +329,24 @@
 
 ;; speedbar-toggle-show-all-files
 ;; compile-next-error
+
+;; in contrib/quick-jump.el
+;; bookmark-ido-quick-jump
+
+
+
+;; er/mark-word
+;; er/mark-symbol
+;; er/mark-symbol-with-prefix
+;; er/mark-next-accessor
+;; er/mark-method-call
+;; er/mark-inside-pairs
+;; er/mark-outside-pairs
+;; er/mark-comment
+;; er/mark-url
+;; er/mark-email
+;; er/mark-defun
+
+;; try: sticky-windows
+
+;; diary-insert-entry

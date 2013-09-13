@@ -1,4 +1,7 @@
 (require 'dired-x) ;;dired-omit-mode exists here in a built-in
+;; use xargs instead of exec for speed
+(setq find-ls-option '("-print0 | xargs -0 ls -ldH" . "-ldH"))
+
 
 ;; use default (setq dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$")
 
@@ -18,3 +21,5 @@
                                     last (&optional REMEMBER-MARKS) activate protect)
   (if (= (point-min) (point))
       (kill-buffer)))
+
+

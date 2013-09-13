@@ -2,7 +2,7 @@
 (add-to-list 'load-path "~/.emacs.d/contrib")
 (add-to-list 'load-path "~/.emacs.d")
 (require 'reset)
-
+(setq debug-on-error t)
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
@@ -31,7 +31,7 @@
          (add-to-list 'recipes 'fullscreen)))
 
 ;; load private variables
-(dolist (f (directory-files "private" t ".el$"))
+(dolist (f (directory-files "~/.emacs.d/private" t ".el$"))
   (load-file f))
 
 ;; needs to be set before packages initialize
@@ -40,6 +40,8 @@
            (setq pianobar-program-command "/usr/local/bin/pianobar")
            ;; not sure why this path doesn't find pianobar
            (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))))
+(setenv "LC_ALL" "en_US.UTF-8")
+
 
 (require 'recipes)
 (el-get 'sync recipes) ;;load everything
@@ -83,7 +85,8 @@
 (setq desktop-files-not-to-save "^$") ;; do save tramp buffers
 (setq desktop-restore-eager 10)       ;; load them lazily
 
-(desktop-save-mode 1)
+;; try to load desktops manually with bookmark+
+(desktop-save-mode -1)
 (savehist-mode 1)
 
 ;;(setq desktop-path (add-to-list 'desktop-path "~/.emacs.d/.desktops"))
@@ -128,7 +131,6 @@
             (set-cursor-color "#ffff00")
             ;; (spawn-shell "*local*")
             (delete-other-windows)
-            (desktop-save-mode 1)
             ))
 
 (add-hook 'emacs-startup-hook
