@@ -92,7 +92,7 @@
 (M ":" 'undo-tree-redo)
 ;; (M y   'yank-pop)        ;default
 (M p   'subword-kill)
-(M "." 'subword-backward-kill)
+(M> "." 'subword-backward-kill)
 ;; (M "'" 'ido-switch-buffer-other-window) ;timid
 ;; (M "'" 'sr-speedbar-toggle)
 (M \' 'er/mark-outside-quotes)
@@ -184,6 +184,9 @@
 (H r 'ido-ruby-buffer)
 (H d 'dictionary-lookup-definition 'flyspell-auto-correct-word)
 (H f 'run-fetchmail 'run-fetchmail-verbose)
+
+(H 8 'window-configuration-to-register)
+(H 0 'register-to-point)
 
 ;; (defun toggle-subdir-and-stay ()
 ;;   (interactive)
@@ -350,3 +353,6 @@
 ;; try: sticky-windows
 
 ;; diary-insert-entry
+
+;; conflicts:
+;; nrepl-jump M-.

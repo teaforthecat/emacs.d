@@ -36,3 +36,6 @@
 ;; inline customization added:
 ;; /Users/cthompson/.emacs.d/el-get/jabber/jabber-sasl.el:46
 ;; +                   nil                  ;HACK: stop prompt, never use anonymous auth
+
+;; /Users/cthompson/.emacs.d/el-get/jabber/jabber-sasl.el:77
+;; - (yes-or-no-p "Jabber server only allows cleartext password transmission!  Continue? ")
