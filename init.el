@@ -2,6 +2,7 @@
 (add-to-list 'load-path "~/.emacs.d/contrib")
 (add-to-list 'load-path "~/.emacs.d")
 (require 'reset)
+
 (setq debug-on-error t)
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
@@ -57,7 +58,16 @@
 (set-face-attribute 'default nil
                 :family "Inconsolata" :height 165 :weight 'normal)
 
-(add-hook 'write-contents-functions 'delete-trailing-whitespace)
+;; fullscreen with font height 165
+(setq initial-frame-alist
+      (list (cons 'width
+                  (round (/ (x-display-pixel-width) 9.114)))
+            (cons 'height
+                  (round (/ (x-display-pixel-height) 18)))))
+
+
+(add-hook 'write-contents-functions 'whitespace-cleanup)
+
 (display-time)
 
 (setq visible-bell t)
@@ -121,7 +131,7 @@
 (setq rails-tags-dirs '(".")) ;;all
 
 ;; for jabber:
-(setq starttls-extra-arguments 
+(setq starttls-extra-arguments
       '("--insecure" "--no-ca-verification"))
 
 (add-hook 'after-init-hook
