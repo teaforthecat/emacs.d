@@ -109,7 +109,7 @@
         fullscreen
         goto-last-change
         haml-mode helm htmlize
-        ioccur
+        idomenu ioccur
         jabber js2-mode js-comint json-mode jump-char
         key-chord
         list-register
