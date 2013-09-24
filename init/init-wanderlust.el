@@ -7,11 +7,11 @@
 ;; (setq send-mail-function 'smtpmail-send-it)
 
 (add-hook 'wl-draft-mode-hook 'flyspell-mode-on)
-(add-hook 'wl-draft-mode-hook 'toggle-truncate-lines)
-(add-hook 'wl-message-mode-hook 'toggle-truncate-lines)
-;; weird that it isn't defined
-(defvar mime-view-mode-hook ())
-(add-hook 'mime-view-mode-hook  'toggle-truncate-lines)
+
+;; wrap lines
+(setq message-truncate-lines nil
+      wl-draft-truncate-lines nil
+      wl-message-truncate-lines nil)
 
 ;;look into
 ;;wl-summary-auto-sync-marks
@@ -46,6 +46,7 @@
       wl-fcc            ".sent")
 
 (setq wl-fcc-force-as-read t)
+(setq wl-draft-always-delete-myself t)
 
 ;;(setq wl-biff-mail-image '(image :type xpm :file "/usr/local/Cellar/emacs/24.3/share/emacs/24.3/etc/images/newsticker/mark-immortal.xpm" :ascent center))
 
