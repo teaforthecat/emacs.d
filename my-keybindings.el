@@ -102,7 +102,7 @@
 (M 5 'query-replace) (M % 'query-replace-regexp)
 (M 4 'split-window-horizontally)(M $ 'split-window-vertically)
 (M 3 'delete-other-windows)
-(M "`" 'speedbar-get-focus) ;; new
+;;(M "`" 'speedbar-get-focus) ;; new
 (M <f5> 'flyspell-correct-word-before-point)
 (M <f6> 'whitespace-cleanup)
 (M <f7> 'pianobar)
@@ -135,8 +135,8 @@
 (C 5 'find-lisp-find-dired)
 (C 4 'find-grep)
 (C 3 'find-file-at-point-with-line)
-(C 2 'find-tag)
-(C 1 'rails-grep-project)
+(C 2 'ffip)(C @ 'find-file-in-repository)
+(C 1 'idomenu)(C ! 'find-tag)
 
 
 (C p 'backward-page)
