@@ -54,6 +54,8 @@
 (require 'my-macros)
 (require 'my-keybindings)
 
+(org-babel-load-file "organizer.org")
+
 ; TODO: move to custom settings file
 (set-face-attribute 'default nil
                 :family "Inconsolata" :height 165 :weight 'normal)
