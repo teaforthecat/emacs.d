@@ -33,23 +33,22 @@
     (split-string (buffer-string) "\n" t)))
 #+end_src
 
-* ido-read-hosts
+* my-dancer-shell-hosts function
 #+begin_src emacs-lisp
-(defvar ido-read-hosts-history (or (read-lines "~/.emacs.d/tmp/ido-read-hosts-history") ("test")))
-(defun ido-read-hosts ()
+(defvar my-read-hosts-history (or (read-lines "~/.emacs.d/tmp/my-read-hosts-history") '("test")))
+(defun my-dancer-shell-hosts ()
   (interactive)
   (let* ((files (file-expand-wildcards "~/.dsh/group/*"))
          (hosts (-mapcat 'read-lines files))
-         (host (ido-completing-read "host: " hosts nil nil nil 'ido-read-hosts-history (car ido-read-hosts-history))))
-    (add-to-history 'ido-read-hosts-history host 30)
-    (write-lines ido-read-hosts-history "~/.emacs.d/tmp/ido-read-hosts-history")
+         (host (ido-completing-read "host: " hosts nil nil nil 'my-read-hosts-history (car my-read-hosts-history))))
+    (add-to-history 'my-read-hosts-history host 30)
+    (write-lines my-read-hosts-history "~/.emacs.d/tmp/my-read-hosts-history")
     host))
 #+end_src
-
 * goto-remote-host
 #+begin_src emacs-lisp
 (defun goto-remote-host ()
   (interactive)
-  (remote-shell (ido-read-hosts)))
+  (remote-shell (my-dancer-shell-hosts)))
 #+end_src
 
