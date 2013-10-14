@@ -1,6 +1,30 @@
 (require 'w3m)
 (require 'mime-w3m)
 
+(defadvice wl (around wl-fullscreen activate)
+  (window-configuration-to-register :wl-fullscreen)
+  ad-do-it
+  (delete-other-windows))
+
+(defadvice wl-draft (around wl-fullscreen activate)
+  (window-configuration-to-register :wl-fullscreen)
+  ad-do-it
+  (delete-other-windows))
+
+(defadvice wl-draft-kill (after wl-fullscreen activate)
+  (jump-to-register :wl-fullscreen))
+
+(defun wl-quit-session ()
+  "Restores the previous window configuration and kills the magit buffer"
+  (interactive)
+  (bury-buffer)
+  (jump-to-register :wl-fullscreen))
+
+(eval-after-load 'wl
+  '(progn
+     (define-key wl-folder-mode-map (kbd "q") 'wl-quit-session)))
+
+
 (load-file "~/.emacs.d/contrib/dmj-html-message.el")
 
 ;; (setq elmo-imap4-debug t)
