@@ -95,8 +95,8 @@
 (M> "." 'subword-backward-kill)
 ;; (M "'" 'ido-switch-buffer-other-window) ;timid
 ;; (M "'" 'sr-speedbar-toggle)
-(M \' 'er/mark-outside-quotes)
-(M \" 'er/mark-inside-quotes)
+(M> \' 'er/mark-outside-quotes)
+(M> \" 'er/mark-inside-quotes)
 
 ;54321`
 (M 5 'query-replace) (M % 'query-replace-regexp)
@@ -129,19 +129,22 @@
 (C f 'sudo-find-file)
 
 ; the hotness
+; finders
 (C 8 (lambdo (ioccur (unless current-prefix-arg (thing-at-point 'symbol)))))
-(C 7 'my-ido-find-tag)
-(C 6 'my-ido-find-file-in-tag-files)
-(C 5 'find-lisp-find-dired)
-(C 4 'find-grep)
-(C 3 'find-file-at-point-with-line)
-(C 2 'ffip)(C @ 'find-file-in-repository)
-(C 1 'idomenu)(C ! 'find-tag)
+(C> 7 'idomenu) (C> * 'my-ido-find-tag)
+(C> 6 'my-ido-find-file-in-tag-files)
+(C> 5 'find-lisp-find-dired)
+(C> 4 'find-grep)
+(C> 3 'find-file-at-point-with-line)
+(C> 2 'ffip)(C> @ 'find-file-in-repository)
+(C> 1 'idomenu)(C> ! 'find-tag)
 
+
+(C ~ (lambdo (let ((default-directory "~")) (ido-find-file))))
 
 (C p 'backward-page)
 (C i 'indent-for-tab-command)
-(C o 'eproject-find-file 'find-file)
+;(C o 'eproject-find-file 'find-file)
 (C o 'ido-find-file 'ido-find-file-other-window)
 (C a 'mark-whole-buffer)
 
@@ -356,3 +359,4 @@
 
 ;; conflicts:
 ;; nrepl-jump M-.
+;; js-find-symbol
