@@ -3,7 +3,7 @@
 (add-to-list 'load-path "~/.emacs.d")
 (require 'reset)
 
-;;(setq debug-on-error t)
+;; (setq debug-on-error nil)
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
@@ -54,7 +54,7 @@
 (require 'my-macros)
 (require 'my-keybindings)
 
-(org-babel-load-file "organizer.org")
+(org-babel-load-file "~/.emacs.d/organizer.org")
 
 ; TODO: move to custom settings file
 (set-face-attribute 'default nil
@@ -72,6 +72,7 @@
 
 (display-time)
 
+(setq ffip-find-options "-not -regex \".*svn.*\" -not -path '*/.bundle/*' -not -path '*/contrib/*'")
 
 ;; (setq truncate-lines nil)
 (setq visible-bell t)
@@ -138,6 +139,14 @@
 (setq starttls-extra-arguments
       '("--insecure" "--no-ca-verification"))
 
+
+;; for pianobar: <esc>[2k
+(defconst ansi-color-drop-regexp
+  "\033\\[\\([ABCDsuK]\\|2J\\|2K\\|=[0-9]+[hI]\\|[0-9;]*[Hf]\\)"
+  "Regexp that matches ANSI control sequences to silently drop.")
+
+
+
 (add-hook 'after-init-hook
           (lambda ()
             (load-theme 'misterioso t)
@@ -156,18 +165,19 @@
             (org-agenda-list)))
 
 
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(diredp-compressed-file-suffix ((t (:foreground "dark Blue"))) t)
- '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))))
- '(magit-diff-add ((t (:foreground "chartreuse"))))
- '(magit-diff-del ((t (:foreground "red1"))))
- '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))))
- '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))))
- '(magit-item-highlight ((t nil))))
+ '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))) t)
+ '(magit-diff-add ((t (:foreground "chartreuse"))) t)
+ '(magit-diff-del ((t (:foreground "red1"))) t)
+ '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))) t)
+ '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))) t)
+ '(magit-item-highlight ((t nil)) t))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
