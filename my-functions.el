@@ -1,14 +1,13 @@
 (require 's)
 (require 'dash)
 
-;;TODO tail-apache-logs select host, compile "tail -f /etc/httpd/logs/*"
-
-;; (let ((default-directory "/ssh:prod-puppet2-ep.tops.gdi:/opt/webhook-puppet-deploy/current"))
-;;   (locate-file "config.ru" "/ssh:prod-puppet2-ep.tops.gdi:/opt/webhook-puppet-deploy/current"))
-
-;; neat idea:
-;; (let ((default-directory (locate-dominating-file buffer-file-name "organizer.org")))
-;;   (call-interactively 'compile))
+(defun grep-log-pe-httpd (seek-regex)
+  " run grep on puppetmaster.access.log"
+  (interactive "Sgrep for: ")
+  (let ((default-directory "/sudo:puppet.tops.gdi:/var/log/pe-httpd/")
+        (log-file  "puppetmaster.access.log")
+        (compilation-buffer-name-function (lambda (buffer) (format  "* %s in %s *" seek-regex log-file ))) )
+    (compile (format "grep --color=always -n -H -e %s %s" seek-regex log-file) t)))
 
 (defun my-locate (search)
   (interactive (list (read-string "regex: "  )))
@@ -26,17 +25,36 @@
   (interactive)
   (run-fetchmail "-v  --nodetach --nosyslog"))
 
-(defun projects ()
+(defun my-find-projects ()
   "go to projects/ with organizer.org files"
   (interactive)
   (let ((find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld")))
     (find-name-dired "~/projects" "organizer.org")))
 
+(defun my-ido-mdfind-project ()
+  "open a dired buffer for a project that contains an organizer.org file and open shell as well!"
+  (interactive)
+  (let* ((project-dir "~/projects")
+        (project-list (mdfind "organizer.org" (format "-onlyin %s" project-dir)))
+        (chosen-project (ido-completing-read "project: " (remove nil project-list)))
+        (pre-project-marker (make-symbol (format "pre-" chosen-project)))
+        (default-directory (joindirs project-dir chosen-project)))
+    (window-configuration-to-register pre-project-marker)
+    (setq previous-project pre-project-marker)
+    (dired default-directory)
+    (delete-other-windows)
+    (spawn-shell (format "*%s*" chosen-project))))
 
-;; @wip
-;; (with-temp-buffer
-;;   (shell-command "find ~/projects \\( -name organizer.org \\)" (current-buffer))
-;;   (-map 'dirname (split-string  (buffer-string) "\n")))
+(defun goto-previous-project ()
+  (interactive)
+  (jump-to-register previous-project))
+
+(defun mdfind (file-name &optional opts)
+  "return full paths of files matching name"
+  (let ((mdopts nil))
+    (with-temp-buffer 
+      (shell-command (format "mdfind -name %s %s" file-name opts ) t) 
+    (-map 'dirname (split-string  (buffer-string) "\n")))))
 
 (defun dirname (path)
   "directory of path, must end in filename or /"
@@ -52,10 +70,11 @@
   "start a shell on a vagrant machine
    - must be in a vagrant project
    - must have only one machine
-   - must set IdentityFile in ssh config for Host: vagrant"
+   - must set IdentityFile in ssh config for Host: vagrant
+   - to use sudo remove from default-directory and add it to ssh-config"
   (let* ((port (find-vagrant-port))
          (user "vagrant")
-         (default-directory (concat "/ssh:" user "@vagrant#" port ":/vagrant")))
+         (default-directory (concat "/ssh:" "vagrant#" port ":/vagrant")))
     (spawn-shell "*vagrant*")))
 
 (defun find-vagrant-port ()
@@ -68,7 +87,7 @@
     (thing-at-point 'word)))
 
 (defun goto-init-for ()
-  "find the 'user init file' for a package managed my el-get"
+  "find the 'user init file' for a package managed el-get"
   (interactive)
   (let* ((init-full-dir (expand-file-name el-get-user-package-directory))
          (init-dir (s-chop-prefix default-directory init-full-dir))
