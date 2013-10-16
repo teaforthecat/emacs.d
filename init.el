@@ -123,6 +123,8 @@
 (desktop-save-mode -1)
 (savehist-mode 1)
 
+(put 'narrow-to-region 'disabled nil)
+
 ;;(setq desktop-path (add-to-list 'desktop-path "~/.emacs.d/.desktops"))
 ;; ready
 (server-mode t)
@@ -134,14 +136,14 @@
 (diminish 'global-visual-line-mode)
 (diminish 'rinari-minor-mode "`")
 (diminish 'ruby-end-mode)
-(diminish 'rails-minor-mode)
+;(diminish 'rails-minor-mode)
 (diminish 'eldoc-mode)
 
-(add-hook 'robe-mode-hook '(lambda ()(diminish 'robe-mode "\u03BB")))
-(add-hook 'flymake-mode-hook '(lambda ()(diminish 'flymake-mode " make ")))
-(add-hook 'rails-controller-minor-mode-hook '(lambda ()(diminish 'rails-controller-minor-mode)))
-(add-hook 'rails-model-minor-mode-hook '(lambda ()(diminish 'rails-model-minor-mode)))
-(add-hook 'rails-view-minor-mode-hook '(lambda ()(diminish 'rails-view-minor-mode)))
+;(add-hook 'robe-mode-hook '(lambda ()(diminish 'robe-mode "\u03BB")))
+;(add-hook 'flymake-mode-hook '(lambda ()(diminish 'flymake-mode " make ")))
+;(add-hook 'rails-controller-minor-mode-hook '(lambda ()(diminish 'rails-controller-minor-mode)))
+;(add-hook 'rails-model-minor-mode-hook '(lambda ()(diminish 'rails-model-minor-mode)))
+;(add-hook 'rails-view-minor-mode-hook '(lambda ()(diminish 'rails-view-minor-mode)))
 
 
 (rename-modeline "ruby-mode" ruby-mode "R")
@@ -191,7 +193,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(diredp-compressed-file-suffix ((t (:foreground "dark Blue"))) t)
- '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))) t)
+ '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))))
  '(magit-diff-add ((t (:foreground "chartreuse"))) t)
  '(magit-diff-del ((t (:foreground "red1"))) t)
  '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))) t)
@@ -205,9 +207,4 @@
  ;; If there is more than one, they won't work right.
  '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
  '(org-latex-pdf-process (quote ("pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f")))
- '(safe-local-variable-values (quote ((eval ignore-errors "Write-contents-functions is a buffer-local alternative to before-save-hook" (add-hook (quote write-contents-functions) (lambda nil (delete-trailing-whitespace) nil)) (require (quote whitespace)) "Sometimes the mode needs to be toggled off and on." (whitespace-mode 0) (whitespace-mode 1)) (whitespace-line-column . 80) (whitespace-style face trailing lines-tail) (require-final-newline . t) (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby"))))
- '(send-mail-function (quote smtpmail-send-it))
- '(tab-always-indent (quote complete))
- '(wl-smtp-connection-type (quote starttls))
- '(wl-smtp-posting-server "mail1.office.gdi"))
-(put 'narrow-to-region 'disabled nil)
+ '(tab-always-indent (quote complete)))
