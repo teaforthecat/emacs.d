@@ -35,6 +35,15 @@
 (dolist (f (directory-files "~/.emacs.d/private" t ".el$"))
   (load-file f))
 
+
+;; Mail
+;; uses ~/.authinfo
+(setq
+ smtpmail-starttls-credentials '(("smtp.gmail.com" "587" nil nil))
+ smtpmail-auth-credentials  (expand-file-name "~/.authinfo")
+ smtpmail-default-smtp-server "smtp.gmail.com")
+
+
 ;; needs to be set before packages initialize
 (if (eq system-type 'darwin)
     (progn ()
