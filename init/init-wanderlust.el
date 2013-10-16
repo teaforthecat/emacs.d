@@ -1,5 +1,18 @@
 (require 'w3m)
 (require 'mime-w3m)
+(require 'elmo-search)
+
+
+(elmo-search-register-engine
+    'mu 'local-file
+    :prog "/usr/local/bin/mu"
+    :args '("find" pattern "--fields" "l" "--sortfield=date") :charset 'utf-8)
+
+(setq elmo-search-default-engine 'mu)
+;; for when you type "g" in folder or summary.
+(setq wl-default-spec "[")
+
+
 
 (defadvice wl (around wl-fullscreen activate)
   (window-configuration-to-register :wl-fullscreen)
@@ -107,10 +120,15 @@
 (setq wl-summary-auto-refile-skip-marks nil)
 (setq wl-refile-rule-alist
       '(("From"         
+         ("Cron Daemon"     . ".GD/cron")
          ("jenkins"         . ".GD/jenkins")
          ("Chatter"         . ".GD/chatter")
          ("nagios"          . ".GD/nagios")
-         ("Restart.Script"  . ".GD/ops"))))
+         ("Restart.Script"  . ".GD/ops"))
+        (("To" "Cc")
+         ("chris.thompson@govdelivery" . 
+          ("From" ("\\(.*\\) <.*@govdelivery.com>" .
+                     ".GD/from/\\1"))))))
 
 
 ;;also consider:
