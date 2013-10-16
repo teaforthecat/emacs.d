@@ -1,3 +1,4 @@
+
 ;; http://stackoverflow.com/a/13473856/714357
 (defun joindirs (root &rest dirs)
   "Joins a series of directories together, like Python's os.path.join,
@@ -35,6 +36,8 @@
         (setq mode-name ,new-name))))
 
 ;; https://github.com/waymondo/hemacs/blob/master/hemacs-ruby.el
+;; contrib-functions.el:47:54:Warning: `replace-regexp' used from Lisp code
+;; That command is designed for interactive use only
 (defun ruby-toggle-hash-syntax (beg end)
   "Toggle syntax of selected ruby hash literal between ruby 1.8 and 1.9 styles."
   (interactive "r")
@@ -50,14 +53,14 @@
 (defun find-file-at-point-with-line ()
   "if file has an attached line num goto that line, ie boom.rb:12"
   (interactive)
-  (setq line-num 0)
-  (save-excursion
-    (search-forward-regexp "[^ ]:" (point-max) t)
-    (if (looking-at "[0-9]+")
-        (setq line-num (string-to-number (buffer-substring (match-beginning 0) (match-end 0))))))
-  (find-file (ffap-guesser))
-  (if (not (equal line-num 0))
-      (goto-line line-num)))
+  (let ((line-num 0))
+    (save-excursion
+      (search-forward-regexp "[^ ]:" (point-max) t)
+      (if (looking-at "[0-9]+")
+          (setq line-num (string-to-number (buffer-substring (match-beginning 0) (match-end 0))))))
+    (find-file (ffap-guesser))
+    (if (not (equal line-num 0))
+        (goto-line line-num))))
 
 ;; http://stackoverflow.com/a/4717026/714357
 (defun duplicate-line-or-region (&optional n)
@@ -123,6 +126,7 @@ With negative N, comment out original line and use the absolute value."
        (unless selective-display
          (1+ (current-column))))))
 
+(defvar hs-minor-mode)
 (defun toggle-hiding (column)
   (interactive "P")
   (if hs-minor-mode
@@ -142,7 +146,7 @@ With negative N, comment out original line and use the absolute value."
 (defun django-server (&optional argprompt)
   (interactive "P")
   ;; Set the default shell if not already set
-  (labels ((read-django-project-dir
+  (cl-labels ((read-django-project-dir
             (prompt dir)
             (let* ((dir (read-directory-name prompt dir))
                    (manage (expand-file-name (concat dir "manage.py"))))
@@ -171,11 +175,12 @@ With negative N, comment out original line and use the absolute value."
                                          "^([Pp]db) "))
       (add-hook 'comint-output-filter-functions
                 'py-comint-output-filter-function))))
+
 ;; pdbtrack
 (defun django-testserver (&optional argprompt)
   (interactive "P")
   ;; Set the default shell if not already set
-  (labels ((read-django-project-dir
+  (cl-labels ((read-django-project-dir
             (prompt dir)
             (let* ((dir (read-directory-name prompt dir))
                    (manage (expand-file-name (concat dir "manage.py"))))
@@ -209,7 +214,7 @@ With negative N, comment out original line and use the absolute value."
 (defun django-shell (&optional argprompt)
   (interactive "P")
   ;; Set the default shell if not already set
-  (labels ((read-django-project-dir
+  (cl-labels ((read-django-project-dir
             (prompt dir)
             (let* ((dir (read-directory-name prompt dir))
                    (manage (expand-file-name (concat dir "manage.py"))))

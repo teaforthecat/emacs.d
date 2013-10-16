@@ -1,10 +1,11 @@
 (require 's)
 (require 'dash)
 
+
 (defun grep-log-pe-httpd (seek-regex)
   " run grep on puppetmaster.access.log"
   (interactive "Sgrep for: ")
-  (let ((default-directory "/sudo:puppet.tops.gdi:/var/log/pe-httpd/")
+  (let* ((default-directory "/sudo:puppet.tops.gdi:/var/log/pe-httpd/")
         (log-file  "puppetmaster.access.log")
         (compilation-buffer-name-function (lambda (buffer) (format  "* %s in %s *" seek-regex log-file ))) )
     (compile (format "grep --color=always -n -H -e %s %s" seek-regex log-file) t)))
@@ -31,13 +32,15 @@
   (let ((find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld")))
     (find-name-dired "~/projects" "organizer.org")))
 
+(defvar previous-project nil)
+
 (defun my-ido-mdfind-project ()
   "open a dired buffer for a project that contains an organizer.org file and open shell as well!"
   (interactive)
   (let* ((project-dir "~/projects")
         (project-list (mdfind "organizer.org" (format "-onlyin %s" project-dir)))
         (chosen-project (ido-completing-read "project: " (remove nil project-list)))
-        (pre-project-marker (make-symbol (format "pre-" chosen-project)))
+        (pre-project-marker (make-symbol (format "pre-%s" chosen-project)))
         (default-directory (joindirs project-dir chosen-project)))
     (window-configuration-to-register pre-project-marker)
     (setq previous-project pre-project-marker)
