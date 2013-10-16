@@ -44,19 +44,7 @@
                                   "/usr/local/bin/ispell"
                                 "/usr/bin/ispell"))))
    (:name ruby-mode
-          :type builtin
-          :after (progn ()
-                   (add-to-list 'auto-mode-alist '("\\.rake" . ruby-mode))
-                   (add-to-list 'auto-mode-alist '("GemFile" . ruby-mode))
-                   (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
-                   (add-to-list 'auto-mode-alist '("gemspec" . ruby-mode))
-                   (add-to-list 'auto-mode-alist '("json_builder" . ruby-mode))
-                   (add-hook 'ruby-mode-hook
-                             (lambda ()
-                               (rvm-activate-corresponding-ruby)
-                               (ruby-end-mode)
-                               (flyspell-prog-mode)
-                               (flyspell-mode 0)))))
+          :type builtin)
 
    ;; non-builtin
    (:name autopair
@@ -101,7 +89,7 @@
 (setq recipes
       '( ace-jump-mode
          bookmark+
-        cl-lib clojure-mode color-theme
+        clojure-mode color-theme
         dash dictionary dired-details+ django-mode
         el-get emacs-w3m eproject expand-region exec-path-from-shell
         feature-mode find-things-fast find-file-in-repository
@@ -115,11 +103,11 @@
         list-register
         magit markdown-mode multiple-cursors
         nrepl
-        org org-publish
+        org org-publish ;; org-dotemacs
         paredit pianobar  puppet-mode pylookup
         rainbow-delimiters redo+ rinari rhtml-mode rspec-mode ruby-end
                                         ;ruby-electric conficts with pair
-        rails rails-speedbar-feature robe rvm
+;;        rails rails-speedbar-feature  rvm ;; robe
         s sass-mode smooth-scrolling smex sr-speedbar;; shell-command
         undo-tree
         wanderlust
