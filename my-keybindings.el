@@ -300,10 +300,12 @@
 
 ;; alias
 (defalias 'vis 'visual-line-mode)
-(defalias 'init 'goto-init-for)
+(defalias 'ini 'goto-init-for)
+(defalias 'rem 'goto-remote-host)
+(defalias 'pro 'my-ido-mdfind-project)
 (defalias 'tl 'toggle-truncate-lines)
+(defalias 'tc 'tramp-cleanup-all-connections)
 (defalias 'un 'rename-uniquely)
-
 
 
 (global-set-key [f11] 'fullscreen)
