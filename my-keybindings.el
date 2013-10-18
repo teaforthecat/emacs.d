@@ -124,7 +124,7 @@
 (C r 'comment-or-uncomment-region)
 ;; l
 ;; / =
-(C = 'er/expand-region)
+(C = 'er/expand-region) ;;needs practice
 ;; \                                       
 (C f 'sudo-find-file)
 
@@ -140,7 +140,7 @@
 (C> 1 'idomenu)(C> ! 'find-tag)
 
 
-(C ~ (lambdo (let ((default-directory "~")) (ido-find-file))))
+(C ~ (lambdo (let ((default-directory "~")) (ido-find-file)))) ;;needs practice
 
 (C p 'backward-page)
 (C i 'indent-for-tab-command)
@@ -286,8 +286,13 @@
   '(progn
      (define-key slime-mode-map (kbd "M-n") 'forward-char)))
 
-;; wtf
-;;(define-key ctl-x-map (kbd "C-d") 'shell-here-now)
+
+(eval-after-load 'bookmark-bmenu-mode
+  '(progn
+     (define-key bookmark-bmenu-mode-map (kbd "i") 'bmkp-bmenu-describe-this-bookmark)
+     (define-key bookmark-bmenu-mode-map (kbd "^") 'bmkp-bmenu-mark-bookmarks-tagged-regexp)
+     (define-key bookmark-bmenu-mode-map (kbd "*") 'bmkp-bmenu-jump-to-marked)))
+
 
                                         ;timid
 (define-key minibuffer-local-completion-map (kbd "SPC") 'minibuffer-complete-and-exit)
