@@ -193,7 +193,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(diredp-compressed-file-suffix ((t (:foreground "dark Blue"))) t)
- '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))))
+ '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))) t)
  '(magit-diff-add ((t (:foreground "chartreuse"))) t)
  '(magit-diff-del ((t (:foreground "red1"))) t)
  '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))) t)
@@ -205,6 +205,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
+ '(bmkp-last-as-first-bookmark-file "/Users/cthompson/.emacs.d/bookmarks")
  '(org-latex-pdf-process (quote ("pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f")))
  '(tab-always-indent (quote complete)))
