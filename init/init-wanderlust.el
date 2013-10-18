@@ -30,7 +30,9 @@
 (defun wl-quit-session ()
   "Restores the previous window configuration and kills the magit buffer"
   (interactive)
-  (bury-buffer)
+  (if current-prefix-arg 
+      (wl-exit)
+    (bury-buffer))
   (jump-to-register :wl-fullscreen))
 
 (eval-after-load 'wl
@@ -66,6 +68,14 @@
       (kill-buffer (find-buffer-visiting temp-file-name))
       (delete-file temp-file-name))))
 
+
+
+;; Invert behaviour of with and without argument replies.
+;; just the author
+(setq wl-draft-reply-without-argument-list
+      '(("Reply-To"      ("Reply-To") nil nil)
+        ("Mail-Reply-To" ("Mail-Reply-To") nil nil)
+        ("From"          ("From") nil nil)))
 
 ;;mime-view
 
