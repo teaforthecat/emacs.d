@@ -43,6 +43,12 @@
  smtpmail-auth-credentials  (expand-file-name "~/.authinfo")
  smtpmail-default-smtp-server "smtp.gmail.com")
 
+;; record keystrokes, analyze later
+;; uses contrib-function macro
+(let ((dribble-file (make-temp-name (expand-file-name "~/.emacs.d/lossage-")))
+      (dribble-persistent (expand-file-name "~/.emacs.d/lossage.txt")))
+  (open-dribble-file dribble-file)
+  (dribble-append-on-exit dribble-file dribble-persistent))
 
 ;; needs to be set before packages initialize
 (if (eq system-type 'darwin)
@@ -205,6 +211,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(bmkp-last-as-first-bookmark-file "/Users/cthompson/.emacs.d/bookmarks")
+ '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
  '(org-latex-pdf-process (quote ("pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f")))
  '(tab-always-indent (quote complete)))

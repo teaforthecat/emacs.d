@@ -1,3 +1,12 @@
+;; http://stackoverflow.com/a/9761896/714357
+(defmacro dribble-append-on-exit (current persistent)
+  "Concatenate the dribble-file for this session to the persistent lossage log."
+  (let ((command (format "cat %s >>%s && rm %s"
+                         (shell-quote-argument (eval current))
+                         (shell-quote-argument (eval persistent))
+                         (shell-quote-argument (eval current)))))
+    `(add-hook 'kill-emacs-hook
+               (lambda () (shell-command ,command)))))
 
 ;; http://stackoverflow.com/a/13473856/714357
 (defun joindirs (root &rest dirs)
