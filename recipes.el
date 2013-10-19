@@ -98,14 +98,14 @@
         goto-last-change
         haml-mode helm htmlize
         idomenu ioccur
-        jabber js2-mode js-comint json-mode jump-char
+        jabber js2-mode js-comint json json-mode jump-char
         key-chord
         list-register
         magit markdown-mode multiple-cursors
         nrepl
         org org-publish ;; org-dotemacs
         paredit pianobar  puppet-mode pylookup
-        rainbow-delimiters redo+ rinari rhtml-mode rspec-mode ruby-end
+        rainbow-delimiters redo+ request rinari rhtml-mode rspec-mode ruby-end
                                         ;ruby-electric conficts with pair
 ;;        rails rails-speedbar-feature  rvm ;; robe
         s sass-mode smooth-scrolling smex sr-speedbar;; shell-command
