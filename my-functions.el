@@ -29,8 +29,8 @@
 (defun my-locate (search)
   (interactive (list (read-string "regex: "  )))
   (let ((dir default-directory)
-        (buf (get-buffer-create (format "*locate %s*" search)))) 
-    (shell-command (format "locate -b %s --regex %s | xargs ls -al" dir search) 
+        (buf (get-buffer-create (format "*locate %s*" search))))
+    (shell-command (format "locate -b %s --regex %s | xargs ls -al" dir search)
                    buf)
     (switch-to-buffer-other-window buf)))
 
@@ -71,8 +71,8 @@
 (defun mdfind (file-name &optional opts)
   "return full paths of files matching name"
   (let ((mdopts nil))
-    (with-temp-buffer 
-      (shell-command (format "mdfind -name %s %s" file-name opts ) t) 
+    (with-temp-buffer
+      (shell-command (format "mdfind -name %s %s" file-name opts ) t)
     (-map 'dirname (split-string  (buffer-string) "\n")))))
 
 (defun dirname (path)
@@ -179,7 +179,7 @@
 (defun spawn-shell (name &optional cmds)
   "Invoke shell in buffer NAME with optional list of COMMANDS
    example (spawn-shell \"*.emacs.d*\" '(\"ls\" \"file init.el\"))"
-  (interactive (list (read-string "Name: " (concat "*" (this-dir-name) "*" ))))  
+  (interactive (list (read-string "Name: " (concat "*" (this-dir-name) "*" ))))
   (let ((ss-buffer (or (get-buffer name)
                        (get-buffer-create (generate-new-buffer-name name)))))
     (pop-to-buffer ss-buffer)
