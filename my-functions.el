@@ -1,14 +1,13 @@
 (require 's)
 (require 'dash)
 
-(defvar elgin-hosts "http://prod-foreman1-ep.tops.gdi:3000/hosts/%s")
-
-(defun refresh-dsh-groups ()
-  "writes hosts to dsh group files by environment"
+;;(refresh-dsh-groups elgin-hosts)
+(defun refresh-dsh-groups (host-url-template)
+  "writes hosts to dsh group files by environment using host-url-template"
   (let* ((environments  '(poc qc int stg prod))
          (file-template "~/.dsh/group/%s"))
     (dolist (env environments)
-      (let* ((response (request (format elgin-hosts env)
+      (let* ((response (request (format host-url-template env)
                             :parser 'json-read
                             :sync t))
              (data (request-response-data response))
