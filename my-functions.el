@@ -1,6 +1,22 @@
 (require 's)
 (require 'dash)
 
+(defvar elgin-hosts "http://prod-foreman1-ep.tops.gdi:3000/hosts/%s")
+
+(defun refresh-dsh-groups ()
+  "writes hosts to dsh group files by environment"
+  (let* ((environments  '(poc qc int stg prod))
+         (file-template "~/.dsh/group/%s"))
+    (dolist (env environments)
+      (let* ((response (request (format elgin-hosts env)
+                            :parser 'json-read
+                            :sync t))
+             (data (request-response-data response))
+             (file-path (format file-template env)))
+        (message (format "writing to %s" file-path))
+        (write-lines (-map '(lambda (s) (format "%s.tops.gdi" s)) ;s is the hostname
+                           (-map 'car data))
+                     file-path)))))
 
 (defun grep-log-pe-httpd (seek-regex)
   " run grep on puppetmaster.access.log"
