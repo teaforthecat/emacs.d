@@ -43,12 +43,6 @@
  smtpmail-auth-credentials  (expand-file-name "~/.authinfo")
  smtpmail-default-smtp-server "smtp.gmail.com")
 
-;; record keystrokes, analyze later
-;; uses contrib-function macro
-(let ((dribble-file (make-temp-name (expand-file-name "~/.emacs.d/lossage-")))
-      (dribble-persistent (expand-file-name "~/.emacs.d/lossage.txt")))
-  (open-dribble-file dribble-file)
-  (dribble-append-on-exit dribble-file dribble-persistent))
 
 ;; needs to be set before packages initialize
 (if (eq system-type 'darwin)
@@ -78,6 +72,16 @@
     (byte-compile-file buffer-file-name)))
 
 (add-hook 'after-save-hook 'byte-compile-current-buffer)
+
+
+;; record keystrokes, analyze later
+;; uses contrib-function macro
+(let ((dribble-file (make-temp-name (expand-file-name "~/.emacs.d/lossage-")))
+     (dribble-persistent (expand-file-name "~/.emacs.d/lossage.txt")))
+ (open-dribble-file dribble-file)
+ (dribble-append-on-exit dribble-file dribble-persistent))
+
+
 
 (org-babel-load-file "~/.emacs.d/organizer.org")
 
@@ -199,18 +203,18 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(diredp-compressed-file-suffix ((t (:foreground "dark Blue"))) t)
- '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))) t)
- '(magit-diff-add ((t (:foreground "chartreuse"))) t)
- '(magit-diff-del ((t (:foreground "red1"))) t)
- '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))) t)
- '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))) t)
- '(magit-item-highlight ((t nil)) t))
+ '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))))
+ '(magit-diff-add ((t (:foreground "chartreuse"))))
+ '(magit-diff-del ((t (:foreground "red1"))))
+ '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))))
+ '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))))
+ '(magit-item-highlight ((t nil))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
+ '(bmkp-last-as-first-bookmark-file "~/.emacs.d/private/bookmarks")
  '(org-latex-pdf-process (quote ("pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f")))
  '(tab-always-indent (quote complete)))

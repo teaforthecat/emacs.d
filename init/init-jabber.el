@@ -20,16 +20,16 @@
 (setq jabber-auto-reconnect t)
 
 ;; may want toggles
-(setq jabber-roster-line-format " %c %-25n %u %-8s  %S") 
-(setq jabber-muc-autojoin 
+(setq jabber-roster-line-format " %c %-25n %u %-8s  %S")
+(setq jabber-muc-autojoin
       (list GD-devlab))
 
 (setq jabber-account-list
       (list (list GD-jid)))
 
 ;; pre-cache password using auth-source and password-cache
-(password-cache-add (jabber-password-key GD-jid) 
-                    (funcall (plist-get (car 
+(password-cache-add (jabber-password-key GD-jid)
+                    (funcall (plist-get (car
                                          (auth-source-search :host GD-host))
                                         :secret)) )
 
