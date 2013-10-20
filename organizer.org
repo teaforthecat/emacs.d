@@ -1,13 +1,13 @@
 * remote-shell function
 #+begin_src emacs-lisp
+(require 's)
 (defun remote-shell ( &optional host)
   (interactive)
   (let* ((remote-hostname (or host (chomp (shell-command-to-string "hostname"))))
          (remote-buffer-name (format "*%s*" (car (split-string remote-hostname "\\." ))))
          (default-directory (format "/ssh:%s:" remote-hostname)))
-   (if current-prefix-arg
-       (shell (generate-new-buffer-name remote-buffer-name))
-     (shell remote-buffer-name))))
+    (dired default-directory)
+    (spawn-shell remote-buffer-name)))
 #+end_src
 
 * example-ido
@@ -52,4 +52,4 @@
 #+end_src
 
 * TODO learn emerge maybe use as git.mergetool
-* TODO check out the new web-mode.el
+* DONE check out the new web-mode.el
