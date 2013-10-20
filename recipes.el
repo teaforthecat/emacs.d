@@ -110,7 +110,7 @@
 ;;        rails rails-speedbar-feature  rvm ;; robe
         s sass-mode smooth-scrolling smex sr-speedbar;; shell-command
         undo-tree
-        wanderlust
+        wanderlust web-mode
         yaml-mode
         zencoding-mode))
 
