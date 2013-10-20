@@ -8,7 +8,8 @@
 
 ;; this allows sudo on ALL remote hosts
 ;; nil evals as all, (host user proxy)
-(setq tramp-default-proxies-alist '((nil "\\`root\\'" "/ssh:%h:")))
+(setq tramp-default-proxies-alist '(("ghost" "root" nil)
+                                    (nil "\\`root\\'" "/ssh:%h:")))
 
 ;; add a colon to accommodate ep root prompt set by PS1
 ;; example  "some prompt:" instead of the usual "some prompt$" or "some prompt#"
