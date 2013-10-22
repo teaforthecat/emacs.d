@@ -33,9 +33,9 @@
   (interactive "r")
   (save-excursion
     (copy-rectangle-as-kill start end)
-    (with-temp-buffer 
+    (with-temp-buffer
       (progn
-        (yank-rectangle)                    
+        (yank-rectangle)
         (message (buffer-string))
         (let ((sum 0))
           (goto-char (point-min))
