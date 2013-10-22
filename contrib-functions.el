@@ -1,3 +1,9 @@
+(defadvice text-scale-increase (around all-buffers (arg) activate)
+  (dolist (buffer (buffer-list))
+    (with-current-buffer buffer
+      ad-do-it)))
+
+
 ;; http://stackoverflow.com/a/9761896/714357
 (defmacro dribble-append-on-exit (current persistent)
   "Concatenate the dribble-file for this session to the persistent lossage log."
