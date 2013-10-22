@@ -51,8 +51,6 @@
         (setq mode-name ,new-name))))
 
 ;; https://github.com/waymondo/hemacs/blob/master/hemacs-ruby.el
-;; contrib-functions.el:47:54:Warning: `replace-regexp' used from Lisp code
-;; That command is designed for interactive use only
 (defun ruby-toggle-hash-syntax (beg end)
   "Toggle syntax of selected ruby hash literal between ruby 1.8 and 1.9 styles."
   (interactive "r")
@@ -60,9 +58,16 @@
     (goto-char beg)
     (cond
      ((save-excursion (search-forward "=>" end t))
-      (replace-regexp ":\\([a-zA-Z0-9_]+\\) +=> +" "\\1: " nil beg end))
+        (while (re-search-forward ":\\([a-zA-Z0-9_]+\\) +=> +" end t)
+          (replace-match "\\1: ")
+          (beginning-of-line)))
      ((save-excursion (re-search-forward "\\w+:" end t))
-      (replace-regexp "\\([a-zA-Z0-9_]+\\):\\( *\\(?:\"\\(?:\\\"\\|[^\"]\\)*\"\\|'\\(?:\\'\\|[^']\\)*'\\|[a-zA-Z0-9_]+([^)]*)\\|[^,]+\\)\\)" ":\\1 =>\\2" nil beg end)))))
+      (let ((count 0) (change 3));; account for addition of characters
+        (while (re-search-forward "\\([a-zA-Z0-9_]+\\):\\( *\\(?:\"\\(?:\\\"\\|[^\"]\\)*\"\\|'\\(?:\\'\\|[^']\\)*'\\|[a-zA-Z0-9_]+([^)]*)\\|[^,\\n]+\\)\\)"
+                                  (+ end (* change count)) t)
+          (replace-match ":\\1 =>\\2")
+          (setq count (+ count 1))
+          (beginning-of-line)))))))
 
 ;; http://stackoverflow.com/a/12101330
 (defun find-file-at-point-with-line ()
