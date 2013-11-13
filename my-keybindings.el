@@ -100,7 +100,7 @@
 
 ;54321`
 (M 5 'query-replace) (M % 'query-replace-regexp)
-(M 4 'split-window-horizontally)(M $ 'split-window-vertically)
+(M $ 'split-window-horizontally)(M 4 'split-window-vertically)
 (M 3 'delete-other-windows)
 ;;(M "`" 'speedbar-get-focus) ;; new
 (M <f5> 'flyspell-correct-word-before-point)
@@ -214,7 +214,7 @@
      (define-key dired-mode-map "e" `dired-up-directory)
      (define-key dired-mode-map "o" `dired-display-file)
      (define-key dired-mode-map (kbd "M-o") `ido-switch-buffer-other-window)
-     (define-key dired-mode-map (kbd "M-$") `split-window-vertically)
+     (define-key dired-mode-map (kbd "M-$") `split-window-horizontally)
      (define-key dired-mode-map (kbd "C-o") nil)
      (define-key dired-mode-map "k" `dired-kill-subdir)))
 
@@ -277,8 +277,12 @@
      (define-key shell-mode-map (kbd "M-n") 'forward-char)
      (define-key shell-mode-map (kbd "C-r") 'comint-history-isearch-backward)
      (define-key shell-mode-map (kbd "C-R") 'comint-history-isearch-backward-regexp)
+     ;; maybe remove these unnecessary custom  key bindings:
      (define-key shell-mode-map (kbd "C-.") 'comint-previous-input)
-     (define-key shell-mode-map (kbd "C-e") 'comint-next-input)))
+     (define-key shell-mode-map (kbd "C-e") 'comint-next-input)
+     ;; M-p is comint-previous-input so,
+     (define-key shell-mode-map (kbd "M-P") 'comint-next-input)
+     ))
 
 
 
@@ -302,6 +306,7 @@
 
 ;; key-chord
 (key-chord-define shell-mode-map "qn" 'rename-uniquely)
+(key-chord-define global-map  "_S" 'isearch-backward)
 
 ;; alias
 (defalias 'vis 'visual-line-mode)
@@ -310,7 +315,8 @@
 (defalias 'pro 'my-ido-mdfind-project)
 (defalias 'tl 'toggle-truncate-lines)
 (defalias 'tc 'tramp-cleanup-all-connections)
-(defalias 'un 'rename-uniquely)
+(defalias 'ru 'rename-uniquely)
+(defalias 'calc-clear 'calc-reset)
 
 
 (global-set-key [f11] 'fullscreen)
