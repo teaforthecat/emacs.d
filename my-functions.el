@@ -1,5 +1,6 @@
 (require 's)
 (require 'dash)
+(require 'request)
 
 ;;(refresh-dsh-groups elgin-hosts)
 (defun refresh-dsh-groups (host-url-template)
