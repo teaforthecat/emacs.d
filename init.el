@@ -91,10 +91,10 @@
 
 ;; fullscreen with font height 165
 (setq initial-frame-alist
-      (list (cons 'width
-                  (round (/ (x-display-pixel-width) 9.114)))
-            (cons 'height
-                  (round (/ (x-display-pixel-height) 18)))))
+     (list (cons 'width
+                 (round (/ (x-display-pixel-width) 9.114)))
+           (cons 'height
+                 (round (/ (x-display-pixel-height) 18)))))
 
 
 (add-hook 'write-contents-functions 'whitespace-cleanup)
@@ -125,6 +125,9 @@
 
 (setq emacs-tags-table-list
            '("~/.emacs.d" ".emacs.d/el-get"))
+
+;;consider, it seems to cancel ido-mode
+;;(icomplete-mode t)
 
 (setq desktop-files-not-to-save "^$") ;; do save tramp buffers
 (setq desktop-restore-eager 10)       ;; load them lazily
@@ -171,10 +174,9 @@
       '("--insecure" "--no-ca-verification"))
 
 
-;; for pianobar: <esc>[2k
-(defconst ansi-color-drop-regexp
-  "\033\\[\\([ABCDsuK]\\|2J\\|2K\\|=[0-9]+[hI]\\|[0-9;]*[Hf]\\)"
-  "Regexp that matches ANSI control sequences to silently drop.")
+
+(setq completion-cycle-threshold 6);;omg 
+(setq completion-auto-help 'lazy)
 
 
 
