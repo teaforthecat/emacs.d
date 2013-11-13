@@ -6,6 +6,9 @@
 ;;autosave (don't leave # files around on remote hosts)
 (setq tramp-auto-save-directory "~/.emacs.d/tramp-autosave/")
 
+(setq tramp-default-method "ssh")
+(setq explicit-shell-file-name "/bin/bash") ;; for tramp remote
+
 ;; this allows sudo on ALL remote hosts
 ;; nil evals as all, (host user proxy)
 (setq tramp-default-proxies-alist '(("foreman1"  "\\`root\\'" "/ssh:%h:")

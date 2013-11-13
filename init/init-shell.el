@@ -2,19 +2,9 @@
 
 (add-hook 'shell-mode-hook 'dirtrack-mode)
 
+;; maybe usefull sometime
+;(setenv "PAGER" "cat")
 
-(setq comint-buffer-maximum-size 1000)
-
-(setq tramp-default-method "ssh")
-(setq explicit-shell-file-name "/bin/bash") ;; for tramp remote
-
-(add-hook 'comint-output-filter-functions 'comint-truncate-buffer)
-
-;; not sure I want this extra modeline cruft
-;; (defun add-mode-line-dirtrack ()
-;;   (add-to-list 'mode-line-buffer-identification 
-;;                '(:propertize (" " default-directory " ") face dired-directory)))
-;; (add-hook 'shell-mode-hook 'add-mode-line-dirtrack)
 
 (defun recon-shell ()
   (interactive)
@@ -48,20 +38,5 @@
 ;;           (lambda ()
 ;;             (set (make-local-variable 'comint-file-name-prefix)
 ;;                  (or (file-remote-p default-directory) ""))))
-
-
-;; made for the zeus start command
-(defun ansi-pre-command-truncate-buffer (&optional _string)
-  "honor the ansi command to clear text"
-  (if (or (string-match "\\[19A" _string) (string-match "\\[20A" _string))
-      (progn
-        (delete-region (point-min) (point-max))
-        (substring _string 5))
-    _string))
-
-
-(add-hook 'comint-preoutput-filter-functions 'ansi-pre-command-truncate-buffer)
-
-(setq rinari-tags-file-name "TAGS")
 
 ;; TODO: set compilation-buffer-name-function for unique names
