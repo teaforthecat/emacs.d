@@ -1,0 +1,11 @@
+(:name popwin
+       :type http
+       :url "https://raw.github.com/m2ym/popwin-el/master/popwin.el"
+       :features popwin)
+
+;; orig
+;; (:name popwin
+;;        :description "Popup Window Manager."
+;;        :website "https://github.com/m2ym/popwin-el"
+;;        :type github
+;;        :pkgname "m2ym/popwin-el")
