@@ -1,0 +1,4 @@
+(:name flx-ido
+:auto-generated t
+:type elpa
+:description "flx integration for ido")

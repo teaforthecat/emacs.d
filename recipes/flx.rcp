@@ -1,0 +1,4 @@
+(:name flx
+:auto-generated t
+:type elpa
+:description "fuzzy matching with good sorting")
