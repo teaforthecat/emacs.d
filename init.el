@@ -1,3 +1,4 @@
+(cd "~");; not sure what is up about this
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (add-to-list 'load-path "~/.emacs.d/contrib")
 (add-to-list 'load-path "~/.emacs.d")
