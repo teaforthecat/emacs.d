@@ -129,6 +129,7 @@
 
 ;;consider, it seems to cancel ido-mode
 ;;(icomplete-mode t)
+;;(flx-ido-mode 1)
 
 (setq desktop-files-not-to-save "^$") ;; do save tramp buffers
 (setq desktop-restore-eager 10)       ;; load them lazily
@@ -144,8 +145,8 @@
 (server-mode t)
 
 ;; TODO: need to do this after load
-(diminish 'yas-minor-mode "y")
-(diminish 'eproject-mode "P")
+(diminish 'yas-minor-mode)
+(diminish 'eproject-mode)
 (diminish 'autopair-mode)
 (diminish 'global-visual-line-mode)
 (diminish 'rinari-minor-mode "`")
@@ -153,18 +154,21 @@
 ;(diminish 'rails-minor-mode)
 (diminish 'eldoc-mode)
 
+
+
 ;(add-hook 'robe-mode-hook '(lambda ()(diminish 'robe-mode "\u03BB")))
-;(add-hook 'flymake-mode-hook '(lambda ()(diminish 'flymake-mode " make ")))
+(add-hook 'flymake-mode-hook '(lambda ()(diminish 'flymake-mode)))
 ;(add-hook 'rails-controller-minor-mode-hook '(lambda ()(diminish 'rails-controller-minor-mode)))
 ;(add-hook 'rails-model-minor-mode-hook '(lambda ()(diminish 'rails-model-minor-mode)))
 ;(add-hook 'rails-view-minor-mode-hook '(lambda ()(diminish 'rails-view-minor-mode)))
 
 
-(rename-modeline "ruby-mode" ruby-mode "R")
-(rename-modeline "lisp-mode" emacs-lisp-mode "()")
-(rename-modeline "shell" shell-mode "$")
+(rename-modeline "ruby-mode" ruby-mode "Rb ")
+(rename-modeline "lisp-mode" emacs-lisp-mode "() ")
+(rename-modeline "shell" shell-mode "$ ")
 
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
+(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
 
 (flyspell-prog-mode)
 (setq rails-tags-command "ctags -e --Ruby-kinds=cfmF -o %s -R %s") ;;all kinds, don't append
@@ -183,7 +187,8 @@
 
 (add-hook 'after-init-hook
           (lambda ()
-            (load-theme 'misterioso t)
+            ;; (load-theme 'misterioso t)
+            (load-theme 'flatland t)
             ;; (switch-to-buffer-other-window (get-buffer "*scratch*"))
             (set-cursor-color "#ffff00")
             ;; (spawn-shell "*local*")
@@ -200,18 +205,20 @@
 
 
 
+
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(diredp-compressed-file-suffix ((t (:foreground "dark Blue"))) t)
- '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))))
- '(magit-diff-add ((t (:foreground "chartreuse"))))
- '(magit-diff-del ((t (:foreground "red1"))))
- '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))))
- '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))))
- '(magit-item-highlight ((t nil))))
+ '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))) t)
+ '(magit-diff-add ((t (:foreground "chartreuse"))) t)
+ '(magit-diff-del ((t (:foreground "red1"))) t)
+ '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))) t)
+ '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))) t)
+ '(magit-item-highlight ((t nil)) t))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -219,5 +226,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(bmkp-last-as-first-bookmark-file "~/.emacs.d/private/bookmarks")
+ '(custom-safe-themes (quote ("6e05b0a83b83b5efd63c74698e1ad6feaddf69a50b15a8b4a83b157aac45127c" default)))
  '(org-latex-pdf-process (quote ("pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f")))
  '(tab-always-indent (quote complete)))
