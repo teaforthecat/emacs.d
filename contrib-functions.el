@@ -1,3 +1,29 @@
+;; https://gist.github.com/sabof/7363048
+(defun es-make-minibuffer-frame ()
+  (interactive)
+  (let* (( last-recursion-depth )
+         ( frame (make-frame '((width . 60)
+                               (height . 4)
+                               (minibuffer . only)
+                               (title . "Emacs-Minibuffer"))))
+         ( enable-recursive-minibuffers t)
+         ;; Runs when going down a level, or when entering a prompt. Not ideal
+         ( minibuffer-exit-hook (list (lambda ()
+                                        (cond ( (or (= (recursion-depth) 1)
+                                                    (and last-recursion-depth
+                                                         (= (recursion-depth)
+                                                            last-recursion-depth)))
+                                                (run-with-timer 2 nil 'top-level))
+                                              ( t (setq last-recursion-depth
+                                                        (recursion-depth))))
+                                        ))))
+    (unwind-protect
+         (with-selected-frame frame
+           (call-interactively 'eval-expression)
+           (sit-for 1))
+      (delete-frame frame))))
+
+;; scale all buffers
 (defadvice text-scale-increase (around all-buffers (arg) activate)
   (dolist (buffer (buffer-list))
     (with-current-buffer buffer
@@ -50,24 +76,6 @@
      '(defadvice ,mode (after rename-modeline activate)
         (setq mode-name ,new-name))))
 
-;; https://github.com/waymondo/hemacs/blob/master/hemacs-ruby.el
-(defun ruby-toggle-hash-syntax (beg end)
-  "Toggle syntax of selected ruby hash literal between ruby 1.8 and 1.9 styles."
-  (interactive "r")
-  (save-excursion
-    (goto-char beg)
-    (cond
-     ((save-excursion (search-forward "=>" end t))
-        (while (re-search-forward ":\\([a-zA-Z0-9_]+\\) +=> +" end t)
-          (replace-match "\\1: ")
-          (beginning-of-line)))
-     ((save-excursion (re-search-forward "\\w+:" end t))
-      (let ((count 0) (change 3));; account for addition of characters
-        (while (re-search-forward "\\([a-zA-Z0-9_]+\\):\\( *\\(?:\"\\(?:\\\"\\|[^\"]\\)*\"\\|'\\(?:\\'\\|[^']\\)*'\\|[a-zA-Z0-9_]+([^)]*)\\|[^,\\n]+\\)\\)"
-                                  (+ end (* change count)) t)
-          (replace-match ":\\1 =>\\2")
-          (setq count (+ count 1))
-          (beginning-of-line)))))))
 
 ;; http://stackoverflow.com/a/12101330
 (defun find-file-at-point-with-line ()
