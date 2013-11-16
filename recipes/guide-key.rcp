@@ -1,0 +1,7 @@
+(:name guide-key
+:auto-generated t
+:type elpa
+:repo ("melpa" . "http://melpa.milkbox.net/packages/")
+:depends (popwin)
+:features guide-key                     ;
+:Description "Guide the following key bindings automatically and dynamically [source: github]")
