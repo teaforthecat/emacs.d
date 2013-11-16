@@ -1,3 +1,7 @@
+;; (require 'eproject-ruby)
+;; (require 'eproject-ruby-on-rails)
+
+
 (setq eproject-completing-read-function 'eproject--ido-completing-read)
 
 
