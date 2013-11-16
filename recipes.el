@@ -3,7 +3,10 @@
  el-get-sources
  '((:name el-get)
 
-   ;; bultins
+   ;; bultins to trigger init file loading
+   (:name comint
+          :type builtin)
+
    (:name ediff
           :type builtin
           :after (progn ()
@@ -93,9 +96,9 @@
         dash dictionary dired-details+ django-mode
         el-get emacs-w3m eproject expand-region exec-path-from-shell
         feature-mode find-things-fast find-file-in-repository
-        flymake-python-pyflakes flymake-ruby 
-        fullscreen
-        goto-last-change
+        flymake-python-pyflakes flymake-ruby
+        fullscreen flx flx-ido
+        goto-last-change guide-key
         haml-mode helm htmlize
         idomenu ioccur
         jabber js2-mode js-comint json json-mode jump-char
@@ -104,8 +107,8 @@
         magit markdown-mode multiple-cursors
         nrepl
         org org-publish ;; org-dotemacs
-        paredit pianobar  puppet-mode pylookup
-        rainbow-delimiters redo+ request rinari rhtml-mode rspec-mode ruby-end
+        paredit pianobar popwin powerline puppet-mode pylookup
+        rainbow-delimiters redo+ request rinari rhtml-mode rspec-mode ruby-end ruby-hash-syntax;rainbow-mode for colors
                                         ;ruby-electric conficts with pair
 ;;        rails rails-speedbar-feature  rvm ;; robe
         s sass-mode smooth-scrolling smex sr-speedbar;; shell-command
