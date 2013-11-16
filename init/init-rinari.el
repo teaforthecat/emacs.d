@@ -5,3 +5,5 @@
 
 ;; this is actually a rails thing 
 (setq rails-ui:show-mode-line nil)
+
+(setq rinari-tags-file-name "TAGS")

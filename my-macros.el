@@ -30,6 +30,10 @@
 ;; (fset 'start-server
 ;;    (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([134217825 115 104 101 108 108 return 99 100 return 99 100 32 119 97 108 107 101 114 97 114 116 return 118 105 114 116 101 110 118 return 46 47 109 97 110 97 103 101 46 112 121 32 114 117 110 115 101 114 118 101 114 return] 0 "%d")) arg)))
 
+(fset 'pprint-comma-structure
+   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([134217811 44 13 return] 0 "%d")) arg)))
+
+
 
 
 (provide 'my-macros)

@@ -117,7 +117,8 @@
 (C d 'duplicate-line-or-region) ;; don't want this in minibuffer
 (C> h '(lambda () (interactive)(other-window -1)))
 (C> t '(lambda () (interactive)(other-window  1)))
-(C n 'forward-page)
+;; unsure (C n 'forward-page)
+(G (kbd "C-n") 'forward-paragraph)
 (C s 'save-buffer)
 (C b 'browse-kill-ring)
 (C w 'kill-this-buffer)
@@ -139,10 +140,9 @@
 (C> 2 'ffip)(C> @ 'find-file-in-repository)
 (C> 1 'idomenu)(C> ! 'find-tag)
 
-
 (C ~ (lambdo (let ((default-directory "~")) (ido-find-file)))) ;;needs practice
 
-(C p 'backward-page)
+(C p 'backward-paragraph)
 (C i 'indent-for-tab-command)
 ;(C o 'eproject-find-file 'find-file)
 (C o 'ido-find-file 'ido-find-file-other-window)
@@ -162,7 +162,7 @@
 
 ;; C-x-* Initialize apps
 (G (kbd "C-x g") 'magit-status)
-(G (kbd "C-x f") 'recentf-open-files)
+(G (kbd "C-x f") 'ftf-grepsource)
 (G (kbd "C-x -") 'goto-line)
 (G (kbd "C-x k") 'kill-this-buffer)
 (G (kbd "C-c li") 'org-clock-in)
@@ -171,18 +171,17 @@
 (G (kbd "C-c C-x C-j") 'org-clock-goto)
 (G (kbd "C-c r") 'org-capture)
 
-(G (kbd "A-c") 'mc/edit-lines)
-(G (kbd "A->") 'mc/mark-next-like-this)
-(G (kbd "A-<") 'mc/mark-previous-like-this)
-(G (kbd "C-c A-<") 'mc/mark-all-like-this)
-
-
-
 ;; contrib-functions
 (G (kbd "C-c C-r") 'rename-file-and-buffer)
 
 
 ;; HYPER
+;; multiple cursors
+(H c 'mc/edit-lines)
+(H > 'mc/mark-next-like-this)
+(H < 'mc/mark-previous-like-this)
+(G (kbd "C-c H-<") 'mc/mark-all-like-this)
+
 (H s 'ido-shell-buffer)
 (H r 'ido-ruby-buffer)
 (H d 'dictionary-lookup-definition 'flyspell-auto-correct-word)
@@ -284,7 +283,10 @@
      (define-key shell-mode-map (kbd "M-P") 'comint-next-input)
      ))
 
-
+(eval-after-load 'comint
+  '(progn
+     (define-key compilation-mode-map (kbd "C-p") 'compilation-previous-error)
+     (define-key compilation-mode-map (kbd "C-n") 'compilation-next-error)))
 
 (eval-after-load 'slime
   '(progn
@@ -347,7 +349,6 @@
 ;; wl-summary-save-current-message
 
 ;; speedbar-toggle-show-all-files
-;; compile-next-error
 
 ;; in contrib/quick-jump.el
 ;; bookmark-ido-quick-jump
@@ -373,3 +374,8 @@
 ;; conflicts:
 ;; nrepl-jump M-.
 ;; js-find-symbol
+
+;; fill-paragraph
+;; forward-sentence
+;; backward-sentence
+;; repeat is C-x z
