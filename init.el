@@ -108,7 +108,8 @@
 (setq visible-bell t)
 (put 'set-goal-column 'disabled nil)
 (put 'scroll-left 'disabled nil)
-(setq tab-always-indent 'complete)
+;(setq tab-always-indent 'complete) ;don't list files on tab indentation
+;(setq tab-always-indent t)
 (setq speedbar-show-unknown-files t)
 (setq speedbar-frame-parameters '((minibuffer)
                                  (width . 60)
@@ -123,9 +124,12 @@
 (setq password-cache-expiry nil) ;;duration of process
 (setq use-dialog-box nil)
 
+;; not sure this is used:?
+;; (setq emacs-tags-table-list
+;;            '("~/.emacs.d" ".emacs.d/el-get"))
 
-(setq emacs-tags-table-list
-           '("~/.emacs.d" ".emacs.d/el-get"))
+(setq tags-table-list '("~/.emacs.d/"  "~/.emacs.d/el-get/"))
+
 
 ;;consider, it seems to cancel ido-mode
 ;;(icomplete-mode t)
@@ -168,9 +172,10 @@
 (rename-modeline "shell" shell-mode "$ ")
 
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
-(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
+; this might be causing a delay with pairs
+;(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
 
-(flyspell-prog-mode)
+;;(flyspell-prog-mode) ;; does this cause problems with tramp? esp ruby
 (setq rails-tags-command "ctags -e --Ruby-kinds=cfmF -o %s -R %s") ;;all kinds, don't append
 (setq rails-tags-dirs '(".")) ;;all
 
@@ -227,5 +232,4 @@
  ;; If there is more than one, they won't work right.
  '(bmkp-last-as-first-bookmark-file "~/.emacs.d/private/bookmarks")
  '(custom-safe-themes (quote ("6e05b0a83b83b5efd63c74698e1ad6feaddf69a50b15a8b4a83b157aac45127c" default)))
- '(org-latex-pdf-process (quote ("pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f")))
- '(tab-always-indent (quote complete)))
+ '(org-latex-pdf-process (quote ("pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f"))))
