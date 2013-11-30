@@ -9,34 +9,18 @@
 (ido-mode t)
 (ido-everywhere t) ;ido.el both files and buffers
 
+;; vertical ido
+(setq ido-decorations (quote ("\n=> " " " "\n   " "\n   ..."
+                              "[" "]" " [No match]" " [Matched]"
+                              " [Not readable]" " [Too big]" " [Confirm]")))
 
-(add-hook 'ido-setup-hook 'ido-my-keys)
+
 ;; change keybindings here
 (defun ido-my-keys ()
   "Add my keybindings for ido."
   (define-key ido-completion-map " " 'ido-next-match)
   )
-
-
-(defun my-ido-find-tag ()
-  "Find a tag using ido"
-  (interactive)
-  (tags-completion-table)
-  (let (tag-names)
-    (mapatoms (lambda (x)
-                (push (prin1-to-string x t) tag-names))
-              tags-completion-table)
-    (find-tag (ido-completing-read "Tag: " tag-names))))
-
-(defun my-ido-find-file-in-tag-files ()
-  (interactive)
-  (save-excursion
-    (let ((enable-recursive-minibuffers t))
-      (visit-tags-table-buffer))
-    (find-file
-     (expand-file-name
-      (ido-completing-read
-       "Project file: " (tags-table-files) nil t)))))
+(add-hook 'ido-setup-hook 'ido-my-keys)
 
 
 ;; http://emacswiki.org/emacs/InteractivelyDoThings
@@ -80,10 +64,27 @@
                                               (buffer-name buf)))))
                                    (buffer-list)))))))
 
-;; vertical ido
-(setq ido-decorations (quote ("\n=> " " " "\n   " "\n   ..."
-                              "[" "]" " [No match]" " [Matched]"
-                              " [Not readable]" " [Too big]" " [Confirm]")))
+(defun my-ido-find-tag ()
+  "Find a tag using ido"
+  (interactive)
+  (tags-completion-table)
+  (let (tag-names)
+    (mapatoms (lambda (x)
+                (push (prin1-to-string x t) tag-names))
+              tags-completion-table)
+    (find-tag (ido-completing-read "Tag: " tag-names))))
+
+(defun my-ido-find-file-in-tag-files ()
+  (interactive)
+  (save-excursion
+    (let ((enable-recursive-minibuffers t))
+      (visit-tags-table-buffer))
+    (find-file
+     (expand-file-name
+      (ido-completing-read
+       "Project file: " (tags-table-files) nil t)))))
+
+
 
 ;; http://whattheemacsd.com/setup-ido.el-02.html
 (add-hook 'ido-setup-hook
