@@ -56,11 +56,15 @@
    (:name browse-kill-ring
           :after (progn ()
                         (setq browse-kill-ring-quit-action 'save-and-restore)))
-   (:name  coffee-mode
+   (:name coffee-mode
            :after (progn
                     (add-to-list 'auto-mode-alist '("\\.coffee" . coffee-mode))
                     (add-to-list 'auto-mode-alist '("\\.coffee\\.erb" . coffee-mode))
                     (add-hook 'coffee-mode-hook 'set-tab-width-two)))
+
+   (:name edit-server
+          :features edit-server
+          :after (progn () (edit-server-start))) ;; for pairing maybe: edit-server-host
    (:name emacs-w3m
           :after (progn ()
                         (setq browse-url-browser-function 'w3m-browse-url)))
@@ -90,7 +94,7 @@
    ))
 
 (setq recipes
-      '( ace-jump-mode
+      '( ace-jump-mode ack-and-a-half
          bookmark+
         clojure-mode color-theme
         dash dictionary dired-details+ django-mode
@@ -107,7 +111,7 @@
         magit markdown-mode multiple-cursors
         nrepl
         org org-publish ;; org-dotemacs
-        paredit pianobar popwin powerline puppet-mode pylookup
+        paredit pianobar popwin  puppet-mode pylookup ;;powerline seems cool buggy though
         rainbow-delimiters redo+ request rinari rhtml-mode rspec-mode ruby-end ruby-hash-syntax;rainbow-mode for colors
                                         ;ruby-electric conficts with pair
 ;;        rails rails-speedbar-feature  rvm ;; robe
