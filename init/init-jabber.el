@@ -15,8 +15,8 @@
 ;; (setq jabber-alert-message-hooks '(jabber-message-scroll))
 (setq jabber-alert-muc-hooks '(jabber-muc-scroll))
 
+(setq jabber-chat-fill-long-lines nil)
 
-;; I'm kind of getting a weird feeling from this
 (setq jabber-auto-reconnect t)
 
 ;; may want toggles

@@ -7,7 +7,7 @@
 
 (define-project-type emacs.d (generic)
   (look-for "init.el")
-  :irrelevant-files ("el-get/.*"))
+  :irrelevant-files ("el-get/.*" "tmp"))
 
 (define-project-type clojure (generic)
   (look-for "project.clj")
