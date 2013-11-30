@@ -48,6 +48,8 @@
 (show-paren-mode t)
 
 ;; Lines should be 80 characters wide, not 72
+;; this actually needs to be set from within customize to
+;; not be buffer-local only, leaving here for notes sake
 (setq fill-column 80)
 
 ;; Save a list of recent files visited. (open recent file with C-x f)
