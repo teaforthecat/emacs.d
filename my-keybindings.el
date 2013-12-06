@@ -50,6 +50,7 @@
   `'(lambda () (interactive) ,body))
 
 
+
 ;; M Right Hand (movement)
 ;dhtns-
 (M> t 'next-line 'scroll-up)
@@ -135,9 +136,10 @@
 (C> 7 'idomenu) (C> * 'my-ido-find-tag)
 (C> 6 'my-ido-find-file-in-tag-files)
 (C> 5 'find-lisp-find-dired)
-(C> 4 'find-grep)
+(C> 4 'ack-line)
 (C> 3 'find-file-at-point-with-line)
-(C> 2 'ffip)(C> @ 'find-file-in-repository)
+;; (C> 2 'ftf-find-file)(C> @ 'ftf-grepsource) I wish ftf worked. It misses files!
+(C> 2 'ftf-find-file)(C> @ 'ftf-grepsource)
 (C> 1 'idomenu)(C> ! 'find-tag)
 
 (C ~ (lambdo (let ((default-directory "~")) (ido-find-file)))) ;;needs practice
@@ -181,6 +183,9 @@
 (H > 'mc/mark-next-like-this)
 (H < 'mc/mark-previous-like-this)
 (G (kbd "C-c H-<") 'mc/mark-all-like-this)
+
+(H SPC 'er/expand-region) ;;hyperspace
+(M RET 'align)
 
 (H s 'ido-shell-buffer)
 (H r 'ido-ruby-buffer)
@@ -320,6 +325,11 @@
 (defalias 'ru 'rename-uniquely)
 (defalias 'calc-clear 'calc-reset)
 
+(defalias 'ack 'ack-and-a-half)
+(defalias 'ack-same 'ack-and-a-half-same)
+(defalias 'ack-find-file 'ack-and-a-half-find-file)
+(defalias 'ack-find-file-same 'ack-and-a-half-find-file-same)
+
 
 (global-set-key [f11] 'fullscreen)
 (define-key ctl-x-map (kbd "C-d") nil) ;; unset 'list-directory
@@ -379,3 +389,7 @@
 ;; forward-sentence
 ;; backward-sentence
 ;; repeat is C-x z
+ 
+
+;; copy-rectangle-as-kill C-x r M-w
+;; yank-rectangle         ..........
