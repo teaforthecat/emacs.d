@@ -45,7 +45,7 @@
 ;; (setq elmo-imap4-debug t)
 ;; (setq send-mail-function 'smtpmail-send-it)
 
-(add-hook 'wl-draft-mode-hook 'flyspell-mode-on)
+;; (add-hook 'wl-draft-mode-hook 'flyspell-mode-on)
 
 ;; wrap lines
 (setq message-truncate-lines nil

@@ -1,5 +1,5 @@
 (setq comint-input-ring-file-name "~/.emacs.d/tmp/comint-history")
-(setq comint-history-isearch t)
+;default (setq comint-history-isearch nil);;disruptive and has blank history
 (setq comint-buffer-maximum-size 1000)
 (setq comint-input-ignoredups t)
 

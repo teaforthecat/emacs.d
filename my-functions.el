@@ -2,6 +2,11 @@
 (require 'dash)
 (require 'request)
 
+;;replace this[^;
+;;]+ with \&; 
+;; to add missing semi-colons
+
+
 ;;(refresh-dsh-groups elgin-hosts)
 (defun refresh-dsh-groups (host-url-template)
   "writes hosts to dsh group files by environment using host-url-template"
@@ -48,7 +53,7 @@
   (let ((find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld")))
     (find-name-dired "~/projects" "organizer.org")))
 
-(defvar previous-project nil)
+(defvar ct/previous-project nil)
 
 (defun my-ido-mdfind-project ()
   "open a dired buffer for a project that contains an organizer.org file and open shell as well!"
@@ -59,7 +64,7 @@
         (pre-project-marker (make-symbol (format "pre-%s" chosen-project)))
         (default-directory (joindirs project-dir chosen-project)))
     (window-configuration-to-register pre-project-marker)
-    (setq previous-project pre-project-marker)
+    (setq ct/previous-project pre-project-marker)
     (dired default-directory)
     (delete-other-windows)
     (spawn-shell (format "*%s*" chosen-project))))

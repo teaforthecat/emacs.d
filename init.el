@@ -4,7 +4,7 @@
 (add-to-list 'load-path "~/.emacs.d")
 (require 'reset)
 
-;; (setq debug-on-error nil)
+;; (setq debug-on-error t)
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
@@ -161,7 +161,7 @@
 
 
 ;(add-hook 'robe-mode-hook '(lambda ()(diminish 'robe-mode "\u03BB")))
-(add-hook 'flymake-mode-hook '(lambda ()(diminish 'flymake-mode)))
+;;(add-hook 'flymake-mode-hook '(lambda ()(diminish 'flymake-mode)))
 ;(add-hook 'rails-controller-minor-mode-hook '(lambda ()(diminish 'rails-controller-minor-mode)))
 ;(add-hook 'rails-model-minor-mode-hook '(lambda ()(diminish 'rails-model-minor-mode)))
 ;(add-hook 'rails-view-minor-mode-hook '(lambda ()(diminish 'rails-view-minor-mode)))
