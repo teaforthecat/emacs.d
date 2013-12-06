@@ -5,6 +5,8 @@
 
 (require 'ox-latex)
 
+(add-hook 'org-mode-hook 'auto-fill-mode)
+
 ;; (add-to-list 'org-latex-packages-alist '("" "listings"))
 ;; (add-to-list 'org-latex-packages-alist '("" "color"))
 
