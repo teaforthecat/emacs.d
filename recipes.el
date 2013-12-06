@@ -4,6 +4,8 @@
  '((:name el-get)
 
    ;; bultins to trigger init file loading
+   (:name align
+          :type builtin)
    (:name comint
           :type builtin)
 
@@ -14,15 +16,17 @@
                         (setq ediff-split-window-function 'split-window-horizontally)
                         (setq ediff-window-setup-function 'ediff-setup-windows-plain)))
 
+   (:name erc
+          :type builtin)
    (:name ibuffer
+          :type builtin)
+   (:name ido
           :type builtin)
    (:name org-mobile
           :type builtin)
    (:name org-mode
           :type builtin)
    (:name python
-          :type builtin)
-   (:name ido
           :type builtin)
    (:name tramp
           :type builtin)
@@ -100,7 +104,7 @@
         dash dictionary dired-details+ django-mode
         el-get emacs-w3m eproject expand-region exec-path-from-shell
         feature-mode find-things-fast find-file-in-repository
-        flymake-python-pyflakes flymake-ruby
+        ;; flymake-python-pyflakes flymake-ruby
         fullscreen flx flx-ido
         goto-last-change guide-key
         haml-mode helm htmlize
@@ -117,6 +121,7 @@
 ;;        rails rails-speedbar-feature  rvm ;; robe
         s sass-mode smooth-scrolling smex sr-speedbar;; shell-command
         undo-tree
+;        visual-regexp-steroids
         wanderlust web-mode
         yaml-mode
         zencoding-mode))
