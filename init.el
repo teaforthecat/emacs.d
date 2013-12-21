@@ -24,14 +24,6 @@
 (setq el-get-user-package-directory "~/.emacs.d/init")
 
 
-;; TODO: fullscreen might not be neccessary anymore:
-;; fullscreen is a wiki package so it may not be available at initial startup
-(unless (file-exists-p (el-get-recipe-filename 'fullscreen))
-  ;; uses ns-fullscreen
-  (progn ()
-         (setq fullscreen-ready t)
-         (add-to-list 'recipes 'fullscreen)))
-
 ;; load private variables
 (dolist (f (directory-files "~/.emacs.d/private" t ".el$"))
   (load-file f))
@@ -77,11 +69,13 @@
 
 ;; record keystrokes, analyze later
 ;; uses contrib-function macro
-(let ((dribble-file (make-temp-name (expand-file-name "~/.emacs.d/lossage-")))
-     (dribble-persistent (expand-file-name "~/.emacs.d/lossage.txt")))
- (open-dribble-file dribble-file)
- (dribble-append-on-exit dribble-file dribble-persistent))
-
+(defun store-keystrokes ()
+  "saves keystrokes to file to study later"
+  (let ((dribble-file (make-temp-name (expand-file-name "~/.emacs.d/lossage-")))
+        (dribble-persistent (expand-file-name "~/.emacs.d/lossage.txt")))
+    (open-dribble-file dribble-file)
+    (dribble-append-on-exit dribble-file dribble-persistent)))
+(store-keystrokes)
 
 
 (org-babel-load-file "~/.emacs.d/organizer.org")
@@ -97,8 +91,15 @@
            (cons 'height
                  (round (/ (x-display-pixel-height) 18)))))
 
+(setq whitespace-line-column  80
+      whitespace-style '(face tabs spaces trailing lines space-before-tab newline indentation empty space-after-tab space-mark tab-mark newline-mark)
+      require-final-newline  t)
 
-(add-hook 'write-contents-functions 'whitespace-cleanup)
+;; this is buffer local:
+;;(add-hook 'write-contents-functions 'whitespace-cleanup)
+
+;; this is global:
+(add-hook 'before-save-hook 'whitespace-cleanup)
 
 (display-time)
 
@@ -185,7 +186,7 @@
 
 
 
-(setq completion-cycle-threshold 6);;omg 
+(setq completion-cycle-threshold 6);;omg
 (setq completion-auto-help 'lazy)
 
 
@@ -211,6 +212,24 @@
 
 
 
+(require 'dash)
+(rainbow-delimiters-mode 1)
+;;TODO these setting should be per-mode and buffer-local:
+(setq safe-local-variable-values
+      '((whitespace-line-column . 80)
+        (whitespace-style face trailing lines-tail)
+        (require-final-newline . t)
+        (ruby-compilation-executable . "ruby")
+        (ruby-compilation-executable . "ruby1.8")
+        (ruby-compilation-executable . "ruby1.9")
+        (ruby-compilation-executable . "rbx")
+        (ruby-compilation-executable . "jruby")))
+
+; not sure why three times
+(setq org-latex-pdf-process
+      '("pdflatex -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -interaction nonstopmode -output-directory %o %f"))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -218,7 +237,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(diredp-compressed-file-suffix ((t (:foreground "dark Blue"))) t)
- '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))) t)
+ '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))))
  '(magit-diff-add ((t (:foreground "chartreuse"))) t)
  '(magit-diff-del ((t (:foreground "red1"))) t)
  '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))) t)
@@ -232,5 +251,4 @@
  ;; If there is more than one, they won't work right.
  '(bmkp-last-as-first-bookmark-file "~/.emacs.d/private/bookmarks")
  '(custom-safe-themes (quote ("6e05b0a83b83b5efd63c74698e1ad6feaddf69a50b15a8b4a83b157aac45127c" default)))
- '(fill-column 80)
- '(org-latex-pdf-process (quote ("pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f" "pdflatex -interaction nonstopmode -output-directory %o %f"))))
+ '(fill-column 80))
