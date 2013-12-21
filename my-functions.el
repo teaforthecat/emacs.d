@@ -1,9 +1,19 @@
 (require 's)
 (require 'dash)
 (require 'request)
+(require 'ack-and-a-half)
+
+(defun search-organizer (term)
+  "search with mdfind for TERM in all files named organizer.org"
+  (interactive "Ssearch: ")
+  (compilation-start
+   (format
+    "mdfind -name organizer.org -0 | xargs -0  ack --nocolor --nogroup --column %s "
+    (shell-quote-argument term))
+   'ack-and-a-half-mode))
 
 ;;replace this[^;
-;;]+ with \&; 
+;;]+ with \&;
 ;; to add missing semi-colons
 
 
@@ -71,7 +81,7 @@
 
 (defun goto-previous-project ()
   (interactive)
-  (jump-to-register previous-project))
+  (jump-to-register ct/previous-project))
 
 (defun mdfind (file-name &optional opts)
   "return full paths of files matching name"
