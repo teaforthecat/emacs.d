@@ -247,6 +247,11 @@
 (setq ioccur-length-line nil)
 (setq ioccur-buffer-completion-use-ido 'ido-completing-read)
 
+(eval-after-load 'occur
+  (progn
+  (define-key occur-mode-map "n" 'occur-next)
+  (define-key occur-mode-map "p" 'occur-prev)
+  ))
 
 (eval-after-load 'isearch
   '(progn

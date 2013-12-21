@@ -1,3 +1,8 @@
+;(autopair-mode -1)
+;(paredit-mode -1)
+;(smartparens-mode)
+;(smartparens-strict-mode)
+
 (define-key nrepl-mode-map (kbd "C-.") 'nrepl-previous-input)
 
 (define-key nrepl-mode-map (kbd "M-.") 'backward-kill-word)

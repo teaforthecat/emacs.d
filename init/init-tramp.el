@@ -1,4 +1,8 @@
 ;;backups (don't leave ~ files around on remote hosts)
+
+;; (setq tramp-debug-buffer t)
+;; (setq tramp-verbose 10)
+
 (add-to-list 'backup-directory-alist
              (cons "." "~/.emacs.d/backups/"))
 (setq tramp-backup-directory-alist backup-directory-alist)

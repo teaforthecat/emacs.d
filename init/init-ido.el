@@ -47,6 +47,9 @@
   (interactive)
   (ido-for-mode "Ruby file:" 'ruby-mode))
 
+(defun ido-dired-buffer()
+  (interactive)
+  (ido-for-mode "Dired buffer:" 'dired-mode))
 
 ;; http://emacswiki.org/emacs/InteractivelyDoThings
 (defun rgr/ido-erc-buffer()
