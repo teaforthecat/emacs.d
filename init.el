@@ -238,11 +238,11 @@
  ;; If there is more than one, they won't work right.
  '(diredp-compressed-file-suffix ((t (:foreground "dark Blue"))) t)
  '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))))
- '(magit-diff-add ((t (:foreground "chartreuse"))) t)
- '(magit-diff-del ((t (:foreground "red1"))) t)
- '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))) t)
- '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))) t)
- '(magit-item-highlight ((t nil)) t))
+ '(magit-diff-add ((t (:foreground "chartreuse"))))
+ '(magit-diff-del ((t (:foreground "red1"))))
+ '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))))
+ '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))))
+ '(magit-item-highlight ((t nil))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
