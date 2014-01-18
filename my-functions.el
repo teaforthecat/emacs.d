@@ -97,7 +97,11 @@
 (defun where-am-i ()
   "copies present location into kill-ring and clipboard"
   (interactive)
-  (kill-new (message (concat buffer-file-name ":" (int-to-string (line-number-at-pos))))))
+  (kill-new (message (concat (minus-project-path buffer-file-name) ":" (int-to-string (line-number-at-pos))))))
+
+(defun minus-project-path (path)
+  (let (project-dir (expand-file-name "~/projects/"))
+    (s-chop-prefix project-dir path)))
 
 (defun visit-vagrant ()
   (interactive)
@@ -106,19 +110,36 @@
    - must have only one machine
    - must set IdentityFile in ssh config for Host: vagrant
    - to use sudo remove from default-directory and add it to ssh-config"
-  (let* ((port (find-vagrant-port))
+  (let* ((vm (ido-completing-read "vm: " (list-vagrant-vms) nil t ))
+         (port (find-vagrant-port vm))
          (user "vagrant")
          (default-directory (concat "/ssh:" "vagrant#" port ":/vagrant")))
     (spawn-shell "*vagrant*")))
 
-(defun find-vagrant-port ()
-  (with-temp-buffer
-    (call-process  "vagrant" nil t nil "ssh-config")
+(defun list-vagrant-vms ()
+  (call-vagrant ("status")
+                (let (vms (list))
+                  (while (search-forward "virtualbox" nil t)
+                    (beginning-of-line)
+                    (add-to-list 'vms (thing-at-point 'word))
+                    (kill-line))
+                  vms)))
+
+(defun find-vagrant-port (&optional vm)
+  (call-vagrant ("ssh-config" vm)
+              (progn
+                (unless (search-forward "Port" nil t)
+                  (message "ERROR:%s" (buffer-string)))
+                  (end-of-line)
+                  (thing-at-point 'word))))
+
+(defmacro call-vagrant (args body)
+  "pass args to the vagrant command and execute body within the context
+   of the output from the vagrant command"
+  `(with-temp-buffer
+    (call-process  "vagrant" nil t nil ,@args)
     (goto-char (point-min))
-    (unless (search-forward "Port")
-      (message "ERROR:%s" (buffer-string)))
-    (end-of-line)
-    (thing-at-point 'word)))
+      ,body))
 
 (defun goto-init-for ()
   "find the 'user init file' for a package managed el-get"
