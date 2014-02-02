@@ -4,6 +4,8 @@
 (add-to-list 'load-path "~/.emacs.d")
 (require 'reset)
 
+
+
 ;; (setq debug-on-error t)
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
@@ -172,7 +174,14 @@
 (rename-modeline "lisp-mode" emacs-lisp-mode "() ")
 (rename-modeline "shell" shell-mode "$ ")
 
-(add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
+;(add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
+(add-hook 'emacs-lisp-mode-hook '(lambda ()(progn
+                                           (eldoc-mode)
+                                           (autopair-mode -1)
+                                           (paredit-mode -1)
+                                           (smartparens-strict-mode 1)
+                                           (rainbow-delimiters-mode 1))))
+
 ; this might be causing a delay with pairs
 ;(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
 
@@ -189,6 +198,8 @@
 (setq completion-cycle-threshold 6);;omg
 (setq completion-auto-help 'lazy)
 
+(guide-key-mode 1)
+(rainbow-delimiters-mode 1)
 
 
 (add-hook 'after-init-hook
@@ -201,9 +212,11 @@
             (delete-other-windows)
             ))
 
+;(require 's)
 (add-hook 'emacs-startup-hook
           (lambda()
-            (if (yes-or-no-p "connect?")
+            ;; (if (yes-or-no-p "connect?")
+            (if (s-contains? "office.gdi" (shell-command-to-string "hostname" ))
                 (progn
                   (wl)
                   (jabber-connect-all)))
@@ -212,8 +225,7 @@
 
 
 
-(require 'dash)
-(rainbow-delimiters-mode 1)
+
 ;;TODO these setting should be per-mode and buffer-local:
 (setq safe-local-variable-values
       '((whitespace-line-column . 80)
@@ -237,12 +249,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(diredp-compressed-file-suffix ((t (:foreground "dark Blue"))) t)
- '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))))
- '(magit-diff-add ((t (:foreground "chartreuse"))))
- '(magit-diff-del ((t (:foreground "red1"))))
- '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))))
- '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))))
- '(magit-item-highlight ((t nil))))
+ '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))) t)
+ '(magit-diff-add ((t (:foreground "chartreuse"))) t)
+ '(magit-diff-del ((t (:foreground "red1"))) t)
+ '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))) t)
+ '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))) t)
+ '(magit-item-highlight ((t nil)) t))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
