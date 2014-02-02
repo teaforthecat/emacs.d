@@ -127,7 +127,7 @@
 ;; l
 ;; / =
 (C = 'er/expand-region) ;;needs practice
-;; \                                       
+;; \
 (C f 'sudo-find-file)
 
 ; the hotness
@@ -394,7 +394,14 @@
 ;; forward-sentence
 ;; backward-sentence
 ;; repeat is C-x z
- 
+
 
 ;; copy-rectangle-as-kill C-x r M-w
 ;; yank-rectangle         ..........
+;; rinari-find-controller
+;; unset tmm-menubar
+(global-set-key (kbd "M-~") 'make-frame)
+(global-set-key (kbd "M-`") 'other-frame)
+;; make-frame
+;; switch-frame
+;; image-mode-fit-frame
