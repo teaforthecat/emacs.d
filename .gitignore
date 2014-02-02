@@ -35,3 +35,5 @@ recipes/private.rcp
 /image-dired/.image-dired_temp
 /image-dired/*.thumb.*
 /organizer.el
+/dribble
+/bookmarks
