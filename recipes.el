@@ -101,13 +101,13 @@
       '( ace-jump-mode ack-and-a-half
          bookmark+
         clojure-mode color-theme
-        dash dictionary dired-details+ django-mode
+        dash dictionary dired-details+ ;django-mode
         el-get emacs-w3m eproject expand-region exec-path-from-shell
         feature-mode find-things-fast find-file-in-repository
         ;; flymake-python-pyflakes flymake-ruby
         fullscreen flx flx-ido
         goto-last-change guide-key
-        haml-mode helm htmlize
+        haml-mode htmlize ;helm
         idomenu ioccur
         jabber js2-mode js-comint json json-mode jump-char
         key-chord
