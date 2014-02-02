@@ -3,6 +3,13 @@
 (require 'request)
 (require 'ack-and-a-half)
 
+
+(defun my/ls-mode-numbers ()
+  (interactive)
+  ;;http://stackoverflow.com/a/1796009/714357
+  (compile " ls -l | awk '{k=0;for(i=0;i<=8;i++)k+=((substr($1,i+2,1)~/[rwx]/) \
+             *2^(8-i));if(k)printf(\"%0o \",k);print}'"))
+
 (defun search-organizer (term)
   "search with mdfind for TERM in all files named organizer.org"
   (interactive "Ssearch: ")

@@ -10,7 +10,8 @@
 
 (add-hook 'dired-mode-hook
           (lambda ()
-            (dired-omit-mode 1)))
+            (dired-omit-mode 1)
+            (set (make-local-variable 'ido-use-filename-at-point) nil)))
 
 (put 'dired-find-alternate-file 'disabled nil)
 
@@ -21,5 +22,3 @@
                                     last (&optional REMEMBER-MARKS) activate protect)
   (if (= (point-min) (point))
       (kill-buffer)))
-
-

@@ -22,7 +22,7 @@
 ;; may want toggles
 (setq jabber-roster-line-format " %c %-25n %u %-8s  %S")
 (setq jabber-muc-autojoin
-      (list GD-devlab GD-devops))
+      (list GD-devlab GD-devops GD-scrum_a))
 
 (setq jabber-account-list
       (list (list GD-jid)))

@@ -1,6 +1,6 @@
 (setq ido-enable-flex-matching t)
-(setq ido-use-filename-at-point 'guess)
-(setq ido-use-url-at-point t)
+(setq ido-use-filename-at-point 'guess) ;; turned off for dired
+;; (setq ido-use-url-at-point nil)
 ;;(setq ido-unc- stuff ) ; samba servers
 (setq ido-use-virtual-buffers t) ;remember previously opened files
 (setq ido-max-window-height 20)
@@ -56,7 +56,7 @@
   "nice example of programattically using ido"
   (interactive)
   (switch-to-buffer
-   (ido-completing-read "Channel:" 
+   (ido-completing-read "Channel:"
                         (save-excursion
                           (delq
                            nil

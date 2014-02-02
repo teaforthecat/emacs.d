@@ -13,7 +13,7 @@
 * example-ido
 #+begin_src emacs-lisp
 (defun example-ido ()
-  (interactive) 
+  (interactive)
   (message (ido-completing-read "say: " '("b" "a" "c"))))
 #+end_src
 
@@ -55,3 +55,8 @@
 * DONE check out the new web-mode.el
 * TODO uppop-mark
 http://stackoverflow.com/questions/3393834/how-to-move-forward-and-backward-in-emacs-mark-ring/5117076#5117076
+* copy many files in dired
+- mark files or not
+- %-C to copy by regex
+  - example: .*\.csv to \&.bak
+    appends .bak to all files
