@@ -4,6 +4,11 @@
 (add-to-list 'load-path "~/.emacs.d")
 (require 'reset)
 
+;; TODO: ediff, go back to register
+;; TODO: make note about replace with sub:
+;; all  [a-z|_]*_url -> my_\,\&
+;; some \([a-z|_]*_url\) -> my_\,\1
+; blog_read_post_url -> my_blog_read_post_url
 
 
 ;; (setq debug-on-error t)
@@ -198,7 +203,6 @@
 (setq completion-cycle-threshold 6);;omg
 (setq completion-auto-help 'lazy)
 
-(guide-key-mode 1)
 (rainbow-delimiters-mode 1)
 
 
@@ -249,12 +253,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(diredp-compressed-file-suffix ((t (:foreground "dark Blue"))) t)
- '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))) t)
- '(magit-diff-add ((t (:foreground "chartreuse"))) t)
- '(magit-diff-del ((t (:foreground "red1"))) t)
- '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))) t)
- '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))) t)
- '(magit-item-highlight ((t nil)) t))
+ '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))))
+ '(magit-diff-add ((t (:foreground "chartreuse"))))
+ '(magit-diff-del ((t (:foreground "red1"))))
+ '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))))
+ '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))))
+ '(magit-item-highlight ((t nil))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

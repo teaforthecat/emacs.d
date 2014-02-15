@@ -88,5 +88,7 @@
 (put 'downcase-region 'disabled nil)
 (put 'erase-buffer 'disabled nil)
 
+(setq dired-omit-verbose nil)
+
 
 (provide 'reset)
