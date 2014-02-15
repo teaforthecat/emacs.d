@@ -124,29 +124,32 @@
     (spawn-shell "*vagrant*")))
 
 (defun list-vagrant-vms ()
-  (call-vagrant ("status")
-                (let (vms (list))
-                  (while (search-forward "virtualbox" nil t)
-                    (beginning-of-line)
-                    (add-to-list 'vms (thing-at-point 'word))
-                    (kill-line))
-                  vms)))
+  (call-vagrant
+                (lambda ()
+                  (let (vms (list))
+                    (while (search-forward "running" nil t)
+                      (beginning-of-line)
+                      (add-to-list 'vms (thing-at-point 'word))
+                      (kill-line))
+                    vms))
+                "status"))
 
 (defun find-vagrant-port (&optional vm)
-  (call-vagrant ("ssh-config" vm)
-              (progn
+  (call-vagrant
+              (lambda ()
                 (unless (search-forward "Port" nil t)
                   (message "ERROR:%s" (buffer-string)))
                   (end-of-line)
-                  (thing-at-point 'word))))
+                  (thing-at-point 'word))
+              "ssh-config" vm ))
 
-(defmacro call-vagrant (args body)
+(defmacro call-vagrant (body &rest args)
   "pass args to the vagrant command and execute body within the context
    of the output from the vagrant command"
   `(with-temp-buffer
     (call-process  "vagrant" nil t nil ,@args)
     (goto-char (point-min))
-      ,body))
+      (,body)))
 
 (defun goto-init-for ()
   "find the 'user init file' for a package managed el-get"
