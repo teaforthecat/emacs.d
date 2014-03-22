@@ -72,12 +72,12 @@
         nrepl
         org org-publish ;; org-dotemacs
         paredit pianobar popwin  puppet-mode ;;pylookup ;;powerline seems cool buggy though
-        rainbow-delimiters ;;redo+
+        rainbow-delimiters revive;;redo+
         request rinari rhtml-mode rspec-mode ruby-end ruby-hash-syntax;rainbow-mode for colors
                                         ;ruby-electric conficts with pair
 ;;        rails rails-speedbar-feature  rvm ;; robe
         s sass-mode smooth-scrolling smex sr-speedbar;; shell-command
-;;        undo-tree
+        undo-tree
 ;        visual-regexp-steroids
         wanderlust web-mode
         yaml-mode
