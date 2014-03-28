@@ -127,7 +127,7 @@
   (call-vagrant
                 (lambda ()
                   (let (vms (list))
-                    (while (search-forward "running" nil t)
+                    (while (search-forward "running " nil t)
                       (beginning-of-line)
                       (add-to-list 'vms (thing-at-point 'word))
                       (kill-line))
