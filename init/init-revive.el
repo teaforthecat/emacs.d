@@ -2,6 +2,12 @@
 ;; resume
 ;; wipe
 ;; revive:configuration-file
+;; also try soring desktop bookmarks with C-x r K and bookmark-bmenu-list
+
+;;;	variables to be saved are in revive:save-variables-global-default
+;;;	and revive:save-variables-local-default.  If you want to save other
+
+;;; checkout: revive:major-mode-command-alist-default
 
 (defun ct/saved-config-alist-read ()
   (let* ((filename-pattern ".revive.\\(.*\\).el")
@@ -34,3 +40,13 @@
          (given-name (ido-completing-read "Name: " (-map 'car saved-config-alist)))
          (revive:configuration-file (cdr (assoc given-name saved-config-alist))))
     (wipe)))
+
+;; Note: changed ~/.emacs.d/el-get/revive/revive.el:756
+;; (cond
+;;  (success
+;;   (condition-case err
+;;       ;; some buffers may already exist/be in use
+;;       (if (not (string= (revive:prop-buffer-name x) (buffer-name)))
+;;       (rename-buffer (revive:prop-buffer-name x)))
+;;     (error (message (format "%s" err))))
+;;   (set-mark (revive:prop-mark x))

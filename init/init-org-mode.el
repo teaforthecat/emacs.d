@@ -3,7 +3,9 @@
 ;(require 'org-deck) ;;need to look around
 (require 'ox-latex) ;; requires mactex full
 
-(require 'ox-latex)
+(require 'org-git-link)
+(require 'org-mime)
+(setq org-mime-library 'semi)
 
 (add-hook 'org-mode-hook 'auto-fill-mode)
 
@@ -41,7 +43,7 @@
 ;;weird that a file with a dir listed is required to load an entire directory
 (setq org-agenda-files "~/Dropbox/org/agenda-files.txt" )
 
-(setq 
+(setq
  org-agenda-span 7
  org-agenda-show-all-dates nil
  org-agenda-skip-deadline-if-done t
@@ -57,10 +59,24 @@
 
 
 
-(org-babel-do-load-languages 'org-babel-load-languages
-                             '((emacs-lisp . t) (dot . t)))
 ;; Fontify org-mode code blocks
 (setq org-src-fontify-natively t)
 
 ;; (require 'org-import-icalendar)
 ;; (setq org-import-icalendar-filename "cal.org")
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(
+   (sh . t)
+   (python . t)
+   (R . t)
+   (ruby . t)
+   (ditaa . t)
+   (dot . t)
+   (sqlite . t)
+   ))
+
+(setq org-babel-sh-command "bash -i")
+
+;; prefix arg to org-open-at-point is broken
+;; (setq org-file-apps '(".html" . emacs))

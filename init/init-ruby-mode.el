@@ -2,6 +2,8 @@
 (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
 (add-to-list 'auto-mode-alist '("gemspec" . ruby-mode))
 (add-to-list 'auto-mode-alist '("json_builder" . ruby-mode))
+(add-to-list 'auto-mode-alist '("rxml" . ruby-mode))
+(add-to-list 'auto-mode-alist '("hamlc" . haml-mode))
 
 (defvar zeus-fast-rails "SF=true PAGER=cat DYLD_LIBRARY_PATH=$ORACLE_HOME USE_RAILS_3=true ")
 (defun zeus-start ()

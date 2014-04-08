@@ -9,3 +9,8 @@
 
 (defadvice ediff-quit (after ediff-off-fullscreen activate)
   (jump-to-register :ediff-fullscreen))
+
+
+;; magit
+(defadvice magit-ediff (before ediff-on-fullscreen activate)
+  (window-configuration-to-register :ediff-fullscreen))

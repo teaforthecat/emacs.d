@@ -159,7 +159,7 @@
 ;; TODO: need to do this after load
 (diminish 'yas-minor-mode)
 (diminish 'eproject-mode)
-(diminish 'autopair-mode)
+;; replaced by smartparens(diminish 'autopair-mode)
 (diminish 'global-visual-line-mode)
 (diminish 'rinari-minor-mode "`")
 (diminish 'ruby-end-mode)
@@ -252,13 +252,15 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(clojure-test-success-face ((t (:foreground "green" :underline t :weight bold))))
  '(diredp-compressed-file-suffix ((t (:foreground "dark Blue"))) t)
- '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))))
+ '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))) t)
  '(magit-diff-add ((t (:foreground "chartreuse"))))
  '(magit-diff-del ((t (:foreground "red1"))))
  '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))))
  '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))))
- '(magit-item-highlight ((t nil))))
+ '(magit-item-highlight ((t nil)))
+ '(window-numbering-face ((t (:background "grey" :foreground "black"))) t))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

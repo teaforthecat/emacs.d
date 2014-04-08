@@ -8,11 +8,12 @@
                               dired+
                               ediff
                               erc
+                              ffap
                               ;;flyspell
                               ibuffer
                               ido
                               ;;org-mobile
-                              org-mode
+                              ;; org-mode ;; try using own recipe
                               ruby-mode
                               ;;python
                               tramp
@@ -28,9 +29,9 @@
                                       :after (progn ()
                                                     (setq uniquify-buffer-name-style 'forward)))
                                ;; non-builtin
-                               (:name autopair
-                                      :after (progn ()
-                                                    (autopair-global-mode 1)))
+                               ;; (:name autopair ;;being replaced by spartparens
+                               ;;        :after (progn ()
+                               ;;                      (autopair-global-mode 1)))
                                (:name browse-kill-ring
                                       :after (progn ()
                                                     (setq browse-kill-ring-quit-action 'save-and-restore)))
@@ -70,13 +71,13 @@
         list-register
         magit markdown-mode multiple-cursors
         nrepl
-        org org-publish ;; org-dotemacs
+        org-mode org-publish ;; org-dotemacs
         paredit pianobar popwin  puppet-mode ;;pylookup ;;powerline seems cool buggy though
         rainbow-delimiters revive;;redo+
         request rinari rhtml-mode rspec-mode ruby-end ruby-hash-syntax;rainbow-mode for colors
                                         ;ruby-electric conficts with pair
 ;;        rails rails-speedbar-feature  rvm ;; robe
-        s sass-mode smooth-scrolling smex sr-speedbar;; shell-command
+        s sass-mode smartparens smooth-scrolling smex sr-speedbar;; shell-command
         undo-tree
 ;        visual-regexp-steroids
         wanderlust web-mode

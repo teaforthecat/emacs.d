@@ -176,6 +176,7 @@
 ;; contrib-functions
 (G (kbd "C-c C-r") 'rename-file-and-buffer)
 
+(G (kbd "<backtab>") 'zencoding-expand-yas)
 
 ;; HYPER
 ;; multiple cursors
@@ -317,8 +318,8 @@
 (setq mac-option-modifier 'hyper) ;; greenfield!
 
 ;; key-chord
-(key-chord-define shell-mode-map "qn" 'rename-uniquely)
-(key-chord-define global-map  "_S" 'isearch-backward)
+;(key-chord-define shell-mode-map "qn" 'rename-uniquely)
+;(key-chord-define global-map  "_S" 'isearch-backward)
 
 ;; alias
 (defalias 'vis 'visual-line-mode)

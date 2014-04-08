@@ -1,5 +1,5 @@
 (require 'smartparens-config)
-;; guide key set to use H-p also
+;; guide key set to use H-p.
 ;; keybinding management, thanks oh-my-emacs
 (define-key sp-keymap (kbd "H-p f") 'sp-forward-sexp)
 (define-key sp-keymap (kbd "H-p b") 'sp-backward-sexp)
@@ -48,3 +48,6 @@
 (define-key sp-keymap (kbd "H-p M-j") 'sp-join-sexp)
 (define-key sp-keymap (kbd "H-p H-p") 'sp-split-sexp)
 (define-key sp-keymap (kbd "H-p M-r") 'sp-raise-sexp)
+
+(smartparens-global-mode t)
+;; ensure (autopair-global-mode -1)

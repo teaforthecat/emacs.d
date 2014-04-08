@@ -114,7 +114,6 @@
   (interactive)
   "start a shell on a vagrant machine
    - must be in a vagrant project
-   - must have only one machine
    - must set IdentityFile in ssh config for Host: vagrant
    - to use sudo remove from default-directory and add it to ssh-config"
   (let* ((vm (ido-completing-read "vm: " (list-vagrant-vms) nil t ))

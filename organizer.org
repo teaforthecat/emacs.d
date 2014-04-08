@@ -51,7 +51,6 @@
   (remote-shell (my-dancer-shell-hosts)))
 #+end_src
 
-* TODO learn emerge maybe use as git.mergetool
 * DONE check out the new web-mode.el
 * TODO uppop-mark
 http://stackoverflow.com/questions/3393834/how-to-move-forward-and-backward-in-emacs-mark-ring/5117076#5117076

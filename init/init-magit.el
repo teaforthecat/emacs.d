@@ -1,4 +1,3 @@
-
 ;; https://github.com/waymondo/hemacs/blob/master/hemacs-git.el
 ;; full screen magit-status
 
@@ -42,5 +41,6 @@
 
 (defun ofv-magit-log-for-paths ()
   (interactive)
-  (let ((paths (read-string "Files or directories: ")))
-    (apply 'magit-log nil "--" (split-string paths))))
+  (let* ((paths (read-string "Files or directories: "))
+         (magit-custom-options paths))
+    (magit-log)))
