@@ -14,3 +14,8 @@
 ;; magit
 (defadvice magit-ediff (before ediff-on-fullscreen activate)
   (window-configuration-to-register :ediff-fullscreen))
+
+
+(defun ct/ediff-revision ()
+  (interactive)
+  (ediff-revision (buffer-file-name)))

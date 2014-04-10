@@ -123,6 +123,7 @@
     (spawn-shell "*vagrant*")))
 
 (defun list-vagrant-vms ()
+  "parse names of vms from output of `vagrant status`"
   (call-vagrant
                 (lambda ()
                   (let (vms (list))
@@ -134,6 +135,7 @@
                 "status"))
 
 (defun find-vagrant-port (&optional vm)
+  "parse Port from output of `vagrant ssh-config`"
   (call-vagrant
               (lambda ()
                 (unless (search-forward "Port" nil t)

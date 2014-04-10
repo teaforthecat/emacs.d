@@ -78,5 +78,12 @@
 
 (setq org-babel-sh-command "bash -i")
 
-;; prefix arg to org-open-at-point is broken
+;; TODO: prefix arg to org-open-at-point is broken
+
+
 ;; (setq org-file-apps '(".html" . emacs))
+; not sure why three times
+(setq org-latex-pdf-process
+      '("pdflatex -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -interaction nonstopmode -output-directory %o %f"))

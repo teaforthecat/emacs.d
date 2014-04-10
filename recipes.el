@@ -1,6 +1,7 @@
+;; el-get recipes to install and initialize
 ;; NOTE: source :name without :type will inherit from recipe with same name
 
-;; bultins to trigger init file loading
+;; register some bultins with el-get to trigger init-* file loading
 (setq ct/builtin-pkgs (map 'list (lambda(p) (list :name p :type 'builtin))
                             '(align
                               comint
@@ -9,21 +10,16 @@
                               ediff
                               erc
                               ffap
-                              ;;flyspell
                               ibuffer
                               ido
-                              ;;org-mobile
-                              ;; org-mode ;; try using own recipe
                               ruby-mode
-                              ;;python
                               tramp
                               shell
                               smtpmail)))
 
 
 (setq el-get-sources (append ct/builtin-pkgs
-                             '(;(:name el-get)
-                               (:name uniquify
+                             '((:name uniquify
                                       :type builtin
                                       :features (uniquify)
                                       :after (progn ()
@@ -41,12 +37,18 @@
                                                (add-to-list 'auto-mode-alist '("\\.coffee\\.erb" . coffee-mode))
                                                (add-hook 'coffee-mode-hook 'set-tab-width-two)))
 
+                               (:name rainbow-delimiters
+                                      :after `(rainbow-delimiters-mode 1))
                                (:name edit-server
                                       :features edit-server
                                       :after (progn () (edit-server-start))) ;; for pairing maybe: edit-server-host
                                (:name emacs-w3m
                                       :after (progn ()
                                                     (setq browse-url-browser-function 'w3m-browse-url)))
+                               (:name pianobar
+                                      :before (progn ()
+                                                     (if (eq system-type 'darwin)
+                                                         (setq pianobar-program-command "/usr/local/bin/pianobar"))))
                                (:name yasnippet
                                       :before (progn
                                                 (setq yas/snippet-dirs "~/.emacs.d/snippets"))
@@ -72,9 +74,10 @@
         magit markdown-mode multiple-cursors
         nrepl
         org-mode org-publish ;; org-dotemacs
-        paredit pianobar popwin  puppet-mode ;;pylookup ;;powerline seems cool buggy though
-        rainbow-delimiters revive;;redo+
-        request rinari rhtml-mode rspec-mode ruby-end ruby-hash-syntax;rainbow-mode for colors
+        paredit popwin  puppet-mode ;;pylookup ;;powerline seems cool buggy though
+        revive;;redo+
+        request rinari rhtml-mode rspec-mode  ruby-hash-syntax;rainbow-mode for colors
+        ;; ruby-end using smartparens instead
                                         ;ruby-electric conficts with pair
 ;;        rails rails-speedbar-feature  rvm ;; robe
         s sass-mode smartparens smooth-scrolling smex sr-speedbar;; shell-command

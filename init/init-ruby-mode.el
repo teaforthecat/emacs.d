@@ -13,7 +13,8 @@
   (comint-send-input)
   (buffer-disable-undo))
 
-
+; prevent prompt about rspec command getting set in .dir-locals.el
+(put 'rspec-spec-command 'safe-local-variable #'stringp)
 
 ;; robe needs to set up a sentinel to set robe-running when buffer killed
 ;; (require 'robe)

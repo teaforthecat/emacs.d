@@ -3,7 +3,7 @@
 ;;need to remap eval-region to something
 (define-key ruby-mode-map "\C-c\C-r" nil)
 
-;; this is actually a rails thing 
+;; this is actually a rails thing
 (setq rails-ui:show-mode-line nil)
 
 (setq rinari-tags-file-name "TAGS")
@@ -28,3 +28,5 @@ user edit the console command arguments."
       (dolist (var '(inf-ruby-prompt-pattern inf-ruby-first-prompt-pattern))
         (set (make-local-variable var) rinari-inf-ruby-prompt-pattern))
       (rinari-launch))))
+
+;;(setenv "DYLD_LIBRARY_PATH" (getenv "ORACLE_HOME"))

@@ -4,12 +4,24 @@
 (add-to-list 'load-path "~/.emacs.d")
 (require 'reset)
 
-;; TODO: ediff, go back to register
+
+;; TODO:
+;; win-switch-mode is kind of cool, needs practice
+;;(setq win-switch-other-window-first nil)
+;;      (global-set-key "\C-xo" 'win-switch-dispatch)
+;;    (win-switch-add-key    "O" 'previous-window)
+;;    (win-switch-delete-key "p" 'previous-window)
+;;    (win-switch-set-keys   '(" " "," "m") 'other-frame)
+
+;; checkout window-jump (move up and down)
+
+;; Enable (window-numbering-mode) and use M-1 through M-0 to navigate.
+
+
 ;; TODO: make note about replace with sub:
 ;; all  [a-z|_]*_url -> my_\,\&
 ;; some \([a-z|_]*_url\) -> my_\,\1
 ; blog_read_post_url -> my_blog_read_post_url
-
 
 ;; (setq debug-on-error t)
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
@@ -36,20 +48,6 @@
   (load-file f))
 
 
-;; Mail
-;; uses ~/.authinfo
-(setq
- smtpmail-starttls-credentials '(("smtp.gmail.com" "587" nil nil))
- smtpmail-auth-credentials  (expand-file-name "~/.authinfo")
- smtpmail-default-smtp-server "smtp.gmail.com")
-
-
-;; needs to be set before packages initialize
-(if (eq system-type 'darwin)
-    (progn ()
-           (setq pianobar-program-command "/usr/local/bin/pianobar")
-           ;; not sure why this path doesn't find pianobar
-           (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))))
 (setenv "LC_ALL" "en_US.UTF-8")
 
 
@@ -76,13 +74,14 @@
 
 ;; record keystrokes, analyze later
 ;; uses contrib-function macro
-(defun store-keystrokes ()
-  "saves keystrokes to file to study later"
-  (let ((dribble-file (make-temp-name (expand-file-name "~/.emacs.d/lossage-")))
-        (dribble-persistent (expand-file-name "~/.emacs.d/lossage.txt")))
-    (open-dribble-file dribble-file)
-    (dribble-append-on-exit dribble-file dribble-persistent)))
-(store-keystrokes)
+;; turn off to explore memory leak
+;; (defun store-keystrokes ()
+;;   "saves keystrokes to file to study later"
+;;   (let ((dribble-file (make-temp-name (expand-file-name "~/.emacs.d/lossage-")))
+;;         (dribble-persistent (expand-file-name "~/.emacs.d/lossage.txt")))
+;;     (open-dribble-file dribble-file)
+;;     (dribble-append-on-exit dribble-file dribble-persistent)))
+;; (store-keystrokes)
 
 
 (org-babel-load-file "~/.emacs.d/organizer.org")
@@ -102,10 +101,6 @@
       whitespace-style '(face tabs spaces trailing lines space-before-tab newline indentation empty space-after-tab space-mark tab-mark newline-mark)
       require-final-newline  t)
 
-;; this is buffer local:
-;;(add-hook 'write-contents-functions 'whitespace-cleanup)
-
-;; this is global:
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
 (display-time)
@@ -116,8 +111,6 @@
 (setq visible-bell t)
 (put 'set-goal-column 'disabled nil)
 (put 'scroll-left 'disabled nil)
-;(setq tab-always-indent 'complete) ;don't list files on tab indentation
-;(setq tab-always-indent t)
 (setq speedbar-show-unknown-files t)
 (setq speedbar-frame-parameters '((minibuffer)
                                  (width . 60)
@@ -132,54 +125,24 @@
 (setq password-cache-expiry nil) ;;duration of process
 (setq use-dialog-box nil)
 
-;; not sure this is used:?
-;; (setq emacs-tags-table-list
-;;            '("~/.emacs.d" ".emacs.d/el-get"))
-
 (setq tags-table-list '("~/.emacs.d/"  "~/.emacs.d/el-get/"))
-
-
-;;consider, it seems to cancel ido-mode
-;;(icomplete-mode t)
-;;(flx-ido-mode 1)
 
 (setq desktop-files-not-to-save "^$") ;; do save tramp buffers
 (setq desktop-restore-eager 10)       ;; load them lazily
-
-;; try to load desktops manually with bookmark+
+(setq desktop-dirname "~/.emacs.d/.desktops")
+;; TODO: try to load desktops manually with bookmark+
+;; might not be as convenient as init-revive.el
 (desktop-save-mode -1)
 (savehist-mode 1)
 
 (put 'narrow-to-region 'disabled nil)
 
-;;(setq desktop-path (add-to-list 'desktop-path "~/.emacs.d/.desktops"))
-;; ready
 (server-mode t)
-
-;; TODO: need to do this after load
-(diminish 'yas-minor-mode)
-(diminish 'eproject-mode)
-;; replaced by smartparens(diminish 'autopair-mode)
-(diminish 'global-visual-line-mode)
-(diminish 'rinari-minor-mode "`")
-(diminish 'ruby-end-mode)
-;(diminish 'rails-minor-mode)
-(diminish 'eldoc-mode)
-
-
-
-;(add-hook 'robe-mode-hook '(lambda ()(diminish 'robe-mode "\u03BB")))
-;;(add-hook 'flymake-mode-hook '(lambda ()(diminish 'flymake-mode)))
-;(add-hook 'rails-controller-minor-mode-hook '(lambda ()(diminish 'rails-controller-minor-mode)))
-;(add-hook 'rails-model-minor-mode-hook '(lambda ()(diminish 'rails-model-minor-mode)))
-;(add-hook 'rails-view-minor-mode-hook '(lambda ()(diminish 'rails-view-minor-mode)))
-
 
 (rename-modeline "ruby-mode" ruby-mode "Rb ")
 (rename-modeline "lisp-mode" emacs-lisp-mode "() ")
 (rename-modeline "shell" shell-mode "$ ")
 
-;(add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 (add-hook 'emacs-lisp-mode-hook '(lambda ()(progn
                                            (eldoc-mode)
                                            (autopair-mode -1)
@@ -191,8 +154,6 @@
 ;(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
 
 ;;(flyspell-prog-mode) ;; does this cause problems with tramp? esp ruby
-(setq rails-tags-command "ctags -e --Ruby-kinds=cfmF -o %s -R %s") ;;all kinds, don't append
-(setq rails-tags-dirs '(".")) ;;all
 
 ;; for jabber:
 (setq starttls-extra-arguments
@@ -202,8 +163,6 @@
 
 (setq completion-cycle-threshold 6);;omg
 (setq completion-auto-help 'lazy)
-
-(rainbow-delimiters-mode 1)
 
 
 (add-hook 'after-init-hook
@@ -216,7 +175,6 @@
             (delete-other-windows)
             ))
 
-;(require 's)
 (add-hook 'emacs-startup-hook
           (lambda()
             ;; (if (yes-or-no-p "connect?")
@@ -235,31 +193,27 @@
       '((whitespace-line-column . 80)
         (whitespace-style face trailing lines-tail)
         (require-final-newline . t)
+        (rspec-spec-command . "bin/spec")
         (ruby-compilation-executable . "ruby")
         (ruby-compilation-executable . "ruby1.8")
         (ruby-compilation-executable . "ruby1.9")
         (ruby-compilation-executable . "rbx")
         (ruby-compilation-executable . "jruby")))
 
-; not sure why three times
-(setq org-latex-pdf-process
-      '("pdflatex -interaction nonstopmode -output-directory %o %f"
-        "pdflatex -interaction nonstopmode -output-directory %o %f"
-        "pdflatex -interaction nonstopmode -output-directory %o %f"))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(clojure-test-success-face ((t (:foreground "green" :underline t :weight bold))))
+ '(clojure-test-success-face ((t (:foreground "green" :underline t :weight bold))) t)
  '(diredp-compressed-file-suffix ((t (:foreground "dark Blue"))) t)
  '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))) t)
- '(magit-diff-add ((t (:foreground "chartreuse"))))
- '(magit-diff-del ((t (:foreground "red1"))))
- '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))))
- '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))))
- '(magit-item-highlight ((t nil)))
+ '(magit-diff-add ((t (:foreground "chartreuse"))) t)
+ '(magit-diff-del ((t (:foreground "red1"))) t)
+ '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))) t)
+ '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))) t)
+ '(magit-item-highlight ((t nil)) t)
  '(window-numbering-face ((t (:background "grey" :foreground "black"))) t))
 
 (custom-set-variables
@@ -269,4 +223,5 @@
  ;; If there is more than one, they won't work right.
  '(bmkp-last-as-first-bookmark-file "~/.emacs.d/private/bookmarks")
  '(custom-safe-themes (quote ("6e05b0a83b83b5efd63c74698e1ad6feaddf69a50b15a8b4a83b157aac45127c" default)))
- '(fill-column 80))
+ '(fill-column 80)
+ '(safe-local-variable-values (quote ((rspec-use-bundler-when-possible . t) (whitespace-line-column . 80) (whitespace-style face trailing lines-tail) (require-final-newline . t) (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby")))))
