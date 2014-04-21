@@ -16,6 +16,17 @@
 ; prevent prompt about rspec command getting set in .dir-locals.el
 (put 'rspec-spec-command 'safe-local-variable #'stringp)
 
+(defadvice rspec-end-of-buffer-target-window (after make-editable activate )
+  "make comint buffer editable; ad-get-arg is buf-name"
+  (let* ((com-buffer (get-buffer (ad-get-arg 0)))
+         (com-window (get-buffer-window com-buffer)))
+    (save-excursion
+      (progn
+        (select-window com-window)
+        (read-only-mode -1)
+        (shell-mode)))))
+
+
 ;; robe needs to set up a sentinel to set robe-running when buffer killed
 ;; (require 'robe)
 ;; (defun zeus-console ()
