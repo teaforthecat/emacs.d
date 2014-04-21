@@ -229,7 +229,7 @@
   (interactive (list (read-string "Name: " (concat "*" (this-dir-name) "*" ))))
   (let ((ss-buffer (or (get-buffer name)
                        (get-buffer-create (generate-new-buffer-name name)))))
-    (pop-to-buffer ss-buffer)
+    (switch-to-buffer ss-buffer)
     (shell ss-buffer)
     (dolist (c cmds)
       (process-send-string nil c )
