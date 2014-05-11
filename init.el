@@ -91,11 +91,12 @@
                 :family "Inconsolata" :height 165 :weight 'normal)
 
 ;; fullscreen with font height 165
-(setq initial-frame-alist
-     (list (cons 'width
-                 (round (/ (x-display-pixel-width) 9.114)))
-           (cons 'height
-                 (round (/ (x-display-pixel-height) 18)))))
+(when (display-graphic-p)
+  (setq initial-frame-alist
+        (list (cons 'width
+                    (round (/ (x-display-pixel-width) 9.114)))
+              (cons 'height
+                    (round (/ (x-display-pixel-height) 18))))))
 
 (setq whitespace-line-column  80
       whitespace-style '(face tabs spaces trailing lines space-before-tab newline indentation empty space-after-tab space-mark tab-mark newline-mark)
@@ -194,6 +195,9 @@
         (whitespace-style face trailing lines-tail)
         (require-final-newline . t)
         (rspec-spec-command . "bin/spec")
+        ;; (inferior-lisp-program . "browser-repl")
+        (rspec-use-bundler-when-possible . t)
+        (feature-cucumber-command . "bin/cucumber FEATURE=\"{feature}\"")
         (ruby-compilation-executable . "ruby")
         (ruby-compilation-executable . "ruby1.8")
         (ruby-compilation-executable . "ruby1.9")
