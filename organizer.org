@@ -28,8 +28,10 @@
 (defun read-lines (filePath)
   "Return a list of lines of a file at filePath."
   (with-temp-buffer
-    (insert-file-contents filePath)
-    (split-string (buffer-string) "\n" t)))
+    (if (file-exists-p filePath)
+        (progn
+          (insert-file-contents filePath)
+          (split-string (buffer-string) "\n" t)))))
 #+end_src
 
 * my-dancer-shell-hosts function
