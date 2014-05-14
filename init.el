@@ -146,7 +146,6 @@
 
 (add-hook 'emacs-lisp-mode-hook '(lambda ()(progn
                                            (eldoc-mode)
-                                           (autopair-mode -1)
                                            (paredit-mode -1)
                                            (smartparens-strict-mode 1)
                                            (rainbow-delimiters-mode 1))))
