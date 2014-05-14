@@ -21,17 +21,18 @@
 
 ;; may want toggles
 (setq jabber-roster-line-format " %c %-25n %u %-8s  %S")
-(setq jabber-muc-autojoin
-      (list GD-devlab GD-devops GD-scrum_a))
 
-(setq jabber-account-list
-      (list (list GD-jid)))
-
-;; pre-cache password using auth-source and password-cache
-(password-cache-add (jabber-password-key GD-jid)
-                    (funcall (plist-get (car
-                                         (auth-source-search :host GD-host))
-                                        :secret)) )
+(if (boundp 'GD-jid)  ;;private is loaded
+    (progn
+      (setq jabber-muc-autojoin
+            (list GD-devlab GD-devops GD-scrum_a))
+      (setq jabber-account-list
+            (list (list GD-jid)))
+      ;; pre-cache password using auth-source and password-cache
+      (password-cache-add (jabber-password-key GD-jid)
+                          (funcall (plist-get (car
+                                               (auth-source-search :host GD-host))
+                                              :secret)) )))
 
 ;; inline customization added:
 ;; /Users/cthompson/.emacs.d/el-get/jabber/jabber-sasl.el:46
