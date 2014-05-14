@@ -23,25 +23,31 @@
        '((sequence "TODO(t)" "REFILE(r)" "SOMEDAY(s)" "|"
                    "DONE(d)" "CANCELED(c@)")))
 
-(setq org-capture-templates
-      '(("t" "Todo" entry
-         (file+headline "~/Dropbox/org/todo.org" "Tasks")
-         "* TODO %^{Brief Description}\n%?\n%a\nAdded: %U")
-        ("l" "Todo with link" entry
-         (file+headline "~/Dropbox/org/todo.org" "Tasks")
-         "* TODO %^{Brief Description}\n%?\n%a\nAdded: %U")
-        ("r" "Reference" entry
-         (file+headline "~/Dropbox/org/reference.org" "Reference")
-         "* TODO %^{Brief Description}\n%a\n%?Added: %U\n")
-        ))
+(if (file-exists-p "~/Dropbox/org/todo.org")
+    (progn
+      ;;weird that a file with a dir listed is required to load an entire directory
+      (setq org-agenda-files "~/Dropbox/org/agenda-files.txt" )
 
-(setq org-agenda-include-diary t)
-(setq org-agenda-diary-file "~/Dropbox/org/.diary")
+      (setq org-capture-templates
+            '(("t" "Todo" entry
+               (file+headline "~/Dropbox/org/todo.org" "Tasks")
+               "* TODO %^{Brief Description}\n%?\n%a\nAdded: %U")
+              ("l" "Todo with link" entry
+               (file+headline "~/Dropbox/org/todo.org" "Tasks")
+               "* TODO %^{Brief Description}\n%?\n%a\nAdded: %U")
+              ("r" "Reference" entry
+               (file+headline "~/Dropbox/org/reference.org" "Reference")
+               "* TODO %^{Brief Description}\n%a\n%?Added: %U\n")
+              ))
 
-(setq org-directory "~/Dropbox/org/")
+      (setq org-agenda-include-diary t)
+      (setq org-agenda-diary-file "~/Dropbox/org/.diary")
 
-;;weird that a file with a dir listed is required to load an entire directory
-(setq org-agenda-files "~/Dropbox/org/agenda-files.txt" )
+      (setq org-directory "~/Dropbox/org/"
+            org-default-notes-file "~/Dropbox/org/notes.org")))
+
+
+
 
 (setq
  org-agenda-span 7
@@ -50,7 +56,7 @@
  org-agenda-skip-scheduled-if-done t
  org-agenda-start-on-weekday nil
  org-deadline-warning-days 3
- org-default-notes-file "~/Dropbox/org/notes.org"
+
  ;not sure what this does org-fast-tag-selection-single-key (quote expert)
  org-completion-use-ido t
  org-log-into-drawer "LOG"
