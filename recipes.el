@@ -63,7 +63,7 @@
         dash ;dictionary
         diminish dired-details+ ;django-mode
         el-get eproject expand-region exec-path-from-shell emacs-w3m ;;emacs-w3m needs to come before wanderlust
-        feature-mode find-things-fast find-file-in-repository
+        feature-mode find-things-fast find-file-in-repository flatland-theme
         ;; flymake-python-pyflakes flymake-ruby
         fullscreen flx flx-ido
         goto-last-change guide-key
