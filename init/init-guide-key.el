@@ -1,9 +1,9 @@
 (require 'guide-key)
 
-(add-hook 'el-get-post-init-hooks '(lambda ()
-                                    (require 'diminish)
-                                    (guide-key-mode 1)
-                                    (diminish 'guide-key-mode)))
+(add-hook 'after-init-hook '(lambda ()
+                              (require 'diminish)
+                              (guide-key-mode 1)
+                              (diminish 'guide-key-mode)))
 
 (setq guide-key/guide-key-sequence '("\C-x 8" ;;internationalization
                                      "H-p"))  ;; smartparens

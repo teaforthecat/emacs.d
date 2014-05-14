@@ -2,5 +2,6 @@
        :type git
        :url "https://github.com/joshwnj/json-mode.git"
        :features json-mode
+       :depends (json-reformat)
        :post-init (progn ()
                     (add-to-list 'auto-mode-alist '("\\.json$" . json-mode))))
