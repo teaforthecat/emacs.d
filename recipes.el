@@ -59,8 +59,9 @@
 (setq recipes
       '(ace-jump-mode ack-and-a-half
         bookmark+
-        clojure-mode color-theme
-        dash dictionary diminish dired-details+ ;django-mode
+        clojure-mode color-theme ;cider
+        dash ;dictionary
+        diminish dired-details+ ;django-mode
         el-get eproject expand-region exec-path-from-shell emacs-w3m ;;emacs-w3m needs to come before wanderlust
         feature-mode find-things-fast find-file-in-repository
         ;; flymake-python-pyflakes flymake-ruby
@@ -72,15 +73,16 @@
         key-chord
         list-register
         magit markdown-mode multiple-cursors
-        nrepl
         org-mode org-publish ;; org-dotemacs
-        paredit popwin  puppet-mode ;;pylookup ;;powerline seems cool buggy though
+        paredit popwin ;;prodigy -installed with package
+        puppet-mode ;;pylookup ;;powerline seems cool buggy though
         revive;;redo+
         request rinari rhtml-mode rspec-mode  ruby-hash-syntax;rainbow-mode for colors
-        ;; ruby-end using smartparens instead
                                         ;ruby-electric conficts with pair
 ;;        rails rails-speedbar-feature  rvm ;; robe
-        s sass-mode smartparens smooth-scrolling smex sr-speedbar;; shell-command
+        s sass-mode smartparens smooth-scrolling
+        ;;smex something about execute-extended-command
+        sr-speedbar;; shell-command
         undo-tree
 ;        visual-regexp-steroids
         wanderlust web-mode
