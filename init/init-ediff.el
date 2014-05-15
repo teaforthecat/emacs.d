@@ -7,6 +7,12 @@
 (defadvice ediff-revision (before ediff-on-fullscreen activate)
   (window-configuration-to-register :ediff-fullscreen))
 
+(defadvice ediff-buffers (before ediff-on-fullscreen activate)
+  (window-configuration-to-register :ediff-fullscreen))
+
+(defadvice ediff-windows-wordwise (before ediff-on-fullscreen activate)
+  (window-configuration-to-register :ediff-fullscreen))
+
 (defadvice ediff-quit (after ediff-off-fullscreen activate)
   (jump-to-register :ediff-fullscreen))
 
