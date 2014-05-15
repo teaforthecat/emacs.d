@@ -68,7 +68,7 @@
         fullscreen flx flx-ido
         goto-last-change guide-key
         haml-mode htmlize ;helm
-        idomenu ioccur
+        idomenu ioccur idle-highlight-mode
         jabber js2-mode js-comint json json-mode jump-char
         key-chord
         list-register
