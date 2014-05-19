@@ -138,8 +138,11 @@
 (C> 5 'find-lisp-find-dired)
 (C> 4 'ack-line)
 (C> 3 'find-file-at-point-with-line)
-;; (C> 2 'ftf-find-file)(C> @ 'ftf-grepsource) I wish ftf worked. It misses files!
-(C> 2 'ftf-find-file)(C> @ 'ftf-grepsource)
+(C> 2 'ftf-find-file)
+(if (display-graphic-p)
+    (C> @ 'ftf-grepsource)
+  (C> @ 'set-mark-command));; weird. C-<space> is inserting C-@ in mac terminal
+
 (C> 1 'idomenu)(C> ! 'find-tag)
 
 (C ~ (lambdo (let ((default-directory "~")) (ido-find-file)))) ;;needs practice
@@ -338,6 +341,7 @@
 
 
 (global-set-key [f11] 'fullscreen)
+(global-set-key [f8] 'prodigy)
 (define-key ctl-x-map (kbd "C-d") nil) ;; unset 'list-directory
 
 (provide 'my-keybindings)
