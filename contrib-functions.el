@@ -86,7 +86,7 @@
       (search-forward-regexp "[^ ]:" (point-max) t)
       (if (looking-at "[0-9]+")
           (setq line-num (string-to-number (buffer-substring (match-beginning 0) (match-end 0))))))
-    (find-file (ffap-guesser))
+    (find-file-other-window (ffap-guesser))
     (if (not (equal line-num 0))
         (goto-line line-num))))
 

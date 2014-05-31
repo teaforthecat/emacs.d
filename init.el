@@ -1,9 +1,11 @@
-(cd "~");; not sure what is up about this
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (add-to-list 'load-path "~/.emacs.d/contrib")
 (add-to-list 'load-path "~/.emacs.d")
 (require 'reset)
 
+;;TODO: use prodigy process mgmt
+;;TODO: use fiplr
+;;TODO: use flycheck
 
 ;; TODO:
 ;; win-switch-mode is kind of cool, needs practice
@@ -60,7 +62,13 @@
 (require 'my-macros)
 (require 'my-keybindings)
 
+;; could not load package ace-window
+;; (require 'use-package)
 
+;; (use-package ace-window
+;;              :init (progn
+;;                      (setq aw-keys '(?a ?o ?e ?u ?' ?, ?. ?p ?y))))
+(setq aw-keys '(?a ?o ?e ?u ?' ?, ?. ?p ?y))
 ;; thanks
 (defun byte-compile-current-buffer ()
   "`byte-compile' current buffer if it's emacs-lisp-mode and compiled file exists."
@@ -97,6 +105,9 @@
                     (round (/ (x-display-pixel-width) 9.114)))
               (cons 'height
                     (round (/ (x-display-pixel-height) 18))))))
+
+(when (display-graphic-p)
+  (cd "~/projects"))
 
 (setq whitespace-line-column  80
       whitespace-style '(face tabs spaces trailing lines space-before-tab newline indentation empty space-after-tab space-mark tab-mark newline-mark)
@@ -138,6 +149,7 @@
 
 (put 'narrow-to-region 'disabled nil)
 
+
 (server-mode t)
 
 (rename-modeline "ruby-mode" ruby-mode "Rb ")
@@ -177,10 +189,8 @@
 
 (add-hook 'emacs-startup-hook
           (lambda()
-            ;; (if (yes-or-no-p "connect?")
             (if (s-contains? "office.gdi" (shell-command-to-string "hostname" ))
                 (progn
-                  (wl)
                   (jabber-connect-all)))
             (org-agenda-list)))
 
@@ -195,6 +205,7 @@
         (require-final-newline . t)
         (rspec-spec-command . "bin/spec")
         ;; (inferior-lisp-program . "browser-repl")
+        (enh-ruby-program . "/Users/cthompson/.rbenv/shims/ruby")
         (rspec-use-bundler-when-possible . t)
         (feature-cucumber-command . "bin/cucumber FEATURE=\"{feature}\"")
         (ruby-compilation-executable . "ruby")
@@ -203,6 +214,7 @@
         (ruby-compilation-executable . "rbx")
         (ruby-compilation-executable . "jruby")))
 
+;; '(mode-line-inactive ((t (:inherit mode-line :background "color-20" :foreground "white" :box (:line-width -1 :color "grey40") :weight light))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -211,12 +223,13 @@
  ;; If there is more than one, they won't work right.
  '(clojure-test-success-face ((t (:foreground "green" :underline t :weight bold))) t)
  '(diredp-compressed-file-suffix ((t (:foreground "dark Blue"))) t)
- '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))) t)
- '(magit-diff-add ((t (:foreground "chartreuse"))) t)
- '(magit-diff-del ((t (:foreground "red1"))) t)
- '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))) t)
- '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))) t)
- '(magit-item-highlight ((t nil)) t)
+ '(idle-highlight ((t (:inherit region :box (:line-width -1 :color "grey75" :style released-button)))))
+ '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))))
+ '(magit-diff-add ((t (:foreground "chartreuse"))))
+ '(magit-diff-del ((t (:foreground "red1"))))
+ '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))))
+ '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))))
+ '(magit-item-highlight ((t nil)))
  '(window-numbering-face ((t (:background "grey" :foreground "black"))) t))
 
 (custom-set-variables
@@ -227,4 +240,4 @@
  '(bmkp-last-as-first-bookmark-file "~/.emacs.d/private/bookmarks")
  '(custom-safe-themes (quote ("6e05b0a83b83b5efd63c74698e1ad6feaddf69a50b15a8b4a83b157aac45127c" default)))
  '(fill-column 80)
- '(safe-local-variable-values (quote ((rspec-use-bundler-when-possible . t) (whitespace-line-column . 80) (whitespace-style face trailing lines-tail) (require-final-newline . t) (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby")))))
+ '(safe-local-variable-values (quote ((rspec-use-rake-when-possible) (rspec-use-bundler-when-possible) (whitespace-line-column . 80) (whitespace-style face trailing lines-tail) (require-final-newline . t) (rspec-spec-command . "bin/spec") (enh-ruby-program . "/Users/cthompson/.rbenv/shims/ruby") (rspec-use-bundler-when-possible . t) (feature-cucumber-command . "bin/cucumber FEATURE=\"{feature}\"") (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby")))))

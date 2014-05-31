@@ -56,7 +56,7 @@
 (M> t 'next-line 'scroll-up)
 (M> h 'backward-char 'beginning-of-line)
 (M> n 'forward-char 'end-of-line)
-(M> s 'ace-jump-mode 'isearch-forward)                    ;new
+(M> s 'ace-jump-mode 'isearch-forward)
 (M> - 'comment-dwim)                                      ;timid
 (M  d 'nil )                                              ;unsure
 ;bmwvz
@@ -113,12 +113,12 @@
 ;--------------
 
 ;control
-
 ; right hand
 (C d 'duplicate-line-or-region) ;; don't want this in minibuffer
 (C> h '(lambda () (interactive)(other-window -1)))
-(C> t '(lambda () (interactive)(other-window  1)))
-;; unsure (C n 'forward-page)
+;;(C> t '(lambda () (interactive)(other-window  1)))
+(C> t 'ace-window)
+
 (G (kbd "C-n") 'forward-paragraph)
 (C s 'save-buffer)
 (C b 'browse-kill-ring)
@@ -180,6 +180,9 @@
 (G (kbd "C-c C-r") 'rename-file-and-buffer)
 
 (G (kbd "<backtab>") 'zencoding-expand-yas)
+
+;;(G (kbd "C-x o") 'ace-window)
+
 
 ;; HYPER
 ;; multiple cursors
@@ -410,3 +413,4 @@
 ;; make-frame
 ;; switch-frame
 ;; image-mode-fit-frame
+;; ace-jump-buffer

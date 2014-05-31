@@ -6,7 +6,10 @@
   '(progn
      ;; Basic erc setup
      (setq erc-nick "teaforthecat"
-           erc-autojoin-channels-alist '(("freenode.net" "#emacs"))
+           erc-autojoin-channels-alist '(("freenode.net"
+                                          "#emacs"
+                                          "#clojurescript"
+                                          "#datomic"))
            erc-keywords '("teaforthecat")
            erc-format-nick-function 'erc-format-@nick
            erc-interpret-mirc-color t
@@ -67,12 +70,11 @@
   "tell chanserv to op me (from: http://paste.lisp.org/display/97466)"
   (interactive)
   (erc-message "PRIVMSG"
-	       (format "chanserv op %s %s"
-		       (erc-default-target)
-		       (erc-current-nick)) nil))
+               (format "chanserv op %s %s"
+                       (erc-default-target)
+                       (erc-current-nick)) nil))
 
 (defun erc-cmd-DEOPME ()
   "deop myself (from: http://paste.lisp.org/display/97466)"
   (interactive)
   (erc-cmd-DEOP (format "%s" (erc-current-nick))))
-

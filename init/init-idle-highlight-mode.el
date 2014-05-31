@@ -1,3 +1,4 @@
+;; from: idle-hightlight-mode.el
 ;; Example:
 ;;
 (defun my-coding-hook ()
@@ -8,6 +9,7 @@
 
 (add-hook 'emacs-lisp-mode-hook 'my-coding-hook)
 (add-hook 'ruby-mode-hook 'my-coding-hook)
+(add-hook 'ruby-mode-hook 'idle-highlight-mode) ;;might be working
 (add-hook 'js2-mode-hook 'my-coding-hook)
 
 (setq idle-highlight-idle-time 1)

@@ -83,7 +83,7 @@
         s sass-mode smartparens smooth-scrolling
         ;;smex something about execute-extended-command
         sr-speedbar;; shell-command
-        undo-tree
+        undo-tree bind-key use-package
 ;        visual-regexp-steroids
         wanderlust web-mode
         yaml-mode

@@ -13,8 +13,9 @@
 (if (display-graphic-p)
     (progn
       (tool-bar-mode 0)
-      (menu-bar-mode 0)
       (scroll-bar-mode 0)))
+
+(menu-bar-mode 0)
 
 ;; from magnars
 ;; Allow pasting selection outside of Emacs

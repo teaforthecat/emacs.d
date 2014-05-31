@@ -25,7 +25,7 @@
 (if (boundp 'GD-jid)  ;;private is loaded
     (progn
       (setq jabber-muc-autojoin
-            (list GD-devlab GD-devops GD-scrum_a))
+            (list GD-devlab GD-deploystatus GD-scrum_a))
       (setq jabber-account-list
             (list (list GD-jid)))
       ;; pre-cache password using auth-source and password-cache
