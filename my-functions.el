@@ -120,7 +120,7 @@
          (port (find-vagrant-port vm))
          (user "vagrant")
          (default-directory (concat "/ssh:" "vagrant#" port ":/vagrant")))
-    (spawn-shell "*vagrant*")))
+    (spawn-shell (format "*vagrant-%s*" vm))))
 
 (defun list-vagrant-vms ()
   "parse names of vms from output of `vagrant status`"
