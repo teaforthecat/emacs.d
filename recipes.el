@@ -60,7 +60,7 @@
       '(ace-jump-mode ack-and-a-half
         bookmark+
         clojure-mode color-theme ;cider
-        dash ;dictionary
+        dash dash-at-point;dictionary
         diminish dired-details+ ;django-mode
         el-get eproject expand-region exec-path-from-shell emacs-w3m ;;emacs-w3m needs to come before wanderlust
         feature-mode find-things-fast find-file-in-repository flatland-theme
