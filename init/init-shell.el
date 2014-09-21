@@ -2,6 +2,11 @@
 
 (add-hook 'shell-mode-hook 'dirtrack-mode)
 
+(defun ct/setup-history ()
+  (let ((comint-input-ring-file-name "~/.bash_history.d/teaforthecat"))
+    (comint-read-input-ring)))
+
+(add-hook 'shell-mode-hook 'ct/setup-history)
 ;; maybe usefull sometime
 ;(setenv "PAGER" "cat")
 
