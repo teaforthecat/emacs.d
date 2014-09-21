@@ -2,6 +2,7 @@
 ;default (setq comint-history-isearch nil);;disruptive and has blank history
 (setq comint-buffer-maximum-size 1000)
 (setq comint-input-ignoredups t)
+(setq comint-history-isearch 'dwim)
 
 ;; for pianobar: <esc>[2k
 (defconst ansi-color-drop-regexp
@@ -32,9 +33,9 @@
 (add-hook 'comint-output-filter-functions 'comint-truncate-buffer)
 
 (add-to-list 'completion-at-point-functions 'comint-dynamic-list-filename-completions)
+(add-hook 'comint-mode 'ansi-color-for-comint-mode-on)
 
 
-	      
 
 
 ;; (make-comint "zeus" "/bin/bash -l -c 'zeus start'" )
