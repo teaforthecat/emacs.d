@@ -3,7 +3,6 @@
 (require 'request)
 (require 'ack-and-a-half)
 
-
 (defun my/ls-mode-numbers ()
   (interactive)
   ;;http://stackoverflow.com/a/1796009/714357
@@ -77,14 +76,21 @@
   (interactive)
   (let* ((project-dir "~/projects")
         (project-list (mdfind "organizer.org" (format "-onlyin %s" project-dir)))
-        (chosen-project (ido-completing-read "project: " (remove nil project-list)))
-        (pre-project-marker (make-symbol (format "pre-%s" chosen-project)))
-        (default-directory (joindirs project-dir chosen-project)))
+        (chosen-project-name (ido-completing-read "project: " (-map 'car project-list)))
+        (chosen-project-path (cdr (assoc chosen-project-name project-list)))
+        (pre-project-marker (make-symbol (format "pre-%s" chosen-project-name)))
+        (default-directory chosen-project-path))
     (window-configuration-to-register pre-project-marker)
     (setq ct/previous-project pre-project-marker)
     (dired default-directory)
     (delete-other-windows)
-    (spawn-shell (format "*%s*" chosen-project))))
+    (split-window-right)
+    (other-window 1)
+    (find-file "organizer.org")
+    (other-window 1)
+    (split-window-below)
+    (other-window 1)
+    (spawn-shell (format "*%s*" chosen-project-name))))
 
 (defun goto-previous-project ()
   (interactive)
@@ -94,8 +100,13 @@
   "return full paths of files matching name"
   (let ((mdopts nil))
     (with-temp-buffer
-      (shell-command (format "mdfind -name %s %s" file-name opts ) t)
-    (-map 'dirname (split-string  (buffer-string) "\n")))))
+      (let ((default-directory "~")) ;;mdfind is global
+        (shell-command (format "mdfind -name %s %s" file-name opts ) t))
+      (let* ((paths (remove nil (split-string  (buffer-string) "\n")))
+             (rm-full-path #'(lambda (s) (s-chop-prefix (expand-file-name "~/projects/") s)))
+             (rm-project-marker-file #'(lambda (s) (s-chop-suffix "/organizer.org" s)))
+             (names (-map rm-project-marker-file (-map rm-full-path paths))))
+        (-zip names paths)))))
 
 (defun dirname (path)
   "directory of path, must end in filename or /"
@@ -237,6 +248,7 @@
 
 
 (defun shell-clear ()
+  "set max size to zero, then truncate buffer"
   (interactive)
   (let ((comint-buffer-maximum-size 0))
     (comint-truncate-buffer)))
