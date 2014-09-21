@@ -3,7 +3,9 @@
 (add-to-list 'auto-mode-alist '("gemspec" . ruby-mode))
 (add-to-list 'auto-mode-alist '("json_builder" . ruby-mode))
 (add-to-list 'auto-mode-alist '("rxml" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\.thor" . ruby-mode))
 (add-to-list 'auto-mode-alist '("hamlc" . haml-mode))
+(add-to-list 'auto-mode-alist '("Vagrantfile" . ruby-mode))
 ;; rspec-mode Version: 1.3
 
 
@@ -38,6 +40,7 @@
 
 (setq enh-ruby-program "/Users/cthompson/.rbenv/shims/ruby")
 
+(add-hook 'enh-ruby-mode-hook 'rinari-minor-mode)
 (add-hook 'enh-ruby-mode-hook 'robe-mode)
 (add-hook 'enh-ruby-mode-hook 'yard-mode)
 (add-hook 'enh-ruby-mode-hook 'eldoc-mode)  ;for yard-mode completions
