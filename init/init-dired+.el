@@ -22,3 +22,16 @@
                                     last (&optional REMEMBER-MARKS) activate protect)
   (if (= (point-min) (point))
       (kill-buffer)))
+
+
+(defun dired-ediff-marked-files ()
+  "Run ediff on marked ediff files."
+  (interactive)
+  (set 'marked-files (dired-get-marked-files))
+  (when (= (safe-length marked-files) 2)
+    (ediff-files (nth 0 marked-files) (nth 1 marked-files)))
+
+  (when (= (safe-length marked-files)
+           (ediff3 (nth 0 marked-files)
+                   (nth 1 marked-files)
+                   (nth 2 marked-files)))))
