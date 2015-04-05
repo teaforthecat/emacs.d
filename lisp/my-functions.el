@@ -1,0 +1,366 @@
+(require 's)
+(require 'dash)
+(require 'request)
+;(require 'ack-and-a-half)
+(require 'term)
+(require 'json)
+
+
+ ;; gem install yaml json
+(setq ruby-yaml-json-command "ruby -ryaml -rjson -e \"puts YAML.load(STDIN.read).to_json\"")
+
+(defun ruby-yaml-json-parse (str)
+  (with-temp-buffer
+    (insert str)
+    (shell-command-on-region (point-min) (point-max)
+                             ruby-yaml-json-command
+                             (current-buffer)
+                             'replace)
+    (goto-char (point-min))
+    (json-read)))
+
+(defun yaml-parse (&optional beg end)
+  (let* ((str (buffer-substring-no-properties beg end))
+         (json-data (ruby-yaml-json-parse str)))
+    json-data))
+
+
+(defun sql-creds-from-rails (connection-data connection-name)
+  (let* ((connection-data (assoc connection-name connection-data))
+         (adapter (assoc 'adapter connection-data)))
+    adapter))
+
+(setq rails-sql-product-map '((oracle_enhanced . oracle)
+                              (mysql2          . mysql)))
+
+(defun rails-translate-product (adapter)
+  ;; TODO ms,postgres,sqlite...
+  (cdr (assoc adapter rails-sql-product-map)))
+
+(defun rails-db-at-point ()
+  "parse the whole yaml file to allow injection, connect to db at point, prompt for tramp host (tunnel) if universal argument given"
+  (interactive)
+  (let* ((connection-name (symbol-at-point))
+         (data (yaml-parse (point-min) (point-max)))
+         (conn-creds (assoc connection-name data))
+         (sql-product (rails-translate-product (intern (cdr (assoc 'adapter conn-creds)))))
+         (sql-user (cdr (assoc 'username conn-creds)))
+         ;;         (sql-password (or (assoc 'username conn-creds) (prompt)))
+         (sql-server (cdr (assoc 'host conn-creds)))
+         (sql-database (cdr (assoc 'database conn-creds)))
+         (sql-port     (cdr (assoc 'port conn-creds))) ;; can be nil???
+         (use-tramp current-prefix-arg))
+
+    (let ((connection-action '((sql-product-interactive sql-product connection-name))))
+      (if use-tramp
+          (ct/cd-remote "ssh" "/etc" connection-action)
+        (eval (car connection-action))))))
+
+(defmacro lambdo (body)
+  `'(lambda () (interactive) ,body))
+
+;; TODO maybe collect all advice in one place
+(defadvice dired-hide-subdir (around stay activate)
+  "don't move the point"
+  (let ((temp-mark (point)))
+    ad-do-it
+    (goto-char temp-mark)))
+
+;; temporary fullscreen a buffer
+(defadvice delete-other-windows (before temporary-fullscreen activate)
+  (window-configuration-to-register :temporary-fullscreen))
+
+(global-set-key (kbd "M-#") (lambdo (jump-to-register :temporary-fullscreen)))
+
+(defun ct/top ()
+  (interactive)
+  (let ((host (ct/completing-hosts)))
+    (ansi-term "/bin/bash" "ansi-term")
+    (term-line-mode)
+    (insert "ssh ") (insert host)
+    (term-send-input)
+    (insert "htop")
+    (term-send-input)
+    (term-char-mode)))
+
+(defun my/ls-mode-numbers ()
+  (interactive)
+  ;;http://stackoverflow.com/a/1796009/714357
+  (compile " ls -l | awk '{k=0;for(i=0;i<=8;i++)k+=((substr($1,i+2,1)~/[rwx]/) \
+             *2^(8-i));if(k)printf(\"%0o \",k);print}'"))
+
+(defun search-organizer (term)
+  "search with mdfind for TERM in all files named organizer.org"
+  (interactive "Ssearch: ")
+  (compilation-start
+   (format
+    "mdfind -name organizer.org -0 | xargs -0  ack --nocolor --nogroup --column %s "
+    term)
+   'ack-and-a-half-mode))
+
+;;replace this[^;
+;;]+ with \&;
+;; to add missing semi-colons
+
+
+;;(refresh-dsh-groups elgin-hosts)
+(defun refresh-dsh-groups (host-url-template)
+  "writes hosts to dsh group files by environment using host-url-template"
+  (let* ((environments  '(poc qc int stg prod))
+         (file-template "~/.dsh/group/%s"))
+    (dolist (env environments)
+      (let* ((response (request (format host-url-template env)
+                            :parser 'json-read
+                            :sync t))
+             (data (request-response-data response))
+             (file-path (format file-template env)))
+        (message (format "writing to %s" file-path))
+        (ct/write-lines (-map '(lambda (s) (format "%s.tops.gdi" s)) ;s is the hostname
+                           (-map 'car data))
+                     file-path)))))
+
+(defun grep-log-pe-httpd (seek-regex)
+  " run grep on puppetmaster.access.log"
+  (interactive "Sgrep for: ")
+  (let* ((default-directory "/sudo:puppet.tops.gdi:/var/log/pe-httpd/")
+        (log-file  "puppetmaster.access.log")
+        (compilation-buffer-name-function (lambda (buffer) (format  "* %s in %s *" seek-regex log-file ))) )
+    (compile (format "grep --color=always -n -H -e %s %s" seek-regex log-file) t)))
+
+(defun my-locate (search)
+  (interactive (list (read-string "regex: "  )))
+  (let ((dir default-directory)
+        (buf (get-buffer-create (format "*locate %s*" search))))
+    (shell-command (format "locate -b %s --regex %s | xargs ls -al" dir search)
+                   buf)
+    (switch-to-buffer-other-window buf)))
+
+(defun run-fetchmail (args)
+  (interactive)
+  (compile (concat "env LC_ALL=C fetchmail " args) ))
+
+(defun run-fetchmail-verbose ()
+  (interactive)
+  (run-fetchmail "-v  --nodetach --nosyslog"))
+
+(defun my-find-projects ()
+  "go to projects/ with organizer.org files"
+  (interactive)
+  (let ((find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld")))
+    (find-name-dired "~/projects" "organizer.org")))
+
+(defvar ct/previous-project nil)
+
+
+;; TODO add to org-agenda-file-to-front var
+(defun ct/goto-project ()
+  "open a dired buffer for a project that contains an organizer.org file and open shell as well!"
+  (interactive)
+  (let* ((project-dir "~/projects")
+        (project-list (mdfind "organizer.org" (format "-onlyin %s" project-dir)))
+        (chosen-project-name (ido-completing-read "project: " (-map 'car project-list)))
+        (chosen-project-path (cdr (assoc chosen-project-name project-list)))
+        (pre-project-marker (make-symbol (format "pre-%s" chosen-project-name)))
+        (default-directory (file-name-directory chosen-project-path)))
+    (window-configuration-to-register pre-project-marker)
+    (setq ct/previous-project pre-project-marker)
+    (dired default-directory)
+    (delete-other-windows)
+    (split-window-right)
+    (other-window 1)
+    (find-file "organizer.org")
+    (org-agenda-file-to-front)
+    (other-window 1)
+    (split-window-below)
+    (other-window 1)
+    (spawn-shell (format "*%s*" chosen-project-name))))
+
+(defun goto-previous-project ()
+  (interactive)
+  (jump-to-register ct/previous-project))
+
+(defun mdfind (file-name &optional opts)
+  "return full paths of files matching name"
+  (let ((mdopts nil))
+    (with-temp-buffer
+      (let ((default-directory "~")) ;;mdfind is global
+        (shell-command (format "mdfind -name %s %s" file-name opts ) t))
+      (let* ((paths (remove nil (split-string  (buffer-string) "\n")))
+             (rm-full-path #'(lambda (s) (s-chop-prefix (expand-file-name "~/projects/") s)))
+             (rm-project-marker-file #'(lambda (s) (s-chop-suffix "/organizer.org" s)))
+             (names (-map rm-project-marker-file (-map rm-full-path paths))))
+        (-zip names paths)))))
+
+(defun dirname (path)
+  "directory of path, must end in filename or /"
+  (nth 1 (nreverse (split-string path "/" ))))
+
+(defun where-am-i ()
+  "copies present location into kill-ring and clipboard"
+  (interactive)
+  (kill-new (message (concat (minus-project-path buffer-file-name) ":" (int-to-string (line-number-at-pos))))))
+
+(defun minus-project-path (path)
+  (let (project-dir (expand-file-name "~/projects/"))
+    (s-chop-prefix project-dir path)))
+
+(defun goto-init-for ()
+  "find the 'user init file' for a package managed el-get"
+  (interactive)
+  (let* ((init-full-dir (expand-file-name el-get-user-package-directory))
+         (init-dir (s-chop-prefix default-directory init-full-dir))
+         (init-files (git-ls-full "~/.emacs.d" init-dir))
+               ;; not sure why there is bad data in init-files here:
+         (init-files (-filter '(lambda (f) (s-contains? (concat init-full-dir "/init-" ) f)) init-files))
+         (package-names (-map '(lambda (f)
+                                 (string-match "init-\\(.*\\).el" f)
+                                 (match-string 1 f))
+                              init-files))
+         (tbl (-zip package-names init-files)))
+         (find-file (cdr (assoc (ido-completing-read "init:" (-map 'car tbl)) tbl )))))
+
+
+(defun git-ls-full (path subpath)
+  (with-temp-buffer ;; get the full file paths
+    (cd (expand-file-name path))
+    (shell-command (format "git ls-files %s" subpath) t)
+    (-map 'expand-file-name (split-string (buffer-string) "\n"))))
+
+(defun query-camel-to-dash ()
+  (interactive)
+  ;; tT -> t-t
+  ;; sidenote
+  ;; "\\,(func whatever)" only works in interactive mode of q-r-r
+  (query-replace-regexp "\\([a-z]\\)\\([A-Z]\\)"
+                        '(replace-eval-replacement
+                          concat "\\1-" (replace-quote (downcase (match-string 2))))
+                        nil
+                        (if (and transient-mark-mode mark-active) (region-beginning))
+                        (if (and transient-mark-mode mark-active) (region-end))))
+
+(defun query-fix-hash-rockets ()
+  (interactive)
+  ;; t=>t -> t => t
+  ;; needs Non-space regex matcher instead of letters
+  ;; also maybe check for more than one space.
+  (query-replace-regexp "\\([a-z]\\)=>\\([a-z]\\)"
+                        '(replace-eval-replacement
+                          concat (match-string 1) " => " (match-string 2))
+                        nil
+                        (if (and transient-mark-mode mark-active) (region-beginning))
+                        (if (and transient-mark-mode mark-active) (region-end))))
+
+
+(setq find-for-el-etags
+      "find .  \(  -path ./el-get \) -prune -o -name \"*.el\"  -print | etags -" )
+
+(setq find-for-rails-etags
+      "ctags -e -a --Ruby-kinds=-fFcm -o TAGS -R .")
+
+(defun set-tab-width-two ()
+  (interactive)
+  (set (make-local-variable 'tab-width) 2))
+
+(defmacro interact-with (name compilation)
+  `(list ,compilation
+         (switch-to-buffer-other-window "*compilation*")
+         (shell-mode)
+         (read-only-mode -1)
+         (goto-char (point-max))
+         (unwind-protect
+             (rename-buffer ,name)
+           (rename-uniquely))))
+
+(defun this-dir-name ()
+  (car (last (delete "" (split-string default-directory "/")))))
+
+(defun ct/remote-host-name ()
+  (if (tramp-tramp-file-p default-directory)
+      (s-chop-suffix ".gdi" (tramp-file-name-real-host
+                             (tramp-dissect-file-name default-directory)))
+    nil))
+
+(defun ct/shell-buffer-name ()
+  (if (tramp-tramp-file-p default-directory)
+      (concat (ct/remote-host-name) ":" (this-dir-name))
+    (this-dir-name)))
+
+(defun spawn-shell (name &optional cmds)
+  "Invoke shell in buffer NAME with optional list of COMMANDS
+   example (spawn-shell \"*.emacs.d*\" '(\"ls\" \"file init.el\"))"
+  (interactive (list (read-string "Name: " (concat "*" (ct/shell-buffer-name) "*" ))))
+  (let ((ss-buffer (or (get-buffer name)
+                       (get-buffer-create (generate-new-buffer-name name)))))
+    (switch-to-buffer ss-buffer)
+    (shell ss-buffer)
+    (dolist (c cmds)
+      (process-send-string nil c )
+      (comint-send-input))
+    (ct/setup-shell-history)))
+
+;;stores remote shell history locally
+(defun ct/setup-shell-history ()
+  (setq comint-input-ring-file-name
+        (format "~/.bash_history.d/%s"
+                (if (tramp-tramp-file-p default-directory)
+                    tramp-current-host ;keeps value even when local ?
+                  (s-chomp (shell-command-to-string "hostname")))))
+  (comint-read-input-ring)) ;;maybe make this into a var
+
+(defun shell-clear ()
+  "set max size to zero, then truncate buffer"
+  (interactive)
+  (let ((comint-buffer-maximum-size 0))
+    (comint-truncate-buffer)))
+
+(defun touch-app ()
+  (interactive)
+  (compile "touch config/application.rb"))
+
+(defun production-jobs-count ()
+  (interactive)
+  (compile "ssh deployer@citra cd collections \\&\\& rake jobs:count"))
+
+(defun production-jobs-tail ()
+  (interactive)
+  (compile "ssh deployer@citra tail -f collections/log/delayed_job.log"))
+
+(defun production-console ()
+  (interactive)
+  (interact-with "*PRODUCTION CONSOLE*"
+                 (compile "ssh deployer@citra cd collections \\&\\& ./bin/rails c")))
+
+(defun zeus-console ()
+  (interactive)
+  (interact-with "*console*"
+                 (compile "./bin/zeus c")))
+
+
+;; pdbtrack
+(defun run-selenium ()
+  (interactive)
+  (let ((buf-name "selenium-webdriver"))
+    (switch-to-buffer-other-window
+     (apply 'make-comint buf-name "/usr/bin/java" nil '( "-jar" "/home/cthompson/src/selenium-2.1.0/selenium-server-standalone-2.1.0.jar")))))
+
+
+; Note: find group/ -size 0 -print0 | xargs -0 rm
+; -print0 & -0 allow spaces in path names
+
+(defun process-each-buffer (form)
+  "In a dired buffer, perform an action on each marked file's buffer"
+  (interactive
+   (list (read-from-minibuffer "Eval on buffer(s): "
+                                nil read-expression-map t
+                                'read-expression-history)))
+  (let ((file-list (dired-get-marked-files)))
+    (save-excursion
+      (mapc (lambda (f)
+              (find-file f)
+              (eval form))
+            file-list))))
+
+
+
+
+(provide 'my-functions)
