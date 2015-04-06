@@ -42,7 +42,10 @@
 
 
 ;; Built-ins
-(bind-key "k" 'kill-this-buffer dired-mode-map)
+(bind-key "k"   'dired-kill-subdir dired-mode-map)
+(bind-key "TAB" 'dired-hide-subdir dired-mode-map)
+(bind-key "e"   'dired-up-directory dired-mode-map)
+(bind-key "o"   'dired-display-file dired-mode-map)
 
 
 ;; Notes:
