@@ -17,6 +17,8 @@
 
 (menu-bar-mode 0)
 
+(setq message-log-max 16384)
+
 ;; from magnars
 ;; Allow pasting selection outside of Emacs
 (setq x-select-enable-clipboard t)

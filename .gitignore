@@ -33,3 +33,5 @@ tramp
 
 # eww cache
 /url/
+/bookmarks
+/projectile-bookmarks.eld

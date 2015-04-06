@@ -11,6 +11,7 @@
 
 ;; copy - paste - CUA for dvorak using querty's zxcv keys
 (bind-key "M-j" 'copy-region-as-kill)
+; C-w (bind-key "M-q" 'kill-region)
 (bind-key "M-k" 'clipboard-yank)
 (bind-key "M-;" 'undo-tree-undo)
 (bind-key "M-:" 'undo-tree-redo)
@@ -23,7 +24,7 @@
 (bind-key "M-U" 'kill-word)
 (bind-key "M-E" 'backward-kill-word)
 (bind-key "M-i" 'kill-sexp)
-
+(bind-key "C-r" 'comment-dwim)
 
 ;; Navigate buffer and file
 (bind-key  "M-T" 'scroll-up)
@@ -42,10 +43,10 @@
 
 
 ;; Built-ins
-(bind-key "k"   'dired-kill-subdir dired-mode-map)
-(bind-key "TAB" 'dired-hide-subdir dired-mode-map)
-(bind-key "e"   'dired-up-directory dired-mode-map)
-(bind-key "o"   'dired-display-file dired-mode-map)
+;; (bind-key "k"   'dired-kill-subdir dired-mode-map)
+;; (bind-key "TAB" 'dired-hide-subdir dired-mode-map)
+;; (bind-key "e"   'dired-up-directory dired-mode-map)
+;; (bind-key "o"   'dired-display-file dired-mode-map)
 
 
 ;; Notes:
