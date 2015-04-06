@@ -1,3 +1,15 @@
+;; http://stackoverflow.com/a/14539202/714357
+(defun unpop-to-mark-command ()
+  "Unpop off mark ring. Does nothing if mark ring is empty."
+  (interactive)
+      (when mark-ring
+        (setq mark-ring (cons (copy-marker (mark-marker)) mark-ring))
+        (set-marker (mark-marker) (car (last mark-ring)) (current-buffer))
+        (when (null (mark t)) (ding))
+        (setq mark-ring (nbutlast mark-ring))
+        (goto-char (marker-position (car (last mark-ring))))))
+
+
 ;; http://ergoemacs.org/emacs/elisp_generate_uuid.html
 ;; by Christopher Wellons, 2011-11-18. Editted by Xah Lee.
 ;; Edited by Hideki Saito further to generate all valid variants for "N" in xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx format.

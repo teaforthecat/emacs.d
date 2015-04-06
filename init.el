@@ -27,24 +27,44 @@
 (use-package zenburn-theme)
 
 (use-package guide-key
-  :init (setq guide-key/guide-key-sequence '("M-s"))
+  :init
+  (setq guide-key/guide-key-sequence '("M-s" "C-x 8" "M-o" "C-x r"))
+  (setq guide-key/recursive-key-sequence-flag t)
+  ;; (guide-key/key-chord-hack-on) ;; TODO: try this by adding "<key-chord>"
+  :diminish guide-key-mode
   :config (guide-key-mode 1))
+
+(use-package ace-window
+  :bind ("C-t" . ace-window))
+
+(use-package idomenu
+  :bind ("C-c i" . idomenu))
 
 (use-package undo-tree)
 (use-package magit
+  :bind ("C-x g" . magit-status)
   :init
   (setq magit-last-seen-setup-instructions "1.4.0"))
 
-(use-package moccur-edit)
+(use-package ace-jump-mode
+  :bind
+  ("C-." . ace-jump-mode)
+  ;("C-," . ace-jump-mode-pop-mark)
+  ;:config (ace-jump-mode-enable-mark-sync); TODO: what does this do?
+  )
+
 (use-package color-moccur
   :commands (isearch-moccur isearch-all)
-;  :bind ("C-c C-o" . moccur)
+  :bind ("M-s o" . moccur)
   :init
   (bind-key "M-o" 'isearch-moccur isearch-mode-map)
   (bind-key "M-O" 'isearch-moccur-all isearch-mode-map)
   :config
-  (use-package moccur-edit)
-  )
+  (use-package moccur-edit))
+
+
+(switch-to-buffer "*Messages*") ;; shows loading errors
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

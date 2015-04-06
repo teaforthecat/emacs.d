@@ -1,6 +1,8 @@
 (source gnu)
 (source melpa)
 
+(depends-on "ace-jump-mode")
+(depends-on "ace-window")
 (depends-on "bind-key")
 (depends-on "cask")
 (depends-on "color-moccur")
@@ -15,6 +17,7 @@
 (depends-on "guide-key")
 (depends-on "htmlize")
 (depends-on "idle-highlight-mode")
+(depends-on "idomenu")
 (depends-on "leuven-theme")
 (depends-on "magit")
 (depends-on "memoize")
