@@ -1,3 +1,29 @@
+;;http://stackoverflow.com/questions/435847/emacs-mode-to-edit-json/7934783#7934783
+(defun beautify-json ()
+  (interactive)
+  (let ((b (if mark-active (min (point) (mark)) (point-min)))
+        (e (if mark-active (max (point) (mark)) (point-max))))
+    (shell-command-on-region b e
+     "python -mjson.tool" (current-buffer) t)))
+
+
+;; http://emacswiki.org/emacs/InteractivelyDoThings
+;; this function is more helpfull than the one below
+(defun ido-for-mode(prompt the-mode)
+  (switch-to-buffer
+   (ido-completing-read prompt
+                        (save-excursion
+                          (delq
+                           nil
+                           (mapcar (lambda (buf)
+                                     (when (buffer-live-p buf)
+                                       (with-current-buffer buf
+                                         (and (eq major-mode the-mode)
+                                              (buffer-name buf)))))
+                                   (buffer-list)))))))
+
+
+
 ;; http://stackoverflow.com/a/14539202/714357
 (defun unpop-to-mark-command ()
   "Unpop off mark ring. Does nothing if mark ring is empty."

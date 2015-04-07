@@ -19,6 +19,11 @@
 
 (setq message-log-max 16384)
 
+(setenv "LC_ALL" "en_US.UTF-8")
+
+(setq use-dialog-box nil)
+(put 'narrow-to-region 'disabled nil)
+
 ;; from magnars
 ;; Allow pasting selection outside of Emacs
 (setq x-select-enable-clipboard t)

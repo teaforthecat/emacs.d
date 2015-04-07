@@ -1,12 +1,47 @@
+;;-*- byte-compile-dynamic: t; -*-
+
 (require 's)
 (require 'dash)
 (require 'request)
 ;(require 'ack-and-a-half)
 (require 'term)
 (require 'json)
+(require 'tramp)
 
 
- ;; gem install yaml json
+(defun dired-ediff-marked-files ()
+  "Run ediff on marked files."
+  (interactive)
+  (let ((marked-files (dired-get-marked-files)))
+    (cond
+     ((= (safe-length marked-files) 2)
+      (ediff-files (nth 0 marked-files) (nth 1 marked-files)))
+     ((= (safe-length marked-files)
+         (ediff3 (nth 0 marked-files)
+                 (nth 1 marked-files)
+                 (nth 2 marked-files)))))))
+
+(defun sudo-tramp-file-name (filename)
+  (with-parsed-tramp-file-name filename nil
+    (tramp-make-tramp-file-name "sudo" user host localname )))
+
+(defun sudo-find-file (filename &optional wildcards)
+  "Calls find-file with filename with sudo-tramp-prefix prepended"
+  (interactive "FFind file with sudo ")
+  (let ((sudo-name (sudo-tramp-file-name filename)))
+    (message "sudo-name: %s" sudo-name)
+    (apply 'find-file
+           (cons sudo-name (if (boundp 'wildcards) '(wildcards))))))
+
+(defun bookmark-ido-quick-jump ()
+  "Jump to selected bookmark, using auto-completion and auto-acceptance."
+  (interactive)
+  (bookmark-maybe-load-default-file)
+  (bookmark-jump
+   (ido-completing-read "Jump to bookmark: "
+                        (loop for b in bookmark-alist collect (car b)))))
+
+;; gem install yaml json
 (setq ruby-yaml-json-command "ruby -ryaml -rjson -e \"puts YAML.load(STDIN.read).to_json\"")
 
 (defun ruby-yaml-json-parse (str)
@@ -70,7 +105,14 @@
 (defadvice delete-other-windows (before temporary-fullscreen activate)
   (window-configuration-to-register :temporary-fullscreen))
 
-(global-set-key (kbd "M-#") (lambdo (jump-to-register :temporary-fullscreen)))
+;; moved to bind-key (global-set-key (kbd "M-#") (lambdo (jump-to-register :temporary-fullscreen)))
+
+(defun byte-compile-current-buffer ()
+  "`byte-compile' current buffer if it's emacs-lisp-mode and compiled file exists."
+  (interactive)
+  (when (and (eq major-mode 'emacs-lisp-mode)
+             (file-exists-p (byte-compile-dest-file buffer-file-name)))
+    (byte-compile-file buffer-file-name)))
 
 (defun ct/top ()
   (interactive)
@@ -204,20 +246,22 @@
   (let (project-dir (expand-file-name "~/projects/"))
     (s-chop-prefix project-dir path)))
 
-(defun goto-init-for ()
-  "find the 'user init file' for a package managed el-get"
-  (interactive)
-  (let* ((init-full-dir (expand-file-name el-get-user-package-directory))
-         (init-dir (s-chop-prefix default-directory init-full-dir))
-         (init-files (git-ls-full "~/.emacs.d" init-dir))
-               ;; not sure why there is bad data in init-files here:
-         (init-files (-filter '(lambda (f) (s-contains? (concat init-full-dir "/init-" ) f)) init-files))
-         (package-names (-map '(lambda (f)
-                                 (string-match "init-\\(.*\\).el" f)
-                                 (match-string 1 f))
-                              init-files))
-         (tbl (-zip package-names init-files)))
-         (find-file (cdr (assoc (ido-completing-read "init:" (-map 'car tbl)) tbl )))))
+
+;; this was a nice function
+;; (defun goto-init-for ()
+;;   "find the 'user init file' for a package managed el-get"
+;;   (interactive)
+;;   (let* ((init-full-dir (expand-file-name el-get-user-package-directory))
+;;          (init-dir (s-chop-prefix default-directory init-full-dir))
+;;          (init-files (git-ls-full "~/.emacs.d" init-dir))
+;;                ;; not sure why there is bad data in init-files here:
+;;          (init-files (-filter '(lambda (f) (s-contains? (concat init-full-dir "/init-" ) f)) init-files))
+;;          (package-names (-map '(lambda (f)
+;;                                  (string-match "init-\\(.*\\).el" f)
+;;                                  (match-string 1 f))
+;;                               init-files))
+;;          (tbl (-zip package-names init-files)))
+;;          (find-file (cdr (assoc (ido-completing-read "init:" (-map 'car tbl)) tbl )))))
 
 
 (defun git-ls-full (path subpath)
