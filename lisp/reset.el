@@ -85,6 +85,11 @@
 (set-default 'sentence-end-double-space nil)
 
 
+;; stop the recentering
+;; (setq scroll-step 1)
+;; (setq scroll-conservatively 10000)
+;; (setq auto-window-vscroll nil)
+
 (when (eq system-type 'darwin)
   (setq mac-option-modifier 'hyper)
   (setq mac-command-modifier 'meta)

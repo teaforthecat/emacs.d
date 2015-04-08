@@ -10,15 +10,24 @@
 (require 'bind-key)
 
 (eval-and-compile (push "~/.emacs.d/lisp" load-path))
-(push "/usr/local/bin" exec-path)
+
 
 (require 'reset)
 (require 'navigator)
-(require 'my-functions)
 (require 'contrib-functions)
+(require 'my-functions)
 (require 'settings)
 
 
+;;(push "/usr/local/bin" exec-path)
+(use-package exec-path-from-shell
+  :defer 10
+  :config
+  (when (memq window-system '(mac ns))
+    (exec-path-from-shell-initialize)))
+
+(use-package haml-mode)
+(use-package sass-mode)
 
 (defalias 'pro 'ct/goto-project)
 (defalias 'tl 'toggle-truncate-lines)
@@ -181,14 +190,11 @@
     :config
     (flx-ido-mode 1)))
 
-(use-package nyan-mode
-  :config (nyan-mode))
-
-(use-package zenburn-theme)
+;(use-package zenburn-theme)
 
 (use-package guide-key
   :init
-  (setq guide-key/guide-key-sequence '("M-s" "C-x 8" "M-o" "C-x r"))
+  (setq guide-key/guide-key-sequence '("M-s" "C-x 8" "M-o" "C-x r" "C-b"))
   (setq guide-key/recursive-key-sequence-flag t)
   ;; (guide-key/key-chord-hack-on) ;; TODO: try this by adding "<key-chord>"
   :diminish guide-key-mode
@@ -291,50 +297,24 @@
   :config
   (recentf-mode 1))
 
+(use-package pianobar)
+
+(use-package shell
+  :config
+;; m-p     comint-previous-input           Cycle backwards in input history
+;; m-n     comint-next-input               Cycle forwards
+;; m-r     comint-previous-matching-input  Previous input matching a regexp
+  ;; m-s     comint-next-matching-input      Next input that matches
+
+  (unbind-key "M-s" shell-mode-map)
+  (unbind-key "M-r" shell-mode-map)
+  (unbind-key "M-n" shell-mode-map))
+
+(setq custom-file "~/.emacs.d/lisp/custom.el")
+(load custom-file)
+
 (switch-to-buffer "*Messages*") ;; shows loading errors
-
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(bmkp-last-as-first-bookmark-file "/Users/cthompson/.emacs.d/bookmarks")
- '(custom-safe-themes
-   (quote
-    ("a2e7b508533d46b701ad3b055e7c708323fb110b6676a8be458a758dd8f24e27" "e80932ca56b0f109f8545576531d3fc79487ca35a9a9693b62bf30d6d08c9aaf" "9cb6358979981949d1ae9da907a5d38fb6cde1776e8956a1db150925f2dad6c1" "4dd1b115bc46c0f998e4526a3b546985ebd35685de09bc4c84297971c822750e" default)))
- '(jabber-activity-mode nil)
- '(org-agenda-files
-   (quote
-    ("~/projects/gitlab/configuration/gathor/organizer.org" "~/projects/puppet/organizer.org" "~/projects/gitlab/development/csm/organizer.org" "~/projects/gitlab/configuration/morrell/organizer.org")))
- '(pallet-mode t)
- '(safe-local-variable-values
-   (quote
-    ((rspec-use-rake-when-possible)
-     (rspec-use-bundler-when-possible)))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-;; (custom-set-faces
-;;  ;; custom-set-faces was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  '(clojure-test-success-face ((t (:foreground "green" :underline t :weight bold))) t)
-;;  '(diredp-compressed-file-suffix ((t (:foreground "dark Blue"))) t)
-;;  '(idle-highlight ((t (:inherit region :box (:line-width -1 :color "grey75" :style released-button)))))
-;;  '(jabber-roster-user-online ((t (:foreground "Cyan" :slant normal :weight light))))
-;;  '(magit-diff-add ((t (:foreground "chartreuse"))))
-;;  '(magit-diff-del ((t (:foreground "red1"))))
-;;  '(magit-diff-file-header ((t (:inherit diff-file-header :foreground "black"))))
-;;  '(magit-diff-hunk-header ((t (:inherit diff-hunk-header :foreground "black"))))
-;;  '(magit-item-highlight ((t nil)))
-;;  '(window-numbering-face ((t (:background "grey" :foreground "black"))) t))
-
-
+(load-theme 'flatland)
 
 ;; to silence warnings when byte compiling
 ;; some functions won't be defined until the library is loaded

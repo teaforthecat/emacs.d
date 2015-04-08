@@ -1,3 +1,5 @@
+;;-*- byte-compile-dynamic: t; -*-
+
 ;;http://stackoverflow.com/questions/435847/emacs-mode-to-edit-json/7934783#7934783
 (defun beautify-json ()
   (interactive)
@@ -140,7 +142,7 @@
           (message "Sum: %f" sum))))))
 
 ;; http://whattheemacsd.com/appearance.el-01.html
-;; does major modes
+;; does major modes - replaced by diminish
 (defmacro rename-modeline (package-name mode new-name)
   `(eval-after-load ,package-name
      '(defadvice ,mode (after rename-modeline activate)
@@ -157,8 +159,9 @@
       (if (looking-at "[0-9]+")
           (setq line-num (string-to-number (buffer-substring (match-beginning 0) (match-end 0))))))
     (find-file-other-window (ffap-guesser))
+    (ffap)
     (if (not (equal line-num 0))
-        (goto-line line-num))))
+        (progn (goto-char (point-min))(forward-line (1- line-num))))))
 
 ;; http://stackoverflow.com/a/4717026/714357
 (defun duplicate-line-or-region (&optional n)
@@ -192,7 +195,7 @@ With negative N, comment out original line and use the absolute value."
     (kill-line)
     (yank)
     (open-line 1)
-    (next-line 1)
+    (forward-line 1)
     (yank)
     (move-to-column cursor-column)))
 
@@ -224,124 +227,11 @@ With negative N, comment out original line and use the absolute value."
        (unless selective-display
          (1+ (current-column))))))
 
-(defvar hs-minorr-mode)
-(defun toggle-hiding (column)
-  (interactive "P")
-  (if hs-minorr-mode
-      (if (condition-case nil
-              (hs-toggle-hiding)
-            (error t))
-          (hs-show-all))
-    (toggle-selective-display column)))
-
 ;;http://www.emacswiki.org/emacs/RaymondZeitler
 (defun shellfn ()
   "Invokes the shell using the current buffer file name as a parameter."
   (interactive)
   (shell (concat "echo " (buffer-file-name))))
-
-;;http://stackoverflow.com/questions/1389835/how-to-run-django-shell-from-emacs
-(defun django-server (&optional argprompt)
-  (interactive "P")
-  ;; Set the default shell if not already set
-  (cl-labels ((read-django-project-dir
-            (prompt dir)
-            (let* ((dir (read-directory-name prompt dir))
-                   (manage (expand-file-name (concat dir "manage.py"))))
-              (if (file-exists-p manage)
-                  (expand-file-name dir)
-                (progn
-                  (message "%s is not a Django project directory" manage)
-                  (sleep-for .5)
-                  (read-django-project-dir prompt dir))))))
-    (let* ((dir (read-django-project-dir
-                 "project directory: "
-                 default-directory))
-           (project-name (first
-                          (remove-if (lambda (s) (or (string= "src" s) (string= "" s)))
-                                     (reverse (split-string dir "/")))))
-           (buffer-name (format "%s-server" project-name))
-           (manage (concat dir "manage.py")))
-      (cd dir)
-      (if (not (equal (buffer-name) buffer-name))
-          (switch-to-buffer-other-window
-           (apply 'make-comint buffer-name manage nil '("runserver")))
-        (apply 'make-comint buffer-name manage nil '("runserver")))
-      (make-local-variable 'comint-prompt-regexp)
-      (setq comint-prompt-regexp (concat py-shell-input-prompt-1-regexp "\\|"
-                                         py-shell-input-prompt-2-regexp "\\|"
-                                         "^([Pp]db) "))
-      (add-hook 'comint-output-filter-functions
-                'py-comint-output-filter-function))))
-
-;; pdbtrack
-(defun django-testserver (&optional argprompt)
-  (interactive "P")
-  ;; Set the default shell if not already set
-  (cl-labels ((read-django-project-dir
-            (prompt dir)
-            (let* ((dir (read-directory-name prompt dir))
-                   (manage (expand-file-name (concat dir "manage.py"))))
-              (if (file-exists-p manage)
-                  (expand-file-name dir)
-                (progn
-                  (message "%s is not a Django project directory" manage)
-                  (sleep-for .5)
-                  (read-django-project-dir prompt dir))))))
-    (let* ((dir (read-django-project-dir
-                 "project directory: "
-                 default-directory))
-           (project-name (first
-                          (remove-if (lambda (s) (or (string= "src" s) (string= "" s)))
-                                     (reverse (split-string dir "/")))))
-           (buffer-name (format "%s-testserver" project-name))
-           (manage (concat dir "manage.py")))
-      (cd dir)
-      (if (not (equal (buffer-name) buffer-name))
-          (switch-to-buffer-other-window
-           (apply 'make-comint buffer-name manage nil '("testserver" "--addrport=localhost:7000")))
-        (apply 'make-comint buffer-name manage nil '("testserver")))
-      (make-local-variable 'comint-prompt-regexp)
-      (setq comint-prompt-regexp (concat py-shell-input-prompt-1-regexp "\\|"
-                                         py-shell-input-prompt-2-regexp "\\|"
-                                         "^([Pp]db) "))
-      (add-hook 'comint-output-filter-functions
-                'py-comint-output-filter-function))))
-
-;;http://stackoverflow.com/questions/1389835/how-to-run-django-shell-from-emacs
-(defun django-shell (&optional argprompt)
-  (interactive "P")
-  ;; Set the default shell if not already set
-  (cl-labels ((read-django-project-dir
-            (prompt dir)
-            (let* ((dir (read-directory-name prompt dir))
-                   (manage (expand-file-name (concat dir "manage.py"))))
-              (if (file-exists-p manage)
-                  (expand-file-name dir)
-                (progn
-                  (message "%s is not a Django project directory" manage)
-                  (sleep-for .5)
-                  (read-django-project-dir prompt dir))))))
-    (let* ((dir (read-django-project-dir
-                 "project directory: "
-                 default-directory))
-           (project-name (first
-                          (remove-if (lambda (s) (or (string= "src" s) (string= "" s)))
-                                     (reverse (split-string dir "/")))))
-           (buffer-name (format "%s-shell" project-name))
-           (manage (concat dir "manage.py")))
-      (cd dir)
-      (if (not (equal (buffer-name) buffer-name))
-          (switch-to-buffer-other-window
-           (apply 'make-comint buffer-name manage nil '("shell_plus")))
-        (apply 'make-comint buffer-name manage nil '("shell_plus")))
-      (make-local-variable 'comint-prompt-regexp)
-      (setq comint-prompt-regexp (concat py-shell-input-prompt-1-regexp "\\|"
-                                         py-shell-input-prompt-2-regexp "\\|"
-                                         "^([Pp]db) "))
-      (add-hook 'comint-output-filter-functions
-                'py-comint-output-filter-function))))
-;; pdbtrack
 
 
 ;;trey jackson
@@ -364,9 +254,6 @@ With negative N, comment out original line and use the absolute value."
      (save-selected-window
        (other-window 1)
        (isearch-forward)))
-
-
-
 
 
 ;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file

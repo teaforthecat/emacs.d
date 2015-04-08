@@ -9,6 +9,14 @@
 (require 'tramp)
 
 
+(defun buffer-switcher-shell ()
+  (interactive)
+  (ido-for-mode "Shell:" 'shell-mode))
+
+(defun buffer-switcher-dired ()
+  (interactive)
+  (ido-for-mode "dired:" 'dired-mode))
+
 (defun dired-ediff-marked-files ()
   "Run ediff on marked files."
   (interactive)

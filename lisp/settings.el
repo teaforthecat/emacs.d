@@ -75,21 +75,7 @@
 (setq completion-auto-help 'lazy)
 
 
-;;TODO these setting should be per-mode and buffer-local:
-(setq safe-local-variable-values
-      '((whitespace-line-column . 80)
-        (whitespace-style face trailing lines-tail)
-        (require-final-newline . t)
-        (rspec-spec-command . "bin/spec")
-        ;; (inferior-lisp-program . "browser-repl")
-        (enh-ruby-program . "/Users/cthompson/.rbenv/shims/ruby")
-        (rspec-use-bundler-when-possible . t)
-        (feature-cucumber-command . "bin/cucumber FEATURE=\"{feature}\"")
-        (ruby-compilation-executable . "ruby")
-        (ruby-compilation-executable . "ruby1.8")
-        (ruby-compilation-executable . "ruby1.9")
-        (ruby-compilation-executable . "rbx")
-        (ruby-compilation-executable . "jruby")))
+
 
 
 (provide 'settings)
