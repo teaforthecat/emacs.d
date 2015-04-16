@@ -38,7 +38,6 @@
 (depends-on "multiple-cursors")
 (depends-on "nyan-mode")
 (depends-on "pallet")
-(depends-on "pianobar")
 (depends-on "popwin")
 (depends-on "prodigy")
 (depends-on "projectile")
@@ -62,3 +61,4 @@
 (depends-on "yasnippet")
 (depends-on "zenburn-theme")
 ;;;pallet-ignore
+(depends-on "pianobar" :git "https://github.com/jhanson/pianobar.el.git")
