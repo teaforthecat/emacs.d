@@ -4,6 +4,7 @@
 (bind-key "M-h" 'backward-char)
 (bind-key "M-c" 'previous-line)
 (bind-key "M-n" 'forward-char)
+(bind-key "C-n" 'forward-char);; because so many modes override this
 (bind-key "M-t" 'next-line)
 (bind-key "M-r" 'forward-word)
 (bind-key "M-g" 'backward-word)
@@ -30,6 +31,7 @@
 (bind-key "C-v" 'sp-forward-barf-sexp)
 
 
+
 ;; Navigate buffer and file
 (bind-key "M-T" 'scroll-up)
 (bind-key "M-C" 'scroll-down)
@@ -44,7 +46,7 @@
 (bind-key "C-b s" 'buffer-switcher-shell)
 (bind-key "C-b d" 'buffer-switcher-dired)
 ;; M-m... M-v... M-z...
-
+(bind-key "C-x !" (lambdo (jump-to-register :temporary-fullscreen))) ;;works with advice around delete other windows
 
 ;; Utilities
 (bind-key "M-SPC" 'er/expand-region)
