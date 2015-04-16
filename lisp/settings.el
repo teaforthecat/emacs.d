@@ -27,11 +27,15 @@
                      '("Passphrase" "passphrase"
                        "Password" "password"
                        "Passcode" "passcode"
-                       "Enter Synchronous Response") t)
+                       ) t)
               ".*:\0? *"))
 
 ;; ensure this is required
 (setq tramp-ssh-controlmaster-options " -o ControlPath=%t.%%r@%%h:%%p -o ControlMaster=auto -o ControlPersist=yes " )
+
+
+;; added "Enter Synchronous Response"
+;; /usr/local/Cellar/emacs/24.4/share/emacs/24.4/lisp/net/tramp.el.gz:600
 
 ;;;
 
