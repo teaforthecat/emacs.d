@@ -41,3 +41,4 @@ tramp
 
 # names of things
 /private/
+/lisp/custom.el

@@ -11,6 +11,9 @@
 
 (eval-and-compile (push "~/.emacs.d/lisp" load-path))
 
+;; TODO: try this
+;(add-to-list 'auto-mode-alist '("\\.log\\'" . auto-revert-tail-mode))
+
 
 (require 'reset)
 (require 'navigator)
@@ -44,7 +47,6 @@
 (use-package sparkline) ;; why? because it is cool
 (use-package subr-x) ;;hash-table and string functions
 
-(bind-key "M-#" (lambdo (jump-to-register :temporary-fullscreen))) ;;works with advice around delete other windows
 
 ;; consider making this buffer local to only fire on emacs-lisp-mode
 (add-hook 'after-save-hook 'byte-compile-current-buffer)
@@ -86,7 +88,6 @@
   (setq jabber-alert-presence-message-function 'no-presence-message )
   (setq jabber-alert-info-message-function 'no-info-message )
   (setq jabber-roster-show-bindings nil)
-
   :defer 10)
 
 (use-package browse-kill-ring+
@@ -105,11 +106,14 @@
   (add-hook 'dired-mode-hook 'dired-omit-mode)
   (setq dired-listing-switches "-thal")
   (setq dired-details-hidden-string "  ")
+  (setq dired-auto-revert-buffer t)
   :config
   (bind-key "k"   'dired-kill-subdir dired-mode-map)
   (bind-key "TAB" 'dired-hide-subdir dired-mode-map)
   (bind-key "e"   'dired-up-directory dired-mode-map)
   (bind-key "o"   'dired-display-file dired-mode-map)
+  (unbind-key "M-c" dired-mode-map)
+  (unbind-key "M-T" dired-mode-map)
   (defadvice dired-kill-subdir (after kill-dired-buffer-as-well
                                     last (&optional REMEMBER-MARKS) activate protect)
   (if (= (point-min) (point))
@@ -206,6 +210,7 @@
   :init
   (setq aw-keys '(?a ?o ?e ?u ?i ?d ?h ?t ?n ?s))
   (setq aw-scope 'frame)
+  (setq aw-background nil)
   :bind* ("C-t" . ace-window)
   :config
   (ace-window-display-mode))
@@ -297,9 +302,12 @@
 
 (use-package recentf
   :config
+  (setq recentf-max-saved-items 100)
   (recentf-mode 1))
 
 (use-package pianobar)
+(use-package clojure-mode)
+(use-package clojure-cheatsheet)
 
 (use-package shell
   :config
@@ -307,10 +315,15 @@
 ;; m-n     comint-next-input               Cycle forwards
 ;; m-r     comint-previous-matching-input  Previous input matching a regexp
   ;; m-s     comint-next-matching-input      Next input that matches
-
+  (bind-key "C-r"  'comint-history-isearch-backward-regexp shell-mode-map)
+;  (bind-key "C-p"  'comint-previous-input shell-mode-map)
+  (bind-key "C-n"  'comint-next-input shell-mode-map)
   (unbind-key "M-s" shell-mode-map)
   (unbind-key "M-r" shell-mode-map)
   (unbind-key "M-n" shell-mode-map))
+
+
+
 
 (setq custom-file "~/.emacs.d/lisp/custom.el")
 (load custom-file)

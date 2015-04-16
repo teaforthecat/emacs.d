@@ -218,7 +218,7 @@
     (delete-other-windows)
     (split-window-right)
     (other-window 1)
-    (find-file "organizer.org")
+    (find-file "README*" t)
     (org-agenda-file-to-front)
     (other-window 1)
     (split-window-below)
