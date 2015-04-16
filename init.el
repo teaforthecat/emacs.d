@@ -26,6 +26,8 @@
   (when (memq window-system '(mac ns))
     (exec-path-from-shell-initialize)))
 
+(use-package cider)
+
 (use-package haml-mode)
 (use-package sass-mode)
 
