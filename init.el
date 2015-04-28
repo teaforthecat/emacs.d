@@ -64,15 +64,45 @@
   :bind ("H-s" . sp-switch-space))
 
 (use-package projectile
-  :diminish projectile-mode
-  :config
-  (projectile-global-mode))
+             :diminish projectile-mode
+             :config
+             (projectile-global-mode)
+             (setq projectile-switch-project-action 'projectile-dired)
+             (defadvice projectile-switch-project (before pre-project-switch-wc-save activate)
+               (window-configuration-to-register :ct/pre-project-switch))
+
+             (defun goto-previous-project ()
+               (interactive)
+               (jump-to-register :ct/pre-project-switch))
+
+             (setq projectile-switch-project-action 'projectile-dired)
+
+             (add-hook 'projectile-switch-project-hook 'ct/setup-project)
+
+             (defun ct/setup-project ()
+               (delete-other-windows)
+               (split-window-right)
+               (other-window 1)
+               (if (and (file-exists-p "organizer.org")
+                        (save-excursion ;; and a todo exists
+                          (find-file "organizer.org")
+                          (goto-char (point-min))
+                          (re-search-forward "\\** TODO" nil t)))
+                   (progn (find-file "organizer.org")
+                          (org-agenda-file-to-front) ;; there is a max
+                          )
+                 (find-file "README*" t))
+               (other-window 1)
+               (split-window-below)
+               (other-window 1)
+               (spawn-shell (format "*%s*" default-directory))))
 
 (use-package yaml-mode)
 (use-package flx-ido)
 
 (use-package jabber
   :init
+  (setq jabber-never-anonymous t) ;;TODO create pull request
   (setq jabber-history-enabled t)
   (setq jabber-history-dir "~/.emacs.d/tmp/jabber-history")
   (setq jabber-roster-line-format " %c %-25n %u %-8s  %S")
@@ -82,13 +112,19 @@
     (let ((starttls-extra-arguments '("--insecure" "--no-ca-verification")))
       ad-do-it))
 
+  ;;  (jabber-mode-line-mode -1)
+  (add-hook 'jabber-alert-message-hooks 'jabber-message-display)
+  (add-hook 'jabber-chat-mode 'toggle-truncate-lines)
+  ;; TODO: set modeline on message alert
+
+
   (defun no-presence-message (who oldstatus newstatus statustext)  nil  )
   (defun no-info-message (infotype buffer)  nil  )
   (setq jabber-roster-show-bindings nil)
   (setq jabber-alert-presence-message-function 'no-presence-message )
   (setq jabber-alert-info-message-function 'no-info-message )
   (setq jabber-roster-show-bindings nil)
-  :defer 10)
+  :defer 5)
 
 (use-package browse-kill-ring+
   :defer 10
@@ -112,14 +148,15 @@
   (bind-key "TAB" 'dired-hide-subdir dired-mode-map)
   (bind-key "e"   'dired-up-directory dired-mode-map)
   (bind-key "o"   'dired-display-file dired-mode-map)
-  (unbind-key "M-c" dired-mode-map)
   (unbind-key "M-T" dired-mode-map)
   (defadvice dired-kill-subdir (after kill-dired-buffer-as-well
                                     last (&optional REMEMBER-MARKS) activate protect)
   (if (= (point-min) (point))
       (kill-buffer)))
   (use-package dired-x)
-  (use-package dired+))
+  (use-package dired+
+    :config
+    (unbind-key "M-c" dired-mode-map)))
 
 (use-package request)
 (use-package memoize)
@@ -305,7 +342,13 @@
   (setq recentf-max-saved-items 100)
   (recentf-mode 1))
 
-(use-package pianobar)
+(use-package pianobar
+  :config
+  (defadvice pianobar-pause-song (around stay-home activate)
+    "so I don't have to worry about starting pianobar while on a remote file"
+    (let ((default-directory "~"))
+      ad-do-it)))
+
 (use-package clojure-mode)
 (use-package clojure-cheatsheet)
 
@@ -316,14 +359,45 @@
 ;; m-r     comint-previous-matching-input  Previous input matching a regexp
   ;; m-s     comint-next-matching-input      Next input that matches
   (bind-key "C-r"  'comint-history-isearch-backward-regexp shell-mode-map)
-;  (bind-key "C-p"  'comint-previous-input shell-mode-map)
+  (bind-key "C-p"  'comint-previous-input shell-mode-map)
   (bind-key "C-n"  'comint-next-input shell-mode-map)
   (unbind-key "M-s" shell-mode-map)
   (unbind-key "M-r" shell-mode-map)
   (unbind-key "M-n" shell-mode-map))
 
 
+(use-package ruby-mode
+  :config
+  (use-package inf-ruby))
 
+
+(add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
+(add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode)
+(add-hook 'after-init-hook 'inf-ruby-switch-setup)
+(eval-after-load 'inf-ruby
+      '(define-key inf-ruby-minor-mode-map
+       (kbd "C-c C-s") 'inf-ruby-console-auto))
+
+
+
+(use-package rinari)
+
+
+
+(use-package yari
+  :init
+  (define-key 'help-command (kbd "R") 'yari))
+
+
+(eval-when-compile
+  (defvar ag-mode-map)) ;;I'm not sure why this isn't set in ag.el
+
+(use-package wgreps
+  :config
+  (bind-key "G" 'wgrep-change-to-wgrep-mode ag-mode-map)
+  (bind-key "S" 'wgrep-save-all-buffers ag-mode-map))
+
+(use-package wgrep-ag)
 
 (setq custom-file "~/.emacs.d/lisp/custom.el")
 (load custom-file)
@@ -331,8 +405,10 @@
 (switch-to-buffer "*Messages*") ;; shows loading errors
 (load-theme 'flatland)
 
+
+
 ;; to silence warnings when byte compiling
 ;; some functions won't be defined until the library is loaded
 ;; Local Variables:
-;; byte-compile-warnings: (not unresolved)
+;; byte-compile-warnings: (not unresolved free-variable)
 ;; End:

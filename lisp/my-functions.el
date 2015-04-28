@@ -199,35 +199,6 @@
   (let ((find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld")))
     (find-name-dired "~/projects" "organizer.org")))
 
-(defvar ct/previous-project nil)
-
-
-;; TODO add to org-agenda-file-to-front var
-(defun ct/goto-project ()
-  "open a dired buffer for a project that contains an organizer.org file and open shell as well!"
-  (interactive)
-  (let* ((project-dir "~/projects")
-        (project-list (mdfind "organizer.org" (format "-onlyin %s" project-dir)))
-        (chosen-project-name (ido-completing-read "project: " (-map 'car project-list)))
-        (chosen-project-path (cdr (assoc chosen-project-name project-list)))
-        (pre-project-marker (make-symbol (format "pre-%s" chosen-project-name)))
-        (default-directory (file-name-directory chosen-project-path)))
-    (window-configuration-to-register pre-project-marker)
-    (setq ct/previous-project pre-project-marker)
-    (dired default-directory)
-    (delete-other-windows)
-    (split-window-right)
-    (other-window 1)
-    (find-file "README*" t)
-    (org-agenda-file-to-front)
-    (other-window 1)
-    (split-window-below)
-    (other-window 1)
-    (spawn-shell (format "*%s*" chosen-project-name))))
-
-(defun goto-previous-project ()
-  (interactive)
-  (jump-to-register ct/previous-project))
 
 (defun mdfind (file-name &optional opts)
   "return full paths of files matching name"
