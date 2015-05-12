@@ -56,13 +56,6 @@
 (bind-key "M-a"   'align-regexp)
 (bind-key "M-~"   'make-frame)
 (bind-key "M-`"   'other-frame)
-(bind-key "<f7>"  'pianobar)
-;; pianobar-play-or-pause
-;; pianobar-next-song
-;; pianobar-love-current-song
-;; pianobar-ban-current-song
-;; pianobar-change-station
-
 
 
 ;; Search

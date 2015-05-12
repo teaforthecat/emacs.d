@@ -24,7 +24,6 @@
 
 ;;(push "/usr/local/bin" exec-path)
 (use-package exec-path-from-shell
-  :defer 10
   :config
   (when (memq window-system '(mac ns))
     (exec-path-from-shell-initialize)))
@@ -67,7 +66,7 @@
              :diminish projectile-mode
              :config
              (projectile-global-mode)
-             (setq projectile-switch-project-action 'projectile-dired)
+
              (defadvice projectile-switch-project (before pre-project-switch-wc-save activate)
                (window-configuration-to-register :ct/pre-project-switch))
 
@@ -83,15 +82,16 @@
                (delete-other-windows)
                (split-window-right)
                (other-window 1)
-               (if (and (file-exists-p "organizer.org")
-                        (save-excursion ;; and a todo exists
-                          (find-file "organizer.org")
-                          (goto-char (point-min))
-                          (re-search-forward "\\** TODO" nil t)))
-                   (progn (find-file "organizer.org")
-                          (org-agenda-file-to-front) ;; there is a max
-                          )
-                 (find-file "README*" t))
+               (cond ((and (file-exists-p "organizer.org")
+                           (save-excursion ;; and a todo exists
+                             (find-file "organizer.org")
+                             (goto-char (point-min))
+                             (re-search-forward "\\** TODO" nil t)))
+                      (progn (find-file "organizer.org")
+                             (org-agenda-file-to-front)))
+                     ((file-exists-p "README.md")
+                      (find-file "README.md")))
+
                (other-window 1)
                (split-window-below)
                (other-window 1)
@@ -106,15 +106,14 @@
   (setq jabber-history-enabled t)
   (setq jabber-history-dir "~/.emacs.d/tmp/jabber-history")
   (setq jabber-roster-line-format " %c %-25n %u %-8s  %S")
-;   (setq jabber-muc-autojoin '("devops@im.office.gdi"))
 
   (defadvice jabber-connect (around insecure activate)
     (let ((starttls-extra-arguments '("--insecure" "--no-ca-verification")))
       ad-do-it))
 
-  ;;  (jabber-mode-line-mode -1)
   (add-hook 'jabber-alert-message-hooks 'jabber-message-display)
-  (add-hook 'jabber-chat-mode 'toggle-truncate-lines)
+  (add-hook 'jabber-chat-mode (lambda () (toggle-truncate-lines -1)))
+  (add-hook 'jabber-chat-mode 'flyspell-mode)
   ;; TODO: set modeline on message alert
 
 
@@ -337,6 +336,10 @@
   (add-hook 'after-init-hook 'edit-server-start t))
 
 
+(use-package markdown-mode
+  :config
+  (unbind-key "M-n" markdown-mode-map))
+
 (use-package recentf
   :config
   (setq recentf-max-saved-items 100)
@@ -364,6 +367,11 @@
   (unbind-key "M-s" shell-mode-map)
   (unbind-key "M-r" shell-mode-map)
   (unbind-key "M-n" shell-mode-map))
+
+
+(use-package tramp
+  :init
+  (setq tramp-ssh-controlmaster-options ""))
 
 
 (use-package ruby-mode

@@ -39,6 +39,7 @@
 (depends-on "idomenu")
 (depends-on "inf-ruby")
 (depends-on "jabber")
+(depends-on "json-mode")
 (depends-on "leuven-theme")
 (depends-on "magit")
 (depends-on "markdown-mode+")
@@ -47,8 +48,8 @@
 (depends-on "multiple-cursors")
 (depends-on "nyan-mode")
 (depends-on "pallet")
-(depends-on "pianobar" :git "https://github.com/jhanson/pianobar.el.git")
 (depends-on "popwin")
+(depends-on "pp+")
 (depends-on "prodigy")
 (depends-on "projectile")
 (depends-on "puppet-mode")
@@ -77,4 +78,4 @@
 (depends-on "yasnippet")
 (depends-on "zenburn-theme")
 ;;;pallet-ignore
-(depends-on "pianobar" :git "https://github.com/jhanson/pianobar.el.git")
+
