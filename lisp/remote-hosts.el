@@ -37,9 +37,10 @@
             "cat ~/.dsh/group/* | uniq")))
 
 (defun ct/remote-hosts-inventory ()
-  "must add history to inventory or the history won't be available in the list"
+  "must add history to inventory or the history won't be available in the list
+   - and make sure history comes first"
   (let* ((hosts (ct/remote-host-inventory-load)))
-    (union ct/remote-hosts-history hosts)))
+    (union ct/remote-hosts-history (append ct/remote-hosts-history hosts))))
 
 
 (defun ct/remote-add-to-history (host)
