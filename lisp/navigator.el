@@ -8,7 +8,8 @@
 (bind-key "M-t" 'next-line)
 (bind-key "M-r" 'forward-word)
 (bind-key "M-g" 'backward-word)
-
+(bind-key "M-m" 'backward-paragraph)
+(bind-key "M-v" 'forward-paragraph)
 
 ;; copy - paste - CUA for dvorak using querty's zxcv keys
 (bind-key "M-j" 'kill-ring-save)
@@ -56,13 +57,20 @@
 (bind-key "M-a"   'align-regexp)
 (bind-key "M-~"   'make-frame)
 (bind-key "M-`"   'other-frame)
+(bind-key "C-x 9" 'fill-paragraph) ;; good for documentation
 
 
 ;; Search
-(bind-key "C-s"   'ace-jump-mode)
+;(bind-key "C-s"   'ace-jump-mode) ;;using avy instead
 (bind-key "M-s s" 'isearch-forward)
 (bind-key "M-s w" 'isearch-other-window)
 
+
+
+;; navigator
+(bind-key "M-r" 'forward-word minibuffer-local-map)
+(bind-key "M-n" 'forward-char minibuffer-local-map)
+;(bind-key* "C-d" 'duplicate-line) TODO don't override in  minibuffer
 
 
 
