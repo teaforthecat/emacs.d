@@ -7,7 +7,102 @@
 (require 'term)
 (require 'json)
 (require 'tramp)
+(require 'animate)
 
+
+(defun ct/blow-up-string (string vpos &optional hpos)
+  "put string in buffer and then blow it up"
+  (letf ((init-chars (lambda (str)
+                      (animate-initialize str vpos
+                                          (or hpos
+                                              (max 0 (/ (- (window-width) (length string)) 2)))))))
+
+    (let ((characters (funcall init-chars string))
+          (show-trailing-whitespace nil)
+          (indent-tabs-mode nil)
+          (cursor-type nil)
+          (starting-pause .05)
+          (inc-pause      .005))
+
+      ;; insert chars then remove, without disrupting user's undo list
+      (let ((buffer-undo-list nil))
+        (animate-step characters 1)
+        (sit-for 1)
+        (primitive-undo (length characters) buffer-undo-list))
+
+      (setq characters (append characters (funcall init-chars "**##..")))
+
+      (dotimes (i animate-n-steps)
+
+        ;; Bind buffer-undo-list so it will be unchanged when we are done.
+        ;; (We're going to undo all our changes anyway.)
+        (let (buffer-undo-list
+              list-to-undo)
+          ;; use minus to count from 1.0 to zero
+          (animate-step characters (/ (- animate-n-steps i) 1.0 animate-n-steps))
+          ;; Make sure buffer is displayed starting at the beginning.
+          (set-window-start nil 1)
+          ;; Display it, and wait just a little while.
+          (setq pause (+ starting-pause (* i inc-pause)))
+          (sit-for pause)
+          ;; Now undo the changes we made in the buffer.
+          (setq list-to-undo buffer-undo-list)
+          (while list-to-undo
+            (let ((undo-in-progress t))
+              (setq list-to-undo (primitive-undo 1 list-to-undo)))))))
+  (undo-boundary)))
+
+
+(defun ct/goodbye ()
+  (interactive)
+  (save-excursion
+    (switch-to-buffer (get-buffer-create "*scratch*"))
+    (erase-buffer)
+    (delete-other-windows)
+    (let ((animate-n-steps 20))
+      (ct/blow-up-string "goodbye" 30)))
+  (save-buffers-kill-terminal 1))
+
+;; [WIP]
+;; (let ((service (prodigy-define-service
+;;                  :name "* head *"
+;;                  :cwd "~/.emacs.d/lisp"
+;;                  :command "head"
+;;                  :args '("my-functions.el")
+;;                  ))
+;;       )
+;;   (prodigy-start-service service))
+
+;; (defun ct/bookmark-shell-command ()
+;;   (interactive)
+;;   (let* ((bname (format "* %s *" (read-string "process buffer name: ")))
+;;         (working-directory (read-string (format "working directory[%s]: " default-directory) nil nil default-directory))
+;;         (full-command (s-split " " (read-string "command: ")))
+;;         (command (car full-command))
+;;         (args (cdr full-command)))
+;;     (bmkp-make-function-bookmark bname `(lambda ()
+;;                                           (prodigy-define-service
+;;                                             :name ,bname
+;;                                             :cwd ,working-directory
+;;                                             :command ,command
+;;                                             :args (quote ,args))
+;;                                           ;; (add-to-list prodigy-services '(
+;;                                           ;;                                   :name ,bname
+;;                                           ;;                                   :cwd ,working-directory
+;;                                           ;;                                   :command ,command
+;;                                           ;;                                   :args (quote ,args)
+;;                                           ;;                                   ))
+;;                                           (prodigy-start-service ,bname)
+
+                                          ;; ))))
+(defun ct/bookmark-shell-command ()
+  (interactive)
+  (let ((bname (format "* %s *" (read-string "process buffer name: ")))
+        (working-directory (read-string (format "working directory[%s]: " default-directory) nil nil default-directory))
+        (command (read-string "command: ")))
+    (bmkp-make-function-bookmark bname `(lambda ()
+                                          (let ((default-directory ,working-directory))
+                                            (async-shell-command ,command ,bname))))))
 
 (defun buffer-switcher-shell ()
   (interactive)
@@ -108,12 +203,6 @@
   (let ((temp-mark (point)))
     ad-do-it
     (goto-char temp-mark)))
-
-;; temporary fullscreen a buffer
-(defadvice delete-other-windows (before temporary-fullscreen activate)
-  (window-configuration-to-register :temporary-fullscreen))
-
-;; moved to bind-key (global-set-key (kbd "M-#") (lambdo (jump-to-register :temporary-fullscreen)))
 
 (defun byte-compile-current-buffer ()
   "`byte-compile' current buffer if it's emacs-lisp-mode and compiled file exists."
