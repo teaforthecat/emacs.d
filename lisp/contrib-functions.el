@@ -37,6 +37,32 @@
         (setq mark-ring (nbutlast mark-ring))
         (goto-char (marker-position (car (last mark-ring))))))
 
+;; this causes invalid byte code
+;; this goes with the above
+;; http://stackoverflow.com/a/5117076/714357
+(defmacro my-unpop-to-mark-advice ()
+  "Enable reversing direction with un/pop-to-mark."
+  `(defadvice ,(key-binding (kbd "C-SPC")) (around my-unpop-to-mark activate)
+     "Unpop-to-mark with negative arg"
+     (let* ((arg (ad-get-arg 0))
+            (num (prefix-numeric-value arg)))
+       (cond
+        ;; Enabled repeated un-pops with C-SPC
+        ((eq last-command 'unpop-to-mark-command)
+         (if (and arg (> num 0) (<= num 4))
+             ad-do-it ;; C-u C-SPC reverses back to normal direction
+           ;; Otherwise continue to un-pop
+           (setq this-command 'unpop-to-mark-command)
+           (unpop-to-mark-command)))
+        ;; Negative argument un-pops: C-- C-SPC
+        ((< num 0)
+         (setq this-command 'unpop-to-mark-command)
+         (unpop-to-mark-command))
+        (t
+         ad-do-it)))))
+
+(my-unpop-to-mark-advice)
+
 
 ;; http://ergoemacs.org/emacs/elisp_generate_uuid.html
 ;; by Christopher Wellons, 2011-11-18. Editted by Xah Lee.
@@ -153,13 +179,15 @@
 (defun find-file-at-point-with-line ()
   "if file has an attached line num goto that line, ie boom.rb:12"
   (interactive)
-  (let ((line-num 0))
-    (save-excursion
-      (search-forward-regexp "[^ ]:" (point-max) t)
-      (if (looking-at "[0-9]+")
-          (setq line-num (string-to-number (buffer-substring (match-beginning 0) (match-end 0))))))
-    (find-file-other-window (ffap-guesser))
-    (ffap)
+  (let ((line-num
+         (save-excursion
+           (search-forward-regexp "[^ ]:" (point-max) t)
+           (if (looking-at "[0-9]+")
+               (string-to-number (buffer-substring (match-beginning 0) (match-end 0))))))
+        (file-path (ffap-guesser)))
+    (other-window 1)
+    (find-file file-path)
+    ;; (ffap file-path) ;;for urls
     (if (not (equal line-num 0))
         (progn (goto-char (point-min))(forward-line (1- line-num))))))
 
